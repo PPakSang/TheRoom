@@ -51,7 +51,11 @@ urlpatterns = [
     path('error/',testError,name='error'),
 
     path('uploadimg/',Img_update_view.as_view()),
-    path('deleteimg/<pk>',deleteimg)
+    path('deleteimg/<pk>',deleteimg),
+
+
+    #test
+    path('test/',test,name='test'),
 ]
 # +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

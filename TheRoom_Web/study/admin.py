@@ -12,7 +12,7 @@ class Student_Admin(admin.ModelAdmin):
 
 
 
-@admin.register(Faq)
+@admin.register(Qna)
 class Faq_Admin(admin.ModelAdmin):
     pass
 

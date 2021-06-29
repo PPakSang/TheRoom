@@ -773,3 +773,17 @@ def deleteimg(request,pk):
     s3_client.delete_object(Bucket='elasticbeanstalk-ap-northeast-2-293437042513',Key='media/'+key)
     img.delete()
     return HttpResponse('삭제완료')
+
+
+
+
+@login_required(login_url="/user/login")
+def test(request):
+    if request.method == "POST":
+        #질문 등록
+        text = request.POST["text"]
+        title = request.POST["title"]
+        post = Qna(user = request.user,text = text, title = title)
+        post.save()
+    else:
+        return render(request,"test/test.html")

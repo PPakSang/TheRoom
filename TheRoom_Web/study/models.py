@@ -1,5 +1,6 @@
 from time import time
 from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core import validators
 from django.db import models
@@ -62,15 +63,15 @@ class Student(models.Model):
 
 
 
-class Faq(models.Model):
-    name = models.CharField(max_length=10)
-    answer_to = models.CharField(max_length=100)
-    user_id = models.IntegerField(default=0)
+class Qna(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
     text = models.TextField()
 
+    answer = models.TextField(blank=True)
 
     def __str__(self) -> str:
-        return self.name + f'({self.answer_to})'
+        return self.user.username
         
 
 class Study_img(models.Model):
