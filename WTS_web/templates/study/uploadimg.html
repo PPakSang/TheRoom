@@ -1,0 +1,33 @@
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token%}
+    {{form}}
+    <input type="submit">
+</form>
+
+{% for img in imgs %}
+<table>
+    <thead>
+        <th>사진 미리보기</th>
+        <th>삭제</th>
+    </thead>
+    <tbody>
+        <td><img style="width: 100px;" src="{{img.pic.url}}" alt=""></td>
+        <td><a href="/uploadimg/" onclick="deleteimg('{{img.pk}}')">삭제</a></td>
+        <td>{{img.pic.name}}</td>
+    </tbody>
+</table>
+
+{%endfor%}
+
+<script>
+    function deleteimg(pk){
+        $.ajax({
+            url : "/deleteimg/"+pk,
+        })
+
+    }
+</script>

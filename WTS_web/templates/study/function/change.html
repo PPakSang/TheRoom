@@ -1,0 +1,323 @@
+{% extends 'study/main/base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<!-- 중간 카테고리 -->
+<nav class="navbar navbar-expand-md navbar-light shadow-sm mid-nav">
+    <div class="container-fluid">
+        <ul class="navbar-nav mx-auto mb-0">
+            <li class="nav-item mx-2 mx-md-3">
+                <a class="nav-link" href="{% url 'enroll' %}">등록하기</a>
+            </li>
+            <li class="nav-item mx-2 mx-md-3">
+                <a class="nav-link" href="{% url 'inquire' %}">조회하기</a>
+            </li>
+            <li class="nav-item mx-2 mx-md-3">
+                <a class="nav-link active" aria-current="page" href="#">변경하기</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="py-2 container text-center">
+    <div class="row gx-md-5 alert-container-parent" id="enroll">
+        <!-- 변경 실패 에러메시지 -->
+        <div class="alert-container">
+            {% for message in messages %}
+            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </symbol>
+            </svg>
+
+            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                    <use xlink:href="#exclamation-triangle-fill"/>
+                </svg>
+                <strong >{{ message }}</strong> 양식에 맞게 날짜를 선택해주세요.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 안내사항 -->
+        <div class="col text-center py-3">
+            <p class="mb-0 mt-3 mt-md-5">숙지해주세요</p>
+            <h3 class="fw-bold">안내사항</h3>
+            <div class="stick mb-3 mb-md-5"></div>
+            <div class="explain text-start bg-light shadow rounded" style="min-height: 200px">
+                <h5>요일은 같은 주차 내에서 변경가능합니다.<br><small class="sub_text" style="color: black;">월요일을 한주의 시작으로 일주일 이내에서
+                    변경가능합니다<br></small></h5>
+                <h5>고정참여일 기준 2일전까지만 변경가능합니다.<br><small class="sub_text" style="color: black;">Ex) 고정 참여일(2021.06.21)기준
+                    (2021.06.19 11:59pm) 까지 변경가능합니다<br>상단 '조회하기'에서 기준 참여일 확인가능합니다.</small></h5></div>
+        </div>
+
+        <!-- 스터디 날짜 변경 -->
+        <div class="col py-3">
+
+            <p class="mb-0 mt-3 mt-md-5">선택해주세요</p>
+            <h3 class="fw-bold">스터디 날짜 변경</h3>
+            <div class="stick mb-3 mb-md-5"></div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <button type="button" class="btn change-btn rounded w-100 py-3" style="max-height: 230px"
+                            data-bs-toggle="modal" data-bs-target="#fromModal">
+                        <span class="change-btn-icon"><i class="far fa-calendar-alt"></i></span>
+                        <span class="row justify-content-center change-btn-content">FROM</span>
+                        <span class="row justify-content-center change-btn-content" id="fromDate">선택해주세요.</span>
+                    </button>
+                </div>
+
+                <div class="col">
+                    <button type="button" class="btn change-btn rounded w-100 py-3" style="max-height: 230px"
+                            data-bs-toggle="modal" data-bs-target="#toModal">
+                        <span class="change-btn-icon"><i class="far fa-calendar-check"></i></span>
+                        <span class="row justify-content-center change-btn-content">TO</span>
+                        <span class="row justify-content-center change-btn-content" id="toDate">선택해주세요.</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row gx-0 mt-4">
+                <form action="" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <!-- POST 정보 넘기기 위함 -->
+                    <input type="text" id="request_day" name="day" class="day" style="display: none;">
+                    <input type="text" id="request_week" name="i" class="i" style="display: none;">
+                    <input type="text" id="request_time" name="time" value="0" style="display: none;">
+                    <button type="submit" class="btn btn-warning change-btn-submit w-100">변경하기</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- 시간표 -->
+    <div class="row py-3 py-md-5 gx-0">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <p class="my-0">고정 스케줄</p>
+            <h3 class="fw-bold">시간표</h3>
+            <div class="stick"></div>
+        </div>
+    </div>
+    <div class="row gx-0 rounded border mw-100">
+        <img src="{% static 'img/changeschedule.jpg'%}" alt="">
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal 1: 변경 전 날짜 선택 -->
+<div class="modal fade" id="fromModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="fromModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fromModalLabel">변경할 날짜 선택</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{student.name}}님의 변경 가능한 스터디 참여일입니다.<br><br>
+                <!-- Radio -->
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="day" id="1"
+                           value="{{student.day1|date:'Y-m-d'}}">
+                    <label class="form-check-label" for="1">
+                        {{student.day1|date:"Y-m-d"}}
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="day" id="2" value="{{student.day2|date:'Y-m-d'}}"
+                           checked>
+                    <label class="form-check-label" for="2">
+                        {{student.day2|date:"Y-m-d"}}
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="day" id="3"
+                           value="{{student.day3|date:'Y-m-d'}}">
+                    <label class="form-check-label" for="3">
+                        {{student.day3|date:"Y-m-d"}}
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="day" id="4"
+                           value="{{student.day4|date:'Y-m-d'}}">
+                    <label class="form-check-label" for="4">
+                        {{student.day4|date:"Y-m-d"}}
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="fromDate()">선택하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal 2: 변경 후 날짜 선택 -->
+<div class="modal fade" id="toModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="toModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="toModalLabel">다음 날짜로 변경</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="toDatePicker" class="form-label fw-bold">날짜 선택</label>
+                <input type="text" name="changeDay" class="form-control" id="toDatePicker" placeholder="연도-월-일"
+                       autocomplete="off" onchange="showTimeInput()">
+
+                <div id="changeTime" class="mt-3">
+                    <label for="toTimePicker" class="form-label fw-bold">시간</label>
+                    <select name="time" id="toTimePicker" class="form-select" onchange="showTimeInput()">
+                        <option value="0" selected>선택해주세요.</option>
+                        <option value="1">오후 1시</option>
+                        <option value="2">오후 4시</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" id="date_ch" class="btn btn-dark disabled" data-bs-dismiss="modal"
+                        onclick="toDate()">선택하기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- date picker -->
+<script>
+    $(function() {
+        $('#toDatePicker').datepicker({
+            format: "yyyy-mm-dd", //데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+            startDate: '+1d', //달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+            endDate: '+60d', //달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)
+            autoclose: true, //사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+            calendarWeeks: false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true
+            clearBtn: false, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+            datesDisabled: ['2019-06-24', '2019-06-26'], //선택 불가능한 일 설정 하는 배열 위에 있는 format 과 형식이 같아야함.
+            daysOfWeekDisabled: [], //선택 불가능한 요일 설정 0 : 일요일 ~ 6 : 토요일
+            daysOfWeekHighlighted: [0], //강조 되어야 하는 요일 설정
+            disableTouchKeyboard: false, //모바일에서 플러그인 작동 여부 기본값 false 가 작동 true가 작동 안함.
+            immediateUpdates: false, //사용자가 보는 화면으로 바로바로 날짜를 변경할지 여부 기본값 :false
+            multidate: false, //여러 날짜 선택할 수 있게 하는 옵션 기본값 :false
+            multidateSeparator: ",", //여러 날짜를 선택했을 때 사이에 나타나는 글짜 2019-05-01,2019-06-01
+            templates: {
+                leftArrow: '&laquo;',
+                rightArrow: '&raquo;'
+            }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징
+            showWeekDays: true, // 위에 요일 보여주는 옵션 기본값 : true
+            title: "변경 후 날짜", //캘린더 상단에 보여주는 타이틀
+            todayHighlight: false, //오늘 날짜에 하이라이팅 기능 기본값 :false
+            toggleActive: true, //이미 선택된 날짜 선택하면 기본값 : false인경우 그대로 유지 true인 경우 날짜 삭제
+            weekStart: 0, //달력 시작 요일 선택하는 것 기본값은 0인 일요일
+            language: "ko" //달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+
+        }); //datepicker end
+    }); //ready end
+
+
+    // 주말 선택 시 '시간' 입력받는 폼 등장
+    function date_add_disabled(){
+        $('#date_ch').addClass('disabled')
+    }
+    function date_remove_disabled(){
+        $('#date_ch').removeClass('disabled')
+    }
+    function check_value(day){ 
+        if($('#toDatePicker').val() == ""){
+            date_add_disabled()
+        }
+        else{
+            if(day==1){
+                date_remove_disabled()
+            }
+            else if(day==2){
+                if($('#toTimePicker option:selected')[0].value != "0"){
+                    date_remove_disabled()
+                }
+            }
+        }
+    }
+
+    function showTimeInput() {
+        var date = document.getElementById('toDatePicker').value; // 날짜
+        var day = new Date(date).getDay(); // 요일 (0:일요일 ~ 6:토요일)
+
+        if(day == 0 || day == 6) { // 주말이면 시간 입력 폼 보여주기
+            var target = document.getElementById('changeTime');
+            date_add_disabled()
+            check_value(2)
+            target.style.display = "block";
+        }
+
+        else { // 평일이면 시간 입력 폼 사라짐
+            var target = document.getElementById('changeTime');
+            check_value(1)
+            target.style.display = "none";
+        }
+    }
+
+
+
+</script>
+
+
+<!-- From, To 버튼의 text를 선택 날짜로 변경 -->
+<script>
+    function fromDate() {
+        var chk_radio = document.getElementsByName('day');
+        var sel_type = null;
+        var week = document.getElementById('request_week')
+
+        // 어느 라디오가 체크되어 있는지 판단 후 값 가져오기
+        for (var i = 0; i < chk_radio.length; i++) {
+            if (chk_radio[i].checked == true) {
+                sel_type = chk_radio[i].value;
+                // chk_radio[i].id/ 몇번째 주차 바꿀건지
+                week.setAttribute('value', chk_radio[i].id)
+
+            }
+        }
+        if (sel_type == null) {
+            alert("변경할 날짜를 선택하세요.");
+            return false;
+        }
+
+        // from 버튼의 text 변경
+        var element = document.getElementById("fromDate");
+        element.innerText = sel_type;
+        element.style.color = "#f9690e";
+    }
+
+    function toDate() {
+        var element = document.getElementById("toDate");
+        var text = document.getElementById("toDatePicker").value;
+        var day = document.getElementById('request_day');
+        var time = document.getElementById('request_time');
+        var time_val = $('#toTimePicker option:selected')[0].value
+        day.setAttribute('value', text);
+        time.setAttribute('value',time_val)
+
+        element.innerText = text;
+        element.style.color = "#f9690e";
+    }
+</script>
+
+{% endblock %}

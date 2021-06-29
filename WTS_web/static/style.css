@@ -1,0 +1,625 @@
+/* 자주 쓰는 색상 변수 선언 */
+
+:root {
+  --text-color-white: #f0f4f5;
+  --accent-color: #ffd511;
+  --more-accent-color: #ed9402;
+  --text-basic-color: gray;
+  --border-color: #e0edee;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  /* font-weight: 100, 300, 400, 500, 700, 900 */
+}
+
+/*네비바 원투스픽 로고*/
+.logo_wts {
+  width: 4rem;
+  height: 4rem;
+}
+
+.alert-container-parent {
+  position: relative;
+}
+.alert-container {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+#channel-chat-button {
+  position: fixed;
+  transform: scale(0.6);
+  bottom: 65px;
+  right: 10px;
+  z-index: 9999;
+}
+
+#kakao_q {
+  display: none;
+}
+
+#topBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 9999;
+}
+
+#topBtn a {
+  font-size: 2.375rem;
+  color: var(--accent-color);
+}
+
+#topBtn a:hover {
+  color: #212529;
+}
+
+/*신청버튼 floating ver*/
+.enrollbtn {
+  max-width: 200px;
+  font-size: 1rem;
+  text-decoration: none;
+  bottom: 25px;
+  z-index: 9999;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  background: var(--more-accent-color);
+  box-shadow: 0px 1px 2px #888;
+  border-radius: 50px;
+}
+
+.enrollbtn:hover {
+  color: white;
+  font-size: 1.1rem;
+}
+
+.sns-icons {
+  list-style: none;
+  padding: 0px;
+}
+
+.sns-icon {
+  display: inline;
+  margin-left: 20px;
+}
+
+.sns-icon a {
+  font-size: 1.5rem;
+  color: #212529;
+}
+
+.sns-icon a:hover {
+  color: var(--accent-color);
+}
+
+.banner-title {
+  font-weight: 900;
+  font-size: 2.875rem;
+}
+
+.stick {
+  width: 50px;
+  height: 3px;
+  margin: 0px auto;
+  /* display: block일 때 요소를 가운데 정렬 */
+  background-color: var(--accent-color);
+}
+
+.btn:hover {
+  background-color: var(--accent-color);
+}
+
+.main-btn {
+  color: #000;
+  background-color: #fde3a7;
+  border-color: #fde3a7;
+}
+
+.main-btn:hover {
+  color: #000;
+  background-color: #fcd670;
+  border-color: #ffc720;
+}
+
+.registration-icon {
+  font-size: 3em;
+  color: #f89406;
+}
+
+.registration-title {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #000;
+}
+
+.customoverlay {
+  position: relative;
+  bottom: 85px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ddd;
+  float: left;
+}
+
+.customoverlay:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+
+.customoverlay a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  overflow: hidden;
+  background: #e74c3c;
+  background: #e74c3c
+    url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+    no-repeat right 14px center;
+}
+
+.customoverlay .title {
+  display: block;
+  text-align: center;
+  background: #fff;
+  margin-right: 35px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.customoverlay:after {
+  content: "";
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: -12px;
+  width: 22px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+
+#map-box {
+  height: 30em;
+}
+/* 부트스트랩 최신 버전에서 datepicker 깨짐 현상 해결 */
+
+.datepicker td,
+.datepicker th {
+  width: 2.5em;
+  height: 2em;
+}
+
+#enrollTime {
+  display: none;
+}
+#changeTime {
+  display: none;
+}
+
+.change-btn {
+  color: #000;
+  background-color: #fde3a7;
+  border-color: #fde3a7;
+}
+
+.change-btn:hover {
+  color: #000;
+  background-color: #fcd670;
+  border-color: #ffc720;
+}
+
+.btn-check:focus + .change-btn,
+.change-btn:focus {
+  box-shadow: 0 0 0 0.25rem rgba(228, 201, 122, 0.568);
+}
+
+.btn-check:checked + .change-btn:focus,
+.btn-check:active + .change-btn:focus,
+.change-btn:active:focus,
+.change-btn.active:focus,
+.show > .change-btn.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.25rem rgba(228, 201, 122, 0.568);
+}
+
+.change-btn-icon {
+  font-size: 3em;
+  color: #f89406;
+}
+
+.change-btn-content {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #000;
+}
+
+.change-btn-submit {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #f39c12;
+}
+
+.change-btn-submit:hover {
+  color: #fff;
+  background-color: #fcb941;
+  border-color: #ffc720;
+}
+
+.table-hover-custom > tbody > tr:hover {
+  background: rgba(0, 0, 0, 0.075);
+  color: #212529;
+}
+/* 아코디언 색 변경 */
+
+.accordion-button:not(.collapsed) {
+  color: #664d03;
+  font-weight: 500;
+  background-color: #fffcef;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+}
+
+.accordion-button:focus {
+  border-color: #ffe56d;
+  box-shadow: 0 0 0 0.25rem rgba(253, 237, 13, 0.25);
+}
+
+.accordion-button:not(.collapsed)::after {
+  /* 메모: svg color code 변경 시 hex값이 아닌 rgba값으로 적어줘야 함 */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23664d03'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  transform: rotate(-180deg);
+}
+
+/* footer */
+.footer-content::after {
+  content: "｜";
+}
+
+/*login 혜원*/
+
+/*네비바*/
+.nav-items {
+  list-style: none;
+  display: flex;
+}
+
+.nav-items .nav-item a {
+  color: gray;
+}
+.nav-items .nav-item a:hover {
+  color: black;
+}
+
+/*로그인 전체 박스 */
+
+#formBox_row {
+  margin-top: 3rem;
+}
+
+#formBox_col {
+  text-align: center;
+  align-items: center;
+  border: 1px;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: var(--border-color);
+}
+
+/*WTS 위 글자*/
+
+#small_title {
+  margin-bottom: 2px;
+  font-size: 1rem;
+}
+
+/*WTS 밑 로그인 글자*/
+
+#loginText {
+  text-align: left;
+  margin-left: 25px;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* 계정찾기(+회원가입), 정책 링크태그 css*/
+
+.login_find,
+.login_policy {
+  text-decoration: none;
+  font-size: 0.75rem;
+  color: var(--text-basic-color);
+}
+
+.login_find {
+  font-size: 0.9rem;
+}
+
+/*계정이 아직 없으신가요?*/
+
+#q_account {
+  font-size: 00.75rem;
+}
+
+/* | */
+
+.bar {
+  font-size: 0.75rem;
+  color: var(--text-basic-color);
+}
+
+/*signup 혜원*/
+
+/*상단 타이틀*/
+
+
+.signup_title {
+  margin-top: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.signup_title a {
+  color: #000;
+  text-decoration: none;
+}
+
+#form_error {
+  color: #e74c3c;
+}
+
+#pw_error,
+#id_dup,
+#email_error {
+  font-size: 0.9rem;
+  color: #e74c3c;
+}
+
+#id_dup_btn {
+  font-size: 000.95rem;
+  border-style: solid;
+  border-color: lightgray;
+  /*background-color: lightgray;*/
+}
+
+/*정책 링크*/
+
+.policy_link {
+  text-decoration: none;
+  font-size: 0.75rem;
+  color: var(--text-basic-color);
+}
+
+.signup_policy_link {
+  font-size: 1rem;
+  color: var(--more-accent-color);
+  cursor: pointer;
+}
+
+
+/*input태그 높이*/
+
+#idInput,
+#passwordInput,
+#passwordInput_check,
+#emailInput,
+#nameInput {
+  height: 40px;
+  font-size: 0.9rem;
+}
+
+/*회원가입 입력폼 */
+
+#signup_box {
+  margin-top: 3rem;
+}
+
+#footer_copyright {
+  font-size: 0.5rem;
+}
+
+#copyright_text {
+  font-weight: bold;
+}
+
+/*이메일 인증확인 페이지*/
+
+.mailBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  border: 1px;
+  border-color: lightgray;
+  border-style: solid;
+  border-radius: 10px;
+  margin-top: 10%;
+}
+/*스터디 로고*/
+.logo {
+  font-size: 1.5rem;
+}
+
+/*유저 이메일*/
+.mailBox #user_mail {
+  color: #1050c2;
+  text-decoration: underline;
+}
+
+/*상위 메일 텍스트*/
+.mailBox #mail_title1,
+.mailBox #mail_title2 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.mailBox #mail_title1 {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/*유의사항*/
+.mailBox_notice .notice_title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.mailBox_notice .notice_content {
+  font-size: 00.95rem;
+}
+
+/*이메일 재전송, 홈 버튼*/
+.email_Btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#input_resend,
+#input_home {
+  display: flex;
+  justify-content: center;
+  border: 1px;
+  border-style: solid;
+  padding: 5px;
+  width: 45%;
+}
+
+#input_home {
+  text-decoration: none;
+  border-color: #000;
+  color: #000;
+  background-color: #f0f0f0;
+}
+
+#input_resend:hover,
+#input_home:hover {
+  background-color: #ffd511;
+  border-color: #ffd511;
+}
+
+/*ID 찾기*/
+
+#findText {
+  display: flex;
+  text-align: start;
+  font-size: 00.85rem;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#goto_login {
+  text-decoration: underline;
+}
+
+.explain {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  color: #f13a3a;
+  padding: 2rem;
+}
+
+.explain h5 {
+  font-size: 1.125rem;
+  margin: 1rem 0;
+}
+
+.sub_text {
+  font-size: 0.9rem;
+  color: gray !important;
+}
+
+@media screen and (max-width: 768px) {
+  #login_footer {
+    visibility: hidden;
+  }
+
+  #channel-chat-button {
+    visibility: hidden;
+  }
+
+  #kakao_q {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  /* 배너 글자 작게 */
+  .banner-title {
+    font-size: 1.375rem;
+  }
+  .banner-content {
+    font-size: 1rem;
+  }
+  /* 메인의 중간 메뉴바 안 보이게 */
+  #mid-nav-container {
+    display: none;
+  }
+  /* 등록, 변경, 조회, faq 페이지에서의 중간 네브 바 가로로 정렬 (기본은 세로 정렬) */
+  .mid-nav {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+  .mid-nav .navbar-nav {
+    flex-direction: row;
+  }
+  .mid-nav .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
+  .mid-nav .navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  .mid-nav .navbar-nav-scroll {
+    overflow: visible;
+  }
+  .mid-nav .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+  }
+  .mid-nav .navbar-toggler {
+    display: none;
+  }
+  #enroll {
+    flex-direction: column;
+  }
+  .registration-title {
+    font-size: 0.875rem;
+  }
+  #map-box {
+    height: 15em;
+  }
+  .footer-text {
+    font-size: 0.75rem;
+    padding-bottom: 2em;
+  }
+
+  .enrollbtn {
+    max-width: 180px;
+    font-size: 0.9rem;
+    bottom: 20px;
+    padding-top: 10px;
+  }
+
+  .enrollbtn:hover {
+    max-width: 190px;
+    font-size: 0.95rem;
+  }
+  .inquire-explain {
+    text-align: left;
+  }
+}

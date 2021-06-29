@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <!-- 부트스트랩 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/dbcfa73564.js" crossorigin="anonymous"></script>
+    <!-- Google Fonts: Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
+    <!-- 카카오맵 Javascript API -->
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f3cf88b4bbc7a3c4b861604e8c17e004"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- Date Picker CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
+            integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"
+            integrity="sha512-L4qpL1ZotXZLLe8Oo0ZyHrj/SweV7CieswUODAAPN/tnqN3PA1P+4qPu5vIryNor6HQ5o22NujIcAZIfyVXwbQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+          integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+
+<body>
+<header>
+    <!-- 상단 카테고리 -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'index' %}"><img class=logo_wts
+                                                                          src="{% static 'img/logo_WTS.svg'%}">원투스픽</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link px-3 px-md-2 {% if request.path == '/' %}active{% endif %}" aria-current="page"
+                           href="{% url 'index' %}">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 px-md-2 {% if request.path == '/category/enroll/' %}active
+                        {% elif request.path == '/category/inquire/' %}active
+                        {% elif request.path == '/category/change/' %}active
+                        {% endif %}" href="{% url 'enroll' %}"
+                           {%if is_zero%} data-bs-toggle="modal" data-bs-target="#reModal" {% endif %} id="navbar_enroll">신청하기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 px-md-2 {% if request.path == '/category/faq/' %}active{% endif %}"
+                           href="{% url 'faq' %}">문의하기</a>
+                    </li>
+                    <li class="nav-item">
+
+                        {% if user.is_authenticated %}
+                        <a class="nav-link px-3 px-md-2" href="{% url 'logout' %}">로그아웃</a> {% else %}
+                        <a class="nav-link px-3 px-md-2" href="{% url 'login' %}">로그인</a> {% endif %}
+                    </li>
+                    {% if user.is_authenticated == False %}
+                    <li class="nav-item">
+                        <a class="nav-link px-3 px-md-2" href="{% url 'signup' %}">회원가입</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- 상단 배너 -->
+    <div class="banner bg-light">
+        <section class="py-3 text-center container">
+            <div class="row py-md-4">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="banner-title">WANT TO SPEAK?</h1>
+                    <p class="lead text-muted banner-content">One, two, speak! 영어회화 스터디는 원투스픽에서!</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</header>
+
+
+<main>
+    {% block content %} {% endblock %}
+</main>
+
+
+<footer class="text-muted py-3 py-md-5 mt-5 bg-light">
+    <div class="container">
+        <div class="float-end pe-0">
+            <ul class="sns-icons mb-0">
+                <li class="sns-icon"><a href="https://www.instagram.com/wantospeak/?hl=ko"><i
+                        class="fab fa-instagram"></i></a></li>
+                <li class="sns-icon"><a href="##" onclick="void chatChannel();"><i class="fas fa-comment"></i></a></li>
+                <!--<li class="sns-icon"><a href="#"><i class="fab fa-facebook"></i></a></li>-->
+            </ul>
+        </div>
+        <div class="footer-text mb-5">
+            <span class="footer-content">㈜원투스픽스터디</span>
+            <span class="footer-content">대표이사: 윤세웅</span>
+            <span>사업자등록번호: 105-19-88185</span><br>
+            <span class="footer-content">전화: 0507-1347-1948</span>
+            <span>이메일: sjkim04101@gmail.com</span>
+        </div>
+    </div>
+</footer>
+
+<!-- 재등록 안내 모달: 스터디 잔여 횟수 0회일 때 등록하기 클릭 시 발생 -->
+<div class="modal fade" id="reModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="reModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reModalLabel">스터디 재등록 안내</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>• <strong>{{user.first_name}}</strong>님의 잔여 스터디 횟수: 0회 (스터디 재등록 가능)</p>
+                <p>• 재등록 진행 시 <u style="color: #BB2020">이전 스터디 참여 기록은 조회하실 수 없습니다.</u></p>
+                <p>• 확인을 누르시면 재등록을 진행합니다.</p>
+            </div>
+            <div class="modal-footer">
+                <form action="/category/enroll/">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="submit" class="btn btn-dark">확인</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--카톡 문의 버튼-->
+<a id="channel-chat-button" href="##" onclick="void chatChannel();">
+    <img
+            src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+</a>
+
+<!-- 위로 가기 버튼 -->
+<div id="topBtn">
+    <a href="#">
+        <i class="fas fa-arrow-alt-circle-up"></i>
+    </a>
+</div>
+
+<!-- 부트스트랩 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+<!--신청하기 float버튼-->
+<script>
+    $(document).ready(function(){
+    
+    var navHeight = $(".banner").height() + $(".navbar").height(); 
+    
+    console.log(navHeight);
+    $(".enrollbtn").hide();
+    
+    $(window).scroll(function(){  // 윈도우 스크롤 기능 작동
+        var rollIt = $(this).scrollTop() >= navHeight; 
+
+    if(rollIt){ 
+            $(".enrollbtn").show().css({"position":"fixed"});
+        }
+        else{
+            $(".enrollbtn").hide();
+        }
+    });
+
+    });
+</script>
+</body>
+
+<!--카톡 문의 버튼 js-->
+
+<script type="text/javascript">
+    function chatChannel() {
+        Kakao.Channel.chat({
+        channelPublicId: '_ZRzXK',
+        })
+    }
+</script>
+
+<script>
+    window.kakaoAsyncInit = function() {
+      Kakao.Channel.createChatButton({
+        container: '#kakao-talk-channel-chat-button',
+      });
+    };
+  
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://developers.kakao.com/sdk/js/kakao.channel.min.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'kakao-js-sdk');
+
+</script>
+
+
+</html>

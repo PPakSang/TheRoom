@@ -1,0 +1,42 @@
+{% extends 'study/sign/sign_base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
+
+    <!--로그인 박스-->
+    <section class="container align-content-center">
+        <div class="row justify-content-center" id="formBox_row">
+            <div class="col-lg-5 col-md-9 col-sm-10 h-100 pt-5 mx-2 bg-white" id="formBox_col">
+                <p class="lead text-muted" id="small_title">Want To Speak</p>
+                <h2 class="font-weight-bold">비밀번호 찾기</h2>
+                <div class="stick"></div>
+                <div class="py-3 pl-0 " id="findText">회원가입 시 등록한 아이디와 이메일이 같아야, 비밀번호를 찾을 수 있습니다.<br> 등록한 이메일로 비밀번호 재설정 양식을 전송합니다.</div>
+                <div class="px-4 justify-content-center" id="login_input">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="row mb-1">
+                            <label for="input_name" class="col-sm-2 col-form-label">아이디</label>
+                            <div class="col-sm-10">
+                                <input class="form-control mb-2" type="text" id="input_name" autocomplete="off" name="username" required>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label for="input_eamil" class="col-sm-2 col-form-label">이메일</label>
+                            <div class="col-sm-10">
+                                <input class="form-control mb-2" type="email" id="input_eamil" autocomplete="off" name="email" required>
+                            </div>
+                        </div>
+                        <button class="btn mb-4 w-100 btn-warning" type="submit">비밀번호 찾기</button>
+                    </form>
+                    {{error}}{{message}}
+                    <a class="login_find" href="{% url 'find_id' %}">아이디 찾기</a>
+                </div>
+                <div class="mt-4 pb-2">
+                    <span id="q_account">
+                        계정이 아직 없으신가요?
+                        <a class="login_find" href="{% url 'signup' %}">회원가입</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{%endblock%}
+

@@ -1,0 +1,59 @@
+{% extends 'study/sign/sign_base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
+
+<!--로그인 박스-->
+<section class="container align-content-center">
+
+    <div class="row justify-content-center" id="formBox_row">
+        <div class="col-xl-4 col-lg-5 col-md-7 col-sm-9 h-100 pt-5 mx-2 bg-white" id="formBox_col">
+            <p class="lead text-muted" id="small_title">one, two, speak study</p>
+            <h2 class="font-weight-bold">Want To Speak</h2>
+            <div class="stick"></div>
+
+            <!-- 아이디/비밀번호 틀렸을 때 에러메시지 -->
+            {% for message in messages %}
+            <div class="alert-container">
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </symbol>
+                </svg>
+
+                <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                        <use xlink:href="#exclamation-triangle-fill"/>
+                    </svg>
+                    <strong>{{ message }}</strong> 아이디 혹은 비밀번호가 틀렸습니다.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="pt-5 pl-0" id="loginText">로그인</div>
+            <div class="px-4 justify-content-center" id="login_input">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input class="form-control mb-2" autocomplete='off' type="text" id="input_id" name="username"
+                           placeholder="아이디" required>
+                    <input class="form-control mb-2" autocomplete='off' type="password" id="input_password"
+                           name="password" placeholder="비밀번호" required>
+                    <button class="btn w-100 btn-warning" type="submit">로그인</button>
+                </form>
+            </div>
+            <div class="row justify-content-center">
+                    <span class="mt-2 mb-5">
+                        <a class="login_find" href="{% url 'find_id' %}">아이디 찾기</a>
+                        <span class="bar">|</span>
+                    <a class="login_find" href="{% url 'find_pw' %}">비밀번호 찾기</a>
+                    </span>
+            </div>
+            <div class="mt-4 pb-2">
+                    <span id="q_account">
+                        계정이 아직 없으신가요?
+                        <a class="login_find" href="{% url 'signup' %}">회원가입</a>
+                    </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

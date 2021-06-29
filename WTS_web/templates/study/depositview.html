@@ -1,0 +1,114 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+{% load static%}
+<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+<link rel="stylesheet" href="{% static 'admin.css'%}">
+
+
+<div class="container">
+    <div>
+        <div id="logo_box">
+            <img id="logo" src="{% static 'img/logo_WTS.svg'%}" alt="">
+            <div class="fs-1">원투스픽 출석체크</div>
+        </div>
+        <div class="form_box">
+            <form action="adminpage/name" method="POST" autocomplete="off">
+                {%csrf_token%}
+                <div class="input-group w-25">
+                    <span class="input-group-text">이름</span>
+                    <input name="name" class="form-control" type="text">
+                    <button class="btn btn-outline-secondary" type="submit">검색</button>
+                </div>
+            </form>
+            <form action="adminpage/number" method="POST" autocomplete="off">
+                {%csrf_token%}
+                <div class="input-group w-25">
+                    <span class="input-group-text">전화번호</span>
+                    <input name="number" class="form-control" type="text">
+                    <button class="btn btn-outline-secondary" type="submit">검색</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<div class="menu">
+    <a href="{% url 'adminpage' 'all' %}">메인으로 </a><a href="{% url 'deposit_view' 'all'%}">전체보기</a> 
+    <a href="{% url 'deposit_view' 'not'%}">미납자보기 </a><a href="{% url 'deposit_view' 'today' %}">금일참여미납자</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">이름</th>
+            <th scope="col">전화번호</th>
+            <th>입금 여부 / 입금 방법</th>
+            <th>미입금</th>
+            <th>예약금</th>
+            <th>완납</th>
+            <th>결제방법</th>
+            <th scope="col">회원정보</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for student in students%}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{student.name}}</td>
+            <td>{{student.number}}</td>
+            <td>{{student.get_deposit_display}} / {{student.get_pay_way_display}}</td>
+            <td><span class="btn btn-danger" onclick="deposit(this,1,'{{student.pk}}')">미입금</span></td>
+            <td><span class="btn btn-secondary" onclick="deposit(this,2,'{{student.pk}}')">예약금</span></td>
+            <td><span class="btn btn-success" onclick="deposit(this,3,'{{student.pk}}')">완납</span></td>
+            <td>
+                <select name="" id="{{student.pk}}">
+                    <option value="1">계좌</option>
+                    <option value="2">카드</option>
+                    <option value="3">현금</option>
+                </select>
+            </td>
+            <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">회원정보</a></td>
+            <div id="comment{{forloop.counter}}" style="display: none;">{{student.comment}}</div>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+<script>
+    // 디파짓여부
+    $('.check_in').on('click',function(){
+        console.log(this.target)
+        $(this).addClass('disabled')
+        alert("출석되었습니다")
+        $.ajax({
+            url:"/checkin/"+this.id
+        })
+    })
+
+    function deposit(tag,option,pk){
+        var way = $(`#${pk} option:selected`).val()
+        if(option==1){
+            way = "0"
+        }
+        $.ajax({
+            url : `/checkdeposit/${option}/${pk}/${way}`,
+            success : function(){
+                alert(tag.innerHTML + " 처리되었습니다")
+            
+            }
+
+
+        })
+    }
+
+
+    // 모달 생성시 text
+    function comment(e){
+        console.log(e)
+        $('.modal-body').html($('#comment'+e.name).html())
+    }
+
+</script>

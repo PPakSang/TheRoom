@@ -1,0 +1,155 @@
+{% extends 'study/main/base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<!-- 중간 카테고리 -->
+<nav class="navbar navbar-expand-md navbar-light shadow-sm mid-nav">
+    <div class="container-fluid">
+        <ul class="navbar-nav mx-auto mb-0">
+            <li class="nav-item mx-2 mx-md-3">
+                <a class="nav-link" href="{% url 'enroll' %}">등록하기</a>
+            </li>
+            <li class="nav-item mx-2 mx-md-3">
+                <a class="nav-link active" aria-current="page" href="#">조회하기</a>
+            </li>
+            <li class="nav-item mx-2 mx-md-3">
+                <a class="nav-link" href="{% url 'change' %}">변경하기</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="py-2 text-center container">
+    <!-- 안내사항 -->
+    <div class="row py-3 gx-0">
+    <p class="mb-0 mt-3 mt-md-5">숙지해주세요</p>
+            <h3 class="fw-bold">안내사항</h3>
+            <div class="stick mb-3 mb-md-5"></div>
+            <div class="explain inquire-explain bg-light shadow rounded">
+            <h5 class="mb-2">등록 후 꼭! 입금해주셔야 스터디 참여가능합니다<br><small class="sub_text" style="color: black;">참여 전날 밤(22시)까지 예약금
+                10,000원을 입금하셔야 정상적으로 스터디 참여가능합니다. <br>미입금 혹은 해당 시간이 지난 후 입금시 참여 제한될 수 있습니다.<br><span
+                        style="color: #007aff;">*국민은행 91234-342165 (김성진 원투스픽 / 예약금 10,000원)</span></small></h5>
+            <h5 class="mb-2">회원정보가 정확하지 않을 시 문의주세요!<br><small class="sub_text" style="color: black;">회원정보, 스터디 참여 날짜 정보가 부정확한
+                경우<br>회원정보에 변동이 있을 경우, 아래를 통해 문의주세요. <br><a
+                        href="http://pf.kakao.com/_ZRzXK">kakao(카카오톡)</a></small></h5>
+            <h5>보너스 참여 날짜는 아래에 표시되지않습니다!<br><small class="sub_text" style="color: black;">모든 보너스 참여일에 대한 부분은
+                오프라인/카카오톡 문의를 통해 확인해주세요!</small></h5>
+        </div>
+    </div>
+
+
+    <div class="row gx-md-5" id="enroll">
+        <!-- 회원 정보 -->
+        <div class="col-md-5 py-3">
+            <p class="mb-0 mt-3 mt-md-5">상세 정보</p>
+            <h3 class="fw-bold">회원 정보</h3>
+            <div class="stick mb-3 mb-md-5"></div>
+            <div class="p-3 rounded bg-light border text-end">
+                <div class="row mb-2">
+                    <label for="infoName" class="col-3 col-form-label fw-bold">이름</label>
+                    <div class="col-9">
+                        <input type="text" readonly class="form-control-plaintext bg-white rounded border ps-2"
+                               id="infoName" value="{{student.name}}">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="infoPhone" class="col-3 col-form-label fw-bold">연락처</label>
+                    <div class="col-9">
+                        <input type="text" readonly class="form-control-plaintext bg-white rounded border ps-2"
+                               id="infoPhone" value="{{student.number}}">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="infoLevel" class="col-3 col-form-label fw-bold">레벨</label>
+                    <div class="col-9">
+                        <input type="text" readonly class="form-control-plaintext bg-white rounded border ps-2"
+                               id="infoLevel" value="{{student.get_level_display}}">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="infoTime" class="col-3 col-form-label fw-bold">다음참여</label>
+                    <div class="col-9">
+                        <input type="text" readonly class="form-control-plaintext bg-white rounded border ps-2"
+                               id="infoTime" value="{{next_time}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="infoRemainCount" class="col-3 col-form-label fw-bold">남은 회차</label>
+                    <div class="col-9">
+                        <input type="text" readonly class="form-control-plaintext bg-white rounded border ps-2"
+                               id="infoRemainCount" value="{{left_day}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스터디 참여 날짜 -->
+        <div class="col-md-7 py-3">
+            <p class="mb-0 mt-3 mt-md-5">고정 참여일</p>
+            <h3 class="fw-bold">스터디 참여 날짜</h3>
+            <div class="stick mb-3 mb-md-5"></div>
+            <div class="row gx-0">
+                <div class="rounded border p-3">
+                    <table class="table table-hover-custom col">
+                        <thead>
+                        <tr>
+                            <th scope="col">회차</th>
+                            <th scope="col">기존 참여 예정일</th>
+                            <th scope="col">변경일</th>
+                            <th scope="col">변경하러 가기</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="hoverNotRow">
+                            <th scope="row">1</th>
+                            <td>{{base_dates.0}}</td>
+                            <td>{{student.day1|date:"Y-m-d"}}</td>
+                            <td rowspan="4" valign="middle" id="hoverNot">
+                                <a href="{% url 'change' %}">
+                                    <button class="btn btn-dark p-4">날짜 변경</button>
+                                </a>
+                            </td>
+                        </tr>
+                        <script>
+                            $('#hoverNotRow').hover(function() {
+                                $('#hoverNot').css("background-color", "#fff");
+                            });
+
+                        </script>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>{{base_dates.1}}</td>
+                            <td>{{student.day2|date:"Y-m-d"}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>{{base_dates.2}}</td>
+                            <td>{{student.day3|date:"Y-m-d"}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td>{{base_dates.3}}</td>
+                            <td>{{student.day4|date:"Y-m-d"}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--
+                <table class="table col">
+                    <thead>
+                        <tr>
+                            <th scope="col">변경하러 가기</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="4"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

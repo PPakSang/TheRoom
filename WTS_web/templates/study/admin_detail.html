@@ -1,0 +1,89 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+{% load static%}
+<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+<link rel="stylesheet" href="{% static 'admin.css'%}">
+
+
+<div class="container">
+    <div>
+        <div id="logo_box">
+            <img id="logo" src="{% static 'img/logo_WTS.svg'%}" alt="">
+            <div class="fs-1">원투스픽 출석체크</div>
+        </div>
+        <div class="form_box">
+            <form action="adminpage/name" method="POST" autocomplete="off">
+                {%csrf_token%}
+                <div class="input-group w-25">
+                    <span class="input-group-text">이름</span>
+                    <input name="name" class="form-control" type="text">
+                    <button class="btn btn-outline-secondary" type="submit">검색</button>
+                </div>
+            </form>
+            <form action="adminpage/number" method="POST" autocomplete="off">
+                {%csrf_token%}
+                <div class="input-group w-25">
+                    <span class="input-group-text">전화번호</span>
+                    <input name="number" class="form-control" type="text">
+                    <button class="btn btn-outline-secondary" type="submit">검색</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <a href="{% url 'adminpage' 'all'%}" class="adminMenu">전체보기</a>
+    <a href="{% url 'adminpage' 'today'%}" class="adminMenu">금일참여명단</a>
+    <a href="{% url 'adminpage' 'new'%}">금일신규등록</a><br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">출석체크</th>
+            <th scope="col">이름</th>
+            <th scope="col">전화번호</th>
+            <th scope="col">참여정보</th>
+            <th>신규 여부</th>
+            <th>참고사항</th>
+            <th scope="col">회원정보</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for student in new_students%}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td><span id="{{student.pk}}" class="btn btn-primary check_in">출석</span></td>
+            <td>{{student.name}}</td>
+            <td>{{student.number}}</td>
+            <td>{{student.check_in}}</td>
+            <td>O</td>
+            <td>
+                <button type="button" name="{{forloop.counter}}" id="comment_open_{{forloop.counter}}"
+                        class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        onclick="comment(this)">열기
+                </button>
+            </td>
+            <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">회원정보</a></td>
+            <div id="comment{{forloop.counter}}" style="display: none;">{{student.comment}}</div>
+        </tr>
+        {%endfor%}
+        {% for student in students%}
+        </tbody>
+    </table>
+</div>
+<script>
+    // 디파짓여부
+    $('.check_in').on('click',function(){
+        console.log(this.target)
+        $(this).addClass('disabled')
+        alert("출석되었습니다")
+        $.ajax({
+            url:"/checkin/"+this.id
+        })
+    })
+
+
+</script>

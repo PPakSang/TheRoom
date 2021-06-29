@@ -1,0 +1,235 @@
+{% extends 'study/main/base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<!-- 중간 카테고리 -->
+<nav class="navbar navbar-expand-md navbar-light shadow-sm" id="mid-nav-container">
+    <div class="container-fluid">
+        <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="#rules">원투스픽?</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="#schedule">시간표</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link nav_enroll active" aria-current="page" href="#registration">신청하기</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="#location">오시는 길</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="#mentors">스터디 사진</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- 수업 규정 -->
+<div class="py-3 text-center container" id="rules">
+    <div class="row py-3 py-md-5 gx-0">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <p class="my-0">원투스픽을 소개합니다</p>
+            <h3 class="fw-bold">원투스픽</h3>
+            <div class="stick"></div>
+        </div>
+    </div>
+    <div class="row mb-lg-5 gx-0 rounded border mw-100">
+        <img src="{% static 'img/introduction.jpg'%}" alt="">
+    </div>
+</div>
+
+
+<!-- 시간표 -->
+<div class="py-3 text-center container" id="schedule">
+    <div class="row py-3 py-md-5 gx-0">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <p class="my-0">고정 스케줄</p>
+            <h3 class="fw-bold">시간표</h3>
+            <div class="stick"></div>
+        </div>
+    </div>
+    <div class="row mb-lg-5 gx-0 rounded border mw-100">
+        <img src="{% static 'img/schedule.jpg'%}" alt="">
+    </div>
+</div>
+
+<!-- 신청하기 -->
+<div class="py-3 text-center container" id="registration">
+    <div class="row py-3 py-md-5 gx-0">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <p class="my-0">함께 공부해요</p>
+            <h3 class="fw-bold">신청하기</h3>
+            <div class="stick"></div>
+        </div>
+    </div>
+    <div class="row gx-3 pb-lg-5">
+        <div class="col-4"
+             {%if is_zero%} data-bs-toggle="modal" data-bs-target="#reModal" {% endif %}
+             onclick="location.href='{% url 'enroll' %}';">
+            <div class="btn main-btn px-0 py-3 py-md-4 rounded w-100">
+                <div class="registration-icon"><i class="far fa-calendar-check"></i></div>
+                <div class="mt-2 registration-title">{{enroll}}</div>
+            </div>
+        </div>
+        <div class="col-4" onclick="location.href='{% url 'inquire' %}';">
+            <div class="btn main-btn px-0 py-3 py-md-4 rounded w-100">
+                <div class="registration-icon"><i class="fas fa-search"></i></div>
+                <div class="mt-2 registration-title">조회하기</div>
+            </div>
+        </div>
+        <div class="col-4" onclick="location.href='{% url 'change' %}';">
+            <div class="btn main-btn px-0 py-3 py-md-4 rounded w-100">
+                <div class="registration-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="mt-2 registration-title">변경하기</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 지도 -->
+<div class="py-3 text-center container" id="location">
+    <div class="row py-3 py-md-5 gx-0">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <p class="my-0">위치</p>
+            <h3 class="fw-bold">오시는 길</h3>
+            <div class="stick"></div>
+        </div>
+    </div>
+    <div class="row pb-lg-5 gx-0" id="map-box">
+        <div class="col bg-dark rounded" id="map"></div>
+        <script>
+            var filter = "win16|win32|win64|mac";
+            if(navigator.platform){
+                if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+                    var lv = 5 // (모바일) 지도의 확대 레벨
+                }
+                else{
+                    var lv = 4 // (PC) 지도의 확대 레벨
+                }
+            }
+
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                    center: new kakao.maps.LatLng(37.55776550565466, 126.92633408259285), // 지도의 중심좌표
+                    level: lv // 지도의 확대 레벨
+                };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            var imageSrc = '{% static 'img/marker.png' %}', // 마커이미지의 주소입니다
+                imageSize = new kakao.maps.Size(70, 70), // 마커이미지의 크기입니다
+                imageOption = {
+                    offset: new kakao.maps.Point(35, 70)
+                }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+                markerPosition = new kakao.maps.LatLng(37.557305674420626, 126.92787700756014),
+                markerPosition2 = new kakao.maps.LatLng(37.556985002665726, 126.91977899936077); // 마커가 표시될 위치입니다
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                position: markerPosition,
+                image: markerImage // 마커이미지 설정
+            });
+            var marker2 = new kakao.maps.Marker({
+                position: markerPosition2,
+                image: markerImage // 마커이미지 설정
+            });
+
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(map);
+            marker2.setMap(map);
+
+            // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            var content = '<div class="customoverlay">' +
+                '  <a href="https://place.map.kakao.com/18513223" target="_blank">' +
+                '    <span class="title">원투스픽 하늘이야기</span>' +
+                '  </a>' +
+                '</div>';
+            var content2 = '<div class="customoverlay">' +
+                '  <a href="https://place.map.kakao.com/1895686979" target="_blank">' +
+                '    <span class="title">원투스픽 구름이야기</span>' +
+                '  </a>' +
+                '</div>';
+
+            // 커스텀 오버레이가 표시될 위치입니다
+            var position = new kakao.maps.LatLng(37.557305674420626, 126.92787700756014);
+            var position2 = new kakao.maps.LatLng(37.556985002665726, 126.91977899936077);
+
+            // 커스텀 오버레이를 생성합니다
+            var customOverlay = new kakao.maps.CustomOverlay({
+                map: map,
+                position: position,
+                content: content,
+                yAnchor: 1
+            });
+            var customOverlay2 = new kakao.maps.CustomOverlay({
+                map: map,
+                position: position2,
+                content: content2,
+                yAnchor: 1
+            });
+
+
+
+
+
+
+
+
+        </script>
+    </div>
+</div>
+
+<!-- 스터디 사진 -->
+<div class="py-3 text-center container" id="mentors">
+    <div class="row py-3 py-md-5 gx-0">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <p class="my-0">스터디 환경</p>
+            <h3 class="fw-bold">스터디 사진</h3>
+            <div class="stick"></div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <!-- 좌측 슬라이드 -->
+        <div class="col-md-8">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    {% for img in imgs %}
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{forloop.counter0}}"
+                    class="{% if forloop.counter0 == 0 %}active{% endif%}" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
+                    {% endfor %}
+                </div>
+                <div class="carousel-inner rounded">
+                    {% for img in imgs %}
+                    <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif%}">
+                        <img src="{{img.pic.url}}" class="d-block w-100" alt="이미지를 불러올 수 없습니다.">
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <!-- 우측 고정 이미지 -->
+        <div class="col-md-4 mt-4 mt-md-0">
+            <img src="{% static 'img/carousel1.jpg' %}" class="d-block w-100 rounded" alt="이미지를 불러올 수 없습니다.">
+            <img src="{% static 'img/carousel2.jpg' %}" class="d-block w-100 mt-4 rounded" alt="이미지를 불러올 수 없습니다.">
+        </div>
+    </div>
+</div>
+
+<!--신청하기 float버튼-->
+<div class="row justify-content-center">
+    <a class="enrollbtn  px-5 py-3 mx-4" href="{% url 'enroll' %}">
+        <span style="font-weight: bold;">신청</span>하러 가기</a>
+    </div>
+{% endblock %}

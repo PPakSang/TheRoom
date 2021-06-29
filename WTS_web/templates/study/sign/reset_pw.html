@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--부트스트랩 CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/dbcfa73564.js" crossorigin="anonymous"></script>
+    <!-- Google Fonts: Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"> {% load static %}
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <title>Reset PW</title>
+</head>
+
+<body class="bg-light">
+    <header>
+
+
+        <!-- 상단 카테고리 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="{% url 'index' %}"><i class="fas fa-cat me-2"></i>원투스픽</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'index' %}">홈</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'enroll' %}">신청하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'inquire' %}">문의하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'login' %}">로그인</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <!--로그인 박스-->
+    <section class="container align-content-center">
+        <div class="row justify-content-center" id="find_id_row">
+            <div class="col-lg-4 col-md-7 col-sm-9 h-100 pt-5 mx-2 bg-white" id="formBox_col">
+                <p class="lead text-muted" id="small_title">one, two, speak study</p>
+                <h2 class="font-weight-bold">Want To Speak</h2>
+                <div class="stick"></div>
+                <div class="pt-5 pl-0 " id="loginText">비밀번호 변경</div>
+                <div class="px-4 justify-content-center" id="login_input">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <input class="form-control mb-2" type="text" id="input_password" name="password" placeholder="비밀번호" required>
+                        <input class="form-control mb-2" type="text" id="input_password2" name="password2" placeholder="비밀번호 확인" required> {{error}}{{message}}
+                        <button class="btn w-100 btn-warning" type="submit">비밀번호 변경</button>
+                    </form>
+                </div>
+                <a class="login_find" href="#">비밀번호 찾기</a>
+                <div class="mt-4 pb-2">
+                    <span id="q_account">
+                        계정이 아직 없으신가요?
+                        <a class="login_find" href="{% url 'signup' %}">회원가입</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--footer-->
+    <footer class="text-muted mt-5 bg-light" id="login_footer">
+        <div class="text-center mb-1">
+            <span>
+            <a class="policy_link" href="#">이용약관</a>
+            <span class="policy_link">&nbsp;|&nbsp;</span>
+            <a class="policy_link" href="#">개인정보 보호정책</a>
+            <span class="policy_link">&nbsp;|&nbsp;</span>
+            <span class="policy_link">전화: 000-0000-0000&nbsp;|&nbsp;이메일: wts@naver.com</span>
+            </span>
+        </div>
+        <div class="container text-center" id="footer_copyright">
+            <span class="mb-1">WTS</span>
+            <span id="copyright_text">&copy; WTS developers</span>
+            <span>All Rights Reserved</span>
+        </div>
+    </footer>
+    <!-- 부트스트랩 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+
+</html>
