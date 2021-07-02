@@ -1,6 +1,8 @@
 {% extends 'study/main/base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
+
+
 <!-- 상단 배너 -->
 <div id="carouselBanner" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -27,7 +29,7 @@
             <img src="{% static 'img/banner/2.jpg' %}" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <h5>피아노 레슨</h5>
-                <p>퇴근길,혹은 하루 일과를 마친 후 무료하고 허무한 마음을 음악으로 채워보아요.</p>
+                <p>퇴근길, 혹은 하루 일과를 마친 후 무료하고 허무한 마음을 음악으로 채워보아요.</p>
             </div>
         </div>
         <div class="carousel-item">
@@ -41,7 +43,7 @@
             <img src="{% static 'img/banner/4.jpg' %}" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <h5>피아노 레슨</h5>
-                <p>퇴근길,혹은 하루 일과를 마친 후 무료하고 허무한 마음을 음악으로 채워보아요.</p>
+                <p>퇴근길, 혹은 하루 일과를 마친 후 무료하고 허무한 마음을 음악으로 채워보아요.</p>
             </div>
         </div>
         <div class="carousel-item">
@@ -70,34 +72,67 @@
     <div class="container-fluid">
         <ul class="navbar-nav mx-auto mb-2 mb-md-0">
             <li class="nav-item mx-3">
-                <a class="nav-link" href="#rules">원투스픽?</a>
+                <a class="nav-link active" href="">상담 신청</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="#schedule">시간표</a>
+                <a class="nav-link" href="">1:1 문의</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link nav_enroll active" aria-current="page" href="#registration">신청하기</a>
+                <a class="nav-link" aria-current="page" href="">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="#location">오시는 길</a>
-            </li>
-            <li class="nav-item mx-3">
-                <a class="nav-link" href="#mentors">스터디 사진</a>
+                <a class="nav-link" href="">더룸 리뷰</a>
             </li>
         </ul>
     </div>
 </nav>
-<!-- 수업 규정 -->
+
+
+<!-- 유튜브 -->
 <div class="py-3 text-center container" id="rules">
     <div class="row py-3 py-md-5 gx-0">
         <div class="col-lg-6 col-md-8 mx-auto">
-            <p class="my-0">원투스픽을 소개합니다</p>
-            <h3 class="fw-bold">원투스픽</h3>
+            <p class="my-0">더룸을 소개합니다</p>
+            <h3 class="fw-bold">레슨 영상</h3>
             <div class="stick"></div>
         </div>
     </div>
-    <div class="row mb-lg-5 gx-0 rounded border mw-100">
-        <img src="{% static 'img/introduction.jpg'%}" alt="">
+    <div class="row mb-3 gx-3">
+        <div class="col-6">
+            <div class="youtubeWrap">
+                <iframe src="https://www.youtube.com/embed/9s5nuM31TqU"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="youtubeWrap">
+                <iframe src="https://www.youtube.com/embed/moFB-j5iY2E"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-lg-5 gx-3">
+        <div class="col-6">
+            <div class="youtubeWrap">
+                <iframe src="https://www.youtube.com/embed/AwrFPJk_BGU"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="youtubeWrap">
+                <iframe src="https://www.youtube.com/embed/zn4gB8ZVS5c"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -233,6 +268,15 @@
                 content: content2,
                 yAnchor: 1
             });
+
+
+
+
+
+
+
+
+
 
 
 
