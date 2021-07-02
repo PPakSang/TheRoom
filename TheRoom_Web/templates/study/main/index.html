@@ -1,6 +1,70 @@
 {% extends 'study/main/base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
+<!-- 상단 배너 -->
+<div id="carouselBanner" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="3"
+                aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="4"
+                aria-label="Slide 5"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'img/banner/1.jpg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>보컬 레슨</h5>
+                <p>저희 더룸 보컬&기타교실은 수업 외에도 언제든 방문하셔서 연습할 수 있습니다.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/banner/2.jpg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>피아노 레슨</h5>
+                <p>퇴근길,혹은 하루 일과를 마친 후 무료하고 허무한 마음을 음악으로 채워보아요.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/banner/3.jpg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block" style="color: black">
+                <h5>작사 커뮤니티</h5>
+                <p>보컬과 기타 외에 작사 작곡 클래스도 여러분을 기다리고 있습니다!</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/banner/4.jpg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>피아노 레슨</h5>
+                <p>퇴근길,혹은 하루 일과를 마친 후 무료하고 허무한 마음을 음악으로 채워보아요.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/banner/5.jpg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>기타&보컬 커뮤니티</h5>
+                <p>음악 동아리 활동을 위해 다른 멤버들과 함께 취미반 커뮤니티를 형성하여 준비하는 시간을 함께 가집니다:)</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselBanner"
+            data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselBanner"
+            data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
 <!-- 중간 카테고리 -->
 <nav class="navbar navbar-expand-md navbar-light shadow-sm" id="mid-nav-container">
     <div class="container-fluid">
@@ -177,6 +241,9 @@
 
 
 
+
+
+
         </script>
     </div>
 </div>
@@ -196,8 +263,10 @@
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     {% for img in imgs %}
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{forloop.counter0}}"
-                    class="{% if forloop.counter0 == 0 %}active{% endif%}" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide-to="{{forloop.counter0}}"
+                            class="{% if forloop.counter0 == 0 %}active{% endif%}" aria-current="true"
+                            aria-label="Slide {{forloop.counter}}"></button>
                     {% endfor %}
                 </div>
                 <div class="carousel-inner rounded">
@@ -231,5 +300,5 @@
 <div class="row justify-content-center">
     <a class="enrollbtn  px-5 py-3 mx-4" href="{% url 'enroll' %}">
         <span style="font-weight: bold;">신청</span>하러 가기</a>
-    </div>
+</div>
 {% endblock %}

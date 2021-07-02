@@ -17,10 +17,9 @@ body {
   /* font-weight: 100, 300, 400, 500, 700, 900 */
 }
 
-/*네비바 원투스픽 로고*/
-.logo_wts {
+/*네비바 더룸 로고*/
+.logo_theroom {
   width: 4rem;
-  height: 4rem;
 }
 
 .alert-container-parent {
