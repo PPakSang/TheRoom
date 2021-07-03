@@ -387,6 +387,22 @@ def faq_view(request): # 자주묻는질문 화면
     return render(request, 'study/function/faq.html')
 
 
+@login_required(login_url='/user/login')
+def qna_view(request):
+    if request.method == "POST":
+        pass
+    else:
+        qnas = Qna.objects.filter(user = request.user)
+        return render(request,'study/function/qna.html',context={"qnas":qnas})
+
+@login_required(login_url='/user/login')
+def qna_detail(request,pk):
+    qna = Qna.objects.get(user = request.user,pk=pk)
+    return render(request,'study/function/qna_detail.html',context={"qna":qna})
+    
+
+
+
 
 # @login_required(login_url='/login/')
 # def change_day(request,i): #요일변경

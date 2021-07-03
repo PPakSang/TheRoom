@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>제목</th>
+            <th>작성 날짜</th>
+            
+     
+        </tr>
+    </thead>
+    <tbody>
+        {% for qna in qnas %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{qna.title}}</td>
+            <td>{{qna.date|date:"Y-m-d"}}</td>
+            <td><a href="{{qna.pk}}">바로가기</a></td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
