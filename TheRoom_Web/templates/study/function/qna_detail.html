@@ -1,0 +1,22 @@
+<p>내용 : {{qna.text}}</p>
+
+
+
+{% if request.user.is_staff %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <textarea name="answer"  cols="30" rows="10">{{qna.answer}}</textarea>
+    <input type="submit" value="답변하기">
+</form>
+{% else %}
+<p>답변 : {% if qna.answer%}{{qna.answer}}{% else %} 답변이 존재하지 않습니다 {% endif %}</p>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" placeholder="제목" name="title">
+    <textarea name="text" placeholder="내용" cols="30" rows="10"></textarea>
+    <input type="submit">
+</form>
+
+
+{% endif %}
