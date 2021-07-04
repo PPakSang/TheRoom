@@ -73,6 +73,28 @@ body {
   height: 100%;
 }
 
+/* 메인 고객 리뷰 carousel */
+.review-caption-right {
+  position: absolute;
+  right: 15%;
+  top: 1.25rem;
+  left: 45%;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  color: #fff;
+  text-align: left;
+}
+.review-caption-left {
+  position: absolute;
+  right: 45%;
+  top: 1.25rem;
+  left: 15%;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  color: #fff;
+  text-align: right;
+}
+
 /*신청버튼 floating ver*/
 .enrollbtn {
   max-width: 200px;
@@ -295,10 +317,94 @@ body {
 
 /* footer */
 .footer-text {
-    color: var(--text-color-white) !important;
+  color: var(--text-color-white) !important;
 }
 .footer-content::after {
   content: "｜";
+}
+
+/*커뮤니티*/
+.divline,
+.divline2,
+.divline3 {
+  width: 100%;
+  margin: 0px auto;
+}
+
+.divline {
+  height: 2px;
+  background-color: black;
+}
+.divline2 {
+  height: 1px;
+  background-color: #6b6b6b;
+}
+.divline3 {
+  height: 1px;
+  background-color: #919191;
+}
+
+.qna_index ul,
+.qna_list ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  list-style: none;
+  margin: 0;
+}
+
+.qna_index ul li {
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+}
+.qna_list ul li {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.qna_list a {
+  text-decoration: none;
+  color: black;
+}
+
+.qna_list:hover {
+  font-weight: bold;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination a {
+  color: black;
+}
+
+.pagination a:hover,
+.pagination a:active,
+.pagination a:visited {
+  color: black;
+}
+
+.writing_link_div {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.writing_link {
+  text-decoration: none;
+  background-color: #212529;
+  color: aliceblue;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-radius: 3px;
+}
+
+.writing_link:hover {
+  color: aliceblue;
+  background-color: #3f464d;
 }
 
 /*login 혜원*/
@@ -377,7 +483,6 @@ body {
 
 /*상단 타이틀*/
 
-
 .signup_title {
   margin-top: 25px;
   text-align: center;
@@ -420,7 +525,6 @@ body {
   color: var(--more-accent-color);
   cursor: pointer;
 }
-
 
 /*input태그 높이*/
 
