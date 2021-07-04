@@ -14,6 +14,7 @@
             <td>{{forloop.counter}}</td>
             <td>{{qna.title}}</td>
             <td>{{qna.date|date:"Y-m-d"}}</td>
+            <td>{% if qna.answer %}답변완료{% else %}답변대기{% endif %}</td>
             <td><a href="{{qna.pk}}">바로가기</a></td>
             
         </tr>

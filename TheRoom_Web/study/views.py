@@ -1,5 +1,5 @@
 from django.conf import settings
-from datetime import timedelta
+from datetime import timedelta, tzinfo
 from typing import ContextManager
 from django.db.models import fields
 from django.db.models.query import QuerySet
@@ -389,16 +389,54 @@ def faq_view(request): # 자주묻는질문 화면
 
 @login_required(login_url='/user/login')
 def qna_view(request):
-    if request.method == "POST":
-        pass
+    if request.user.is_staff:
+        qnas = Qna.objects.all()
+        return render(request,'study/function/qna.html',context={"qnas":qnas})
     else:
         qnas = Qna.objects.filter(user = request.user)
         return render(request,'study/function/qna.html',context={"qnas":qnas})
 
 @login_required(login_url='/user/login')
+def qna_enroll(request):
+    if request.method == "POST":
+        try:
+            last = Qna.objects.filter(user = request.user).last()
+            print(last.next_qna)
+            if last.next_qna > datetime.datetime.today():
+                print("오류")
+                messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
+                return render(request,'study/function/qna_enroll.html')
+        except:
+            qna = Qna(user = request.user)
+            qna.title = request.POST["title"]
+            qna.text = request.POST["text"]
+            qna.date = datetime.date.today()
+            qna.next_qna = datetime.datetime.now(tz=None)+ datetime.timedelta(minutes=10)
+            qna.save()
+            return redirect('qna_view')
+    return render(request,'study/function/qna_enroll.html')
+
+@login_required(login_url='/user/login')
 def qna_detail(request,pk):
-    qna = Qna.objects.get(user = request.user,pk=pk)
-    return render(request,'study/function/qna_detail.html',context={"qna":qna})
+    if request.user.is_staff:
+        #답변하기
+        qna = Qna.objects.get(pk=pk)
+        if request.method == "POST":
+            qna.answer = request.POST["answer"]
+            qna.save()
+        return render(request,'study/function/qna_detail.html',context={"qna":qna})
+    else:
+        qna = Qna.objects.get(user = request.user,pk=pk)
+        if request.method == "POST":
+            if qna.next_qna > datetime.datetime.today():
+                qna.title = request.POST["title"]
+                qna.text = request.POST["text"]
+                qna.date = datetime.date.today()
+                qna.next_qna = datetime.datetime.today()+ datetime.timedelta(minutes=10)
+                qna.save()
+            else:
+                messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
+        return render(request,'study/function/qna_detail.html',context={"qna":qna})
     
 
 
@@ -422,7 +460,13 @@ def qna_detail(request,pk):
 #     return render(request,'student/change_day.html')
 
 
-
+def test3(request):
+    qna = Qna.objects.last()
+    print(datetime.datetime.now())
+    print(datetime.datetime.today())
+    print(qna.next_qna)
+    print(qna.title)
+    return HttpResponse("success")
 
 
 

@@ -56,8 +56,12 @@ urlpatterns = [
 
     #test
     path('test/',test,name='test'),
-    path('test2/',qna_view,name='test'),
-    path('test2/<pk>',qna_detail,name='qna_detail')
+    path('test2/',qna_view,name='qna_view'),
+    path('test2/<pk>',qna_detail,name='qna_detail'),
+    path('testenroll/',qna_enroll,name='qna_enroll'),
+
+
+    path('testt',test3)
 ]
 # +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

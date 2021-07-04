@@ -72,7 +72,25 @@ class Qna(models.Model):
 
     
     #Qna 남기고나서 다음 Qna 는 10분뒤에 남길 수 있도록
-    next_answer = models.DateTimeField(default=datetime.datetime.now()+ datetime.timedelta(minutes=10))
+    next_qna = models.DateTimeField()
+
+
+
+    answer = models.TextField(blank=True)
+
+    def __str__(self) -> str:
+        return self.user.username
+
+class Review(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    text = models.TextField(max_length=1000)
+    date = models.DateField(auto_now=True)
+
+
+    
+    #Qna 남기고나서 다음 Qna 는 10분뒤에 남길 수 있도록
+    next_qna = models.DateTimeField(default=datetime.datetime.now()+ datetime.timedelta(minutes=10))
 
 
 

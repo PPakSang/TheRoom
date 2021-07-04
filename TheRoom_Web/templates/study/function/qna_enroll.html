@@ -1,0 +1,9 @@
+<form action="" method="POST">
+    {% csrf_token %}
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+    <input type="text" placeholder="제목" name="title">
+    <textarea name="text" placeholder="내용" cols="30" rows="10"></textarea>
+    <input type="submit">
+</form>
