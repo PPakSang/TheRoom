@@ -407,6 +407,43 @@ body {
   background-color: #3f464d;
 }
 
+/*글쓰기 페이지*/
+.submenu_writing {
+  font-size: 1.2rem;
+  padding-bottom: 5px;
+  color: #6b6b6b;
+}
+
+.title_input {
+  width: 85%;
+}
+
+.content_input {
+  width: 90%;
+  height: 400px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modify_btn {
+  background-color: #212529;
+  color: aliceblue;
+  font-size: 0.9rem;
+  border-radius: 3px;
+}
+
+.writing_close {
+  text-decoration: none;
+  color: black;
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 3px;
+}
+
 /*login 혜원*/
 
 /*네비바*/
