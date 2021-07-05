@@ -372,14 +372,13 @@ body {
   color: black;
 }
 
-.qna_list:hover {
+.qna_list a :hover {
   font-weight: bold;
 }
 
 
-
-.pagination .page-item a:focus{
-  outline: none;
+.page-link{
+  color: black;
 }
 
 .writing_link_div {

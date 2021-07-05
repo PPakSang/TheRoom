@@ -376,14 +376,35 @@ def faq_view(request):  # 자주묻는질문 화면
     return render(request, 'study/function/faq.html')
 
 
+
 @login_required(login_url='/user/login')
-def qna_view(request):
+def qna_list(request):  # 커뮤니티
     if request.user.is_staff:
-        qnas = Qna.objects.all()
-        return render(request, 'study/function/qna.html', context={"qnas": qnas})
+        qnas = Qna.objects.all().order_by('-pk')
+        qnas = render_to_string('study/function/qna_list_base.html',context={"qnas":qnas})
+        context = {
+            "qnas":qnas,
+        }
+        context = json.dumps(context)
+        return HttpResponse(context)
     else:
-        qnas = Qna.objects.filter(user=request.user)
-        return render(request, 'study/function/qna.html', context={"qnas": qnas})
+        page = int(request.GET['page'])
+        qnas = Qna.objects.filter(user = request.user).order_by('-pk')
+        page_len = qnas.count()//2 + 1
+
+        qnas = qnas[2*(page-1):2*page]
+        qnas = render_to_string('study/function/qna_list_base.html',context={"qnas":qnas})
+
+        context = {
+            "qnas":qnas,
+            "page_len":page_len
+        }
+        context = json.dumps(context)
+        return HttpResponse(context)
+
+
+def qna_view(request,num):
+    return render(request,'study/function/qna_list.html',{"num":num})
 
 
 @login_required(login_url='/user/login')
@@ -433,14 +454,6 @@ def qna_detail(request, pk):
         return render(request,'study/function/qna_detail.html',context={"qna":qna})
 
 
-def community(request):  # 커뮤니티 페이지
-    if request.user.is_staff:
-        qnas = Qna.objects.all().order_by('-date')
-        return render(request,'study/function/community.html',context={"qnas":qnas})
-    else:
-        qnas = Qna.objects.filter(user = request.user).order_by('-date')
-        return render(request,'study/function/community.html',context={"qnas":qnas})
-
 
 
 # @login_required(login_url='/login/')
@@ -462,12 +475,7 @@ def community(request):  # 커뮤니티 페이지
 
 
 def test3(request):
-    qna = Qna.objects.last()
-    print(datetime.datetime.now())
-    print(datetime.datetime.today())
-    print(qna.next_qna)
-    print(qna.title)
-    return HttpResponse("success")
+    return HttpResponse("결과"+request.GET['val'])
 
 
 # sign_view

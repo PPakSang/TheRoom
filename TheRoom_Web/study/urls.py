@@ -38,8 +38,7 @@ urlpatterns = [
     path('category/enroll/', enroll, name='enroll'),
     path('category/change/', change, name='change'),
     path('category/faq/', faq_view, name='faq'),
-    path('category/community/', community, name='community'),
-    path('category/community/enroll', qna_enroll, name='qna_enroll'),
+    
 
     # policy
 
@@ -59,14 +58,13 @@ urlpatterns = [
 
     # test
     path('test/', test, name='test'),
-    path('test2/', qna_view, name='qna_view'),
-    path('test2/<pk>', qna_detail, name='qna_detail'),
+    path('qnalist/', qna_list, name='qna_list'),
+    path('category/qna/detail/<pk>', qna_detail, name='qna_detail'),
     path('testenroll/', qna_enroll, name='qna_enroll'),
+    path('category/qna/<num>',qna_view),
 
 
-    path('testt',test3),
-
-    path("com/",community)
+    path('testt/',test3),
 ]
 # +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
