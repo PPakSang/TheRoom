@@ -373,19 +373,10 @@ body {
   font-weight: bold;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-}
 
-.pagination a {
-  color: black;
-}
 
-.pagination a:hover,
-.pagination a:active,
-.pagination a:visited {
-  color: black;
+.pagination .page-item a:focus{
+  outline: none;
 }
 
 .writing_link_div {

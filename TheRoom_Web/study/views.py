@@ -395,6 +395,8 @@ def qna_enroll(request):
                 print("오류")
                 messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
                 return render(request,'study/function/qna_enroll.html')
+            else:
+                raise Exception
         except:
             qna = Qna(user = request.user)
             qna.title = request.POST["title"]
@@ -426,8 +428,15 @@ def qna_detail(request,pk):
             else:
                 messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
         return render(request,'study/function/qna_detail.html',context={"qna":qna})
-    
 
+
+def community(request):  # 커뮤니티 페이지
+    if request.user.is_staff:
+        qnas = Qna.objects.all().order_by('-date')
+        return render(request,'study/function/community.html',context={"qnas":qnas})
+    else:
+        qnas = Qna.objects.filter(user = request.user).order_by('-date')
+        return render(request,'study/function/community.html',context={"qnas":qnas})
 
 
 
@@ -814,6 +823,8 @@ def deleteimg(request, pk):
     return HttpResponse('삭제완료')
 
 
+
+#Qna
 @login_required(login_url="/user/login")
 def test(request):
     if request.method == "POST":
@@ -825,6 +836,3 @@ def test(request):
     else:
         return render(request, "test/test.html")
 
-
-def community(request):  # 커뮤니티 페이지
-    return render(request, 'study/function/community.html')

@@ -1,3 +1,9 @@
 .container{
     max-width: 60rem;
   }
+
+
+
+.qna{
+  min-height: 522px;
+}

@@ -63,7 +63,9 @@ urlpatterns = [
     path('testenroll/',qna_enroll,name='qna_enroll'),
 
 
-    path('testt',test3)
+    path('testt',test3),
+
+    path("com/",community)
 ]
 # +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
