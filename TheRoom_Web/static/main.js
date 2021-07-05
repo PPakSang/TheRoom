@@ -1,16 +1,14 @@
 var pages
 
 $.ajax({
-        url: "getpageinfo/",
+        url: "/qnalist/",
         data: {
-            "origin": '컴퓨터학부',
-            "num": 1,
-            "tags": ""
+            "page": $('#num').html(),
         },
         dataType: "json",
         success: function(data) {
-            $('.content').html(data.posts)
-            add_pagination(1,data.posts_len)
+            $('.qna_list').html(data.qnas)
+            add_pagination(1,data.page_len)
         },
         error: function(e) {
 
@@ -21,48 +19,48 @@ $.ajax({
 
 
 
-var navs = $('.nav_box li a');
-var nav_title = $('.nav_title');
+// var navs = $('.nav_box li a');
+// var nav_title = $('.nav_title');
 
-// origin 클릭했을때
-navs.off('click').on('click', function(e) {
-    $('.tag_box label').removeClass('text-muted');
-    $('input:checked').prop('checked', false);
+// // origin 클릭했을때
+// navs.off('click').on('click', function(e) {
+//     $('.tag_box label').removeClass('text-muted');
+//     $('input:checked').prop('checked', false);
     
     
-    navs.removeClass('active');
-    this.classList.add('active');
-    navs.removeClass('fw-bold')
-    e.target.classList.add('fw-bold')
-    nav_title.text(this.innerText + ' 공지사항');
-    $.ajax({
-        url: "getpageinfo/",
-        data: {
-            "origin": e.target.text,
-            "search" : $(".search").val(),
-            "num": 1,
-            "tags": ""
-        },
-        dataType: "json",
+//     navs.removeClass('active');
+//     this.classList.add('active');
+//     navs.removeClass('fw-bold')
+//     e.target.classList.add('fw-bold')
+//     nav_title.text(this.innerText + ' 공지사항');
+//     $.ajax({
+//         url: "getpageinfo/",
+//         data: {
+//             "origin": e.target.text,
+//             "search" : $(".search").val(),
+//             "num": 1,
+//             "tags": ""
+//         },
+//         dataType: "json",
 
 
-        success: function(data) {
-            add_pagination(1,data.posts_len)
-        },
-        error: function(e) {
+//         success: function(data) {
+//             add_pagination(1,data.posts_len)
+//         },
+//         error: function(e) {
 
-        }
+//         }
 
-    })
+//     })
     
-})
+// })
 
 
 
 
-var first_page = $('.page_num')
+// var first_page = $('.page_num')
 
-//num -> 몇번부터 띄울건지, max_len 유효성 검사용
+// //num -> 몇번부터 띄울건지, max_len 유효성 검사용
 function add_pagination(num,max_len) {
 
     var page_html = "<li class='lbtn page-item'><a class='page-link' taonex='-1' aria-disabled='true'>&laquo;</a></li>"
@@ -73,16 +71,16 @@ function add_pagination(num,max_len) {
         if(i > max_len){
             break;
         }
-        page_html = page_html + '<li class="page_num page-item"><a href="/com/'+i+'" class="page-link">' + i + '</a></li>'
+        page_html = page_html + '<li class="page_num page-item"><a href="/category/qna/'+i+'" class="page-link">' + i + '</a></li>'
     }
     page_html = page_html + "<li class='rbtn page-item'><a class='page-link'>&raquo;</a></li>"
 
 
 
     pagination.html(page_html)
-    $('.page_num')[0].classList.add('active')
+    $('.page_num')[parseInt($('#num').html())-1].classList.add('active')
     pages = $('.pagination .page_num')
-
+    
     // 버튼추가
     var lbtn = $('.lbtn')
     var rbtn = $('.rbtn')

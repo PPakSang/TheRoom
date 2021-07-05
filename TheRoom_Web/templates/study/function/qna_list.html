@@ -34,8 +34,9 @@
     </ul>
 </div>
 <div class="divline"></div>
-{% for qna in qnas %}
+
 <div class="qna_list">
+    {% for qna in qnas %}
     <a href="#">
         <ul class="py-3 px-2">
             <li class="col-6" id="qna_list_title">{{ qna.title }}</li>
@@ -44,26 +45,18 @@
         </ul>
     </a>
     <div class="divline3"></div>
+    {% endfor %}
 </div>
-{% endfor %}
+
 <div class="writing_link_div">
 <a class="writing_link px-4 py-2" href="#"> 글쓰기</a>
 </div>
 
     <ul class="pagination mt-3 justify-content-center">
-        <li class="page-item">
-            <a class="page-link"  aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item"><a class="page-link" >1</a></li>
-        <li class="page-item"><a class="page-link" >2</a></li>
-        <li class="page-item">
-            <a class="page-link" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
     </ul>
-
 </div>
+
+<div style="display: none;" id="num">{{num}}</div>
+
+<script src="{% static 'main.js' %}"></script>
 {% endblock %}
