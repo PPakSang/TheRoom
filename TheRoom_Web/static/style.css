@@ -59,6 +59,9 @@ body {
   color: #212529;
 }
 
+.navbar {
+  background-color: rgba(255, 255, 255, 0.85);
+}
 /* 유튜브 반응형 */
 .youtubeWrap {
   position: relative;
