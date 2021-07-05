@@ -39,6 +39,7 @@ urlpatterns = [
     path('category/change/', change, name='change'),
     path('category/faq/', faq_view, name='faq'),
     path('category/community/', community, name='community'),
+    path('category/community/enroll', qna_enroll, name='qna_enroll'),
 
     # policy
 
@@ -56,11 +57,11 @@ urlpatterns = [
     path('deleteimg/<pk>', deleteimg),
 
 
-    #test
-    path('test/',test,name='test'),
-    path('test2/',qna_view,name='qna_view'),
-    path('test2/<pk>',qna_detail,name='qna_detail'),
-    path('testenroll/',qna_enroll,name='qna_enroll'),
+    # test
+    path('test/', test, name='test'),
+    path('test2/', qna_view, name='qna_view'),
+    path('test2/<pk>', qna_detail, name='qna_detail'),
+    path('testenroll/', qna_enroll, name='qna_enroll'),
 
 
     path('testt',test3),
