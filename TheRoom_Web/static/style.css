@@ -59,9 +59,26 @@ body {
   color: #212529;
 }
 
+/* 중간메뉴바 sticky일 때 색 */
 .navbar {
   background-color: rgba(255, 255, 255, 0.85);
 }
+
+/* 내 정보 (이름 클릭시 나오는 드롭다운) */
+.info-item {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
 /* 유튜브 반응형 */
 .youtubeWrap {
   position: relative;

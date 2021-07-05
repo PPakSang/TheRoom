@@ -90,7 +90,7 @@ class Review(models.Model):
 
     
     #Qna 남기고나서 다음 Qna 는 10분뒤에 남길 수 있도록
-    next_qna = models.DateTimeField(default=datetime.datetime.now()+ datetime.timedelta(minutes=10))
+    next_qna = models.DateTimeField(blank = True)
 
 
 
