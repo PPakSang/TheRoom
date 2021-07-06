@@ -81,6 +81,13 @@ body {
 /* 중간메뉴바에 드롭다운이 가려서 z-index 설정 */
 .dropdown-z-index {
   z-index: 1021;
+  font-size: 0.8rem;
+}
+.dropdown-link {
+  text-decoration: none;
+}
+.dropdown-link:hover {
+  text-decoration: underline;
 }
 /* 유튜브 반응형 */
 .youtubeWrap {
