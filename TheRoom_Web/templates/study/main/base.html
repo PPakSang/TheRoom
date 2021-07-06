@@ -54,19 +54,29 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link px-3 px-md-2 {% if request.path == '/' %}active{% endif %}" aria-current="page"
+                        <a class="nav-link px-3 px-md-2 {% if request.path == '/' %}active{% endif %}"
+                           aria-current="page"
                            href="{% url 'index' %}">홈</a>
                     </li>
-                    <li class="nav-item">
+
+                    <li class="nav-item dropdown">
                         {% if user.is_authenticated %}
-                        <a class="nav-link px-3 px-md-2" href="{% url 'logout' %}">로그아웃</a> {% else %}
-                        <a class="nav-link px-3 px-md-2" href="{% url 'login' %}">로그인</a> {% endif %}
+                            <a class="nav-link px-3 px-md-2 dropdown-toggle" id="dropdownMenuButton1"
+                                  data-bs-toggle="dropdown" aria-expanded="false" href="">홍길동님</a> {% else %}
+                            <a class="nav-link px-3 px-md-2" href="{% url 'login' %}">로그인</a> {% endif %}
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <p class="info-item mb-0"><i class="fas fa-envelope"></i>&nbsp;&nbsp;name@example.com</p>
+                                <p class="info-item mb-2"><i class="fas fa-key"></i>&nbsp;&nbsp;다음 레슨 일정: 2021/08/17</p>
+                                <a class="btn btn-dark w-50 mx-auto my-1 d-flex justify-content-center" href="{% url 'logout' %}">로그아웃</a>
+                            </div>
                     </li>
+
                     {% if user.is_authenticated == False %}
                     <li class="nav-item">
                         <a class="nav-link px-3 px-md-2" href="{% url 'signup' %}">회원가입</a>
                     </li>
                     {% endif %}
+
                 </ul>
             </div>
         </div>
@@ -98,30 +108,6 @@
         </div>
     </div>
 </footer>
-
-<!-- 재등록 안내 모달: 스터디 잔여 횟수 0회일 때 등록하기 클릭 시 발생 -->
-<div class="modal fade" id="reModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-     aria-labelledby="reModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reModalLabel">스터디 재등록 안내</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>• <strong>{{user.first_name}}</strong>님의 잔여 스터디 횟수: 0회 (스터디 재등록 가능)</p>
-                <p>• 재등록 진행 시 <u style="color: #BB2020">이전 스터디 참여 기록은 조회하실 수 없습니다.</u></p>
-                <p>• 확인을 누르시면 재등록을 진행합니다.</p>
-            </div>
-            <div class="modal-footer">
-                <form action="/category/enroll/">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="submit" class="btn btn-dark">확인</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <!--카톡 문의 버튼-->
@@ -163,6 +149,7 @@
     });
 
     });
+
 </script>
 </body>
 
@@ -174,6 +161,7 @@
         channelPublicId: '_ZRzXK',
         })
     }
+
 </script>
 
 <script>
@@ -190,6 +178,7 @@
       js.src = 'https://developers.kakao.com/sdk/js/kakao.channel.min.js';
       fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'kakao-js-sdk');
+
 
 </script>
 
