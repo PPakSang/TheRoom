@@ -8,13 +8,13 @@
     <div class="container-fluid">
         <ul class="navbar-nav mx-auto mb-md-0">
             <li class="nav-item mx-3">
-                <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
+                <a class="nav-link active" href="{% url 'lesson' %}">레슨 신청</a>
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-link" href="{% url 'qna_view' 1 %}">1:1 문의</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link active" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
+                <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-link" href="">더 룸 리뷰</a>
@@ -66,7 +66,7 @@
             <form method="POST" action="" autocomplete="off">
                 {%csrf_token%}
                 <p class="mb-0 mt-3 mt-md-5">입력해주세요</p>
-                <h3 class="fw-bold">연습실 대여 상담</h3>
+                <h3 class="fw-bold">레슨 상담 신청</h3>
                 <div class="stick mb-3 mb-md-5"></div>
                 <div class="bg-light rounded p-3 shadow">
                     <div class="mb-3 text-start">

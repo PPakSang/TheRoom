@@ -191,6 +191,9 @@ def index(request):  # 메인 화면
     except:
         return render(request, 'study/main/index.html', {"enroll": "등록하기", "imgs": imgs})
 
+@login_required(login_url='/user/login/')
+def enroll_lesson(request): # 레슨 신청 화면
+    return render(request, 'study/function/enroll_lesson.html')
 
 @login_required(login_url='/user/login/')
 def enroll(request):  # 등록하기 화면
