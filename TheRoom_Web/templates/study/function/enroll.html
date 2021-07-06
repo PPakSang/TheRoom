@@ -1,18 +1,23 @@
 {% extends 'study/main/base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
+
+
 <!-- 중간 카테고리 -->
-<nav class="navbar navbar-expand-md navbar-light shadow-sm mid-nav">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav" id="mid-nav-container">
     <div class="container-fluid">
-        <ul class="navbar-nav mx-auto mb-0">
-            <li class="nav-item mx-2 mx-md-3">
-                <a class="nav-link active" aria-current="page" href="#">등록하기</a>
+        <ul class="navbar-nav mx-auto mb-md-0">
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="">레슨 신청</a>
             </li>
-            <li class="nav-item mx-2 mx-md-3">
-                <a class="nav-link" href="{% url 'inquire' %}">조회하기</a>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'qna_view' 1 %}">1:1 문의</a>
             </li>
-            <li class="nav-item mx-2 mx-md-3">
-                <a class="nav-link" href="{% url 'change' %}">변경하기</a>
+            <li class="nav-item mx-3">
+                <a class="nav-link active" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
@@ -61,17 +66,17 @@
             <form method="POST" action="" autocomplete="off">
                 {%csrf_token%}
                 <p class="mb-0 mt-3 mt-md-5">입력해주세요</p>
-                <h3 class="fw-bold">스터디 등록</h3>
+                <h3 class="fw-bold">연습실 대여 상담</h3>
                 <div class="stick mb-3 mb-md-5"></div>
                 <div class="bg-light rounded p-3 shadow">
                     <div class="mb-3 text-start">
                         <label for="formPhone" class="form-label fw-bold">연락처</label>
                         <input type="tel" class="form-control" name="number" id="formPhone"
-                               placeholder="숫자만 입력해주세요. ('-' 제외)" onchange="showTimeInput()">
+                               placeholder="숫자만 입력해주세요. ('-' 제외)" onchange="check_value()">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="formLevel" class="form-label fw-bold">클래스</label>
-                        <select name="level" id="formLevel" onchange="showTimeInput()" class="form-select">
+                        <select name="level" id="formLevel" onchange="check_value()" class="form-select">
                             <option value="0" selected>선택해주세요.</option>
                             <option value="1">보컬</option>
                             <option value="2">악기</option>
@@ -81,7 +86,7 @@
                     <div class="mb-3 text-start">
                         <label for="formDate" class="form-label fw-bold">상담 방문 날짜</label>
                         <input type="text" name="day1" class="form-control" id="formDate" placeholder="연도-월-일"
-                               onchange="showTimeInput()">
+                               onchange="check_value()">
                         <script>
                             $(function() {
                                 $('#formDate').datepicker({
@@ -118,8 +123,8 @@
                             function date_remove_disabled(){
                                 $('#enroll_btn').removeClass('disabled')
                             }
-                            // 평일 선택시 day == 1 , 주말 선택시 day == 2
-                            function check_value(day){ 
+
+                            function check_value(){
                                 var phone = document.getElementById('formPhone').value.length;
                                 if($('option:selected')[0].value == '0'
                                     || $('#formDate').val() == ""
@@ -128,48 +133,10 @@
                                         date_add_disabled()
                                     }
                                 else{
-                                    if(day==1){
-                                        date_remove_disabled()
-                                    }
-                                    else if(day==2){
-                                        if($('option:selected')[1].value != '0'){
-                                            date_remove_disabled()
-                                        }
-                                    }
-                                }
-                            }
-                                
-                            // 주말 선택 시 '시간' 폼 등장
-                            function showTimeInput() {
-                                var date = document.getElementById('formDate').value; // 날짜
-                                var day = new Date(date).getDay(); // 요일 (0:일요일 ~ 6:토요일)
-                                
-
-                                if(day == 0 || day == 6) { // 주말이면 시간 입력 폼 보여주기
-                                    date_add_disabled()
-                                    check_value(2)
-                                    var target = document.getElementById('enrollTime');
-                                    target.style.display = "block";
-                                }
-
-                                else { // 평일이면 시간 입력 폼 사라짐
                                     date_remove_disabled()
-                                    check_value(1)
-                                    var target = document.getElementById('enrollTime');
-                                    target.style.display = "none";
                                 }
                             }
-
-
                         </script>
-                    </div>
-                    <div class="mb-3 text-start" id="enrollTime">
-                        <label for="formDay" class="form-label fw-bold">시간</label>
-                        <select name="time1" id="formDay" class="form-select" onchange="showTimeInput()">
-                            <option value="0" selected>선택해주세요.</option>
-                            <option value="1">오후 1시</option>
-                            <option value="2">오후 4시</option>
-                        </select>
                     </div>
                     <button type="submit" id="enroll_btn" class="btn btn-dark px-5 disabled">등록</button>
                 </div>

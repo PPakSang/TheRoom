@@ -18,7 +18,7 @@
           rel="stylesheet">
     <!-- 카카오맵 Javascript API -->
     <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f3cf88b4bbc7a3c4b861604e8c17e004"></script>
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0c7dd30eced652093dfe35ed7f9a366a"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -45,7 +45,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{% url 'index' %}"><img class="logo_theroom me-2"
-                                                                          src="{% static 'img/logo/theroom-logo-sm-trans.png'%}">더룸</a>
+                                                                          src="{% static 'img/logo/theroom-logo-sm-trans.png'%}">더 룸</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
                            href="{% url 'index' %}">홈</a>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown dropdown-z-index">
                         {% if user.is_authenticated %}
                             <a class="nav-link px-3 px-md-2 dropdown-toggle" id="dropdownMenuButton1"
                                   data-bs-toggle="dropdown" aria-expanded="false" href="">{{request.user.first_name}}님</a> {% else %}
@@ -93,18 +93,18 @@
     <div class="container">
         <div class="float-end pe-0">
             <ul class="sns-icons mb-0">
-                <li class="sns-icon"><a href="https://www.instagram.com/wantospeak/?hl=ko"><i
+                <li class="sns-icon"><a href="https://instagram.com/the_room_love?utm_medium=copy_link"><i
                         class="fab fa-instagram"></i></a></li>
                 <li class="sns-icon"><a href="##" onclick="void chatChannel();"><i class="fas fa-comment"></i></a></li>
                 <!--<li class="sns-icon"><a href="#"><i class="fab fa-facebook"></i></a></li>-->
             </ul>
         </div>
         <div class="footer-text">
-            <span class="footer-content">더룸</span>
+            <span class="footer-content">더 룸</span>
             <span class="footer-content">대표이사: 박수진</span>
             <span>사업자등록번호: 000-00-00000</span><br>
             <span class="footer-content">전화: 000-0000-0000</span>
-            <span>이메일: name@gmail.com</span>
+            <span>이메일: kkumi7@naver.com</span>
         </div>
     </div>
 </footer>
