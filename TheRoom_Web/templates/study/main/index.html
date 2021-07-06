@@ -1,4 +1,4 @@
-{% extends 'study/main/base.html' %} {% block title %}WANTOSPEAK{% endblock %} {% block content %}
+{% extends 'study/main/base.html' %} {% block title %}더 룸{% endblock %} {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
 
@@ -20,7 +20,7 @@
             <img src="{% static 'img/banner/1.jpg' %}" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <h5>보컬 레슨</h5>
-                <p>저희 더룸 보컬&기타교실은 수업 외에도 언제든 방문하셔서 연습할 수 있습니다.</p>
+                <p>저희 더 룸 보컬&기타교실은 수업 외에도 언제든 방문하셔서 연습할 수 있습니다.</p>
             </div>
         </div>
         <div class="carousel-item">
@@ -59,20 +59,20 @@
 
 
 <!-- 중간 카테고리 -->
-<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top" id="mid-nav-container">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav" id="mid-nav-container">
     <div class="container-fluid">
-        <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+        <ul class="navbar-nav mx-auto mb-md-0">
             <li class="nav-item mx-3">
-                <a class="nav-link active" href="{% url 'enroll' %}">상담 신청</a>
+                <a class="nav-link" href="">레슨 신청</a>
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-link" href="{% url 'qna_view' 1 %}">1:1 문의</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" aria-current="page" href="">연습실 대여</a>
+                <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="">더룸 리뷰</a>
+                <a class="nav-link" href="">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
@@ -83,7 +83,7 @@
 <div class="py-3 text-center container" id="rules">
     <div class="row py-3 py-md-5 gx-0">
         <div class="col-lg-6 col-md-8 mx-auto">
-            <p class="my-0">더룸을 소개합니다</p>
+            <p class="my-0">더 룸을 소개합니다</p>
             <h3 class="fw-bold">레슨 영상</h3>
             <div class="stick"></div>
         </div>
@@ -262,7 +262,7 @@
 
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                 mapOption = {
-                    center: new kakao.maps.LatLng(37.55776550565466, 126.92633408259285), // 지도의 중심좌표
+                    center: new kakao.maps.LatLng(37.5597959162956, 126.92418462694194), // 지도의 중심좌표
                     level: lv // 지도의 확대 레벨
                 };
 
@@ -276,50 +276,32 @@
 
             // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-                markerPosition = new kakao.maps.LatLng(37.557305674420626, 126.92787700756014),
-                markerPosition2 = new kakao.maps.LatLng(37.556985002665726, 126.91977899936077); // 마커가 표시될 위치입니다
+                markerPosition = new kakao.maps.LatLng(37.5597959162956, 126.92418462694194); // 마커가 표시될 위치입니다
 
             // 마커를 생성합니다
             var marker = new kakao.maps.Marker({
                 position: markerPosition,
                 image: markerImage // 마커이미지 설정
             });
-            var marker2 = new kakao.maps.Marker({
-                position: markerPosition2,
-                image: markerImage // 마커이미지 설정
-            });
 
             // 마커가 지도 위에 표시되도록 설정합니다
             marker.setMap(map);
-            marker2.setMap(map);
 
             // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
             var content = '<div class="customoverlay">' +
-                '  <a href="https://place.map.kakao.com/18513223" target="_blank">' +
-                '    <span class="title">원투스픽 하늘이야기</span>' +
-                '  </a>' +
-                '</div>';
-            var content2 = '<div class="customoverlay">' +
-                '  <a href="https://place.map.kakao.com/1895686979" target="_blank">' +
-                '    <span class="title">원투스픽 구름이야기</span>' +
+                '  <a href="http://naver.me/xUS12jzE" target="_blank">' +
+                '    <span class="title">복합문화공간 더 룸</span>' +
                 '  </a>' +
                 '</div>';
 
             // 커스텀 오버레이가 표시될 위치입니다
-            var position = new kakao.maps.LatLng(37.557305674420626, 126.92787700756014);
-            var position2 = new kakao.maps.LatLng(37.556985002665726, 126.91977899936077);
+            var position = new kakao.maps.LatLng(37.5597959162956, 126.92418462694194);
 
             // 커스텀 오버레이를 생성합니다
             var customOverlay = new kakao.maps.CustomOverlay({
                 map: map,
                 position: position,
                 content: content,
-                yAnchor: 1
-            });
-            var customOverlay2 = new kakao.maps.CustomOverlay({
-                map: map,
-                position: position2,
-                content: content2,
                 yAnchor: 1
             });
 

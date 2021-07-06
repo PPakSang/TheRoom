@@ -78,7 +78,10 @@ body {
   background-color: transparent;
   border: 0;
 }
-
+/* 중간메뉴바에 드롭다운이 가려서 z-index 설정 */
+.dropdown-z-index {
+  z-index: 1021;
+}
 /* 유튜브 반응형 */
 .youtubeWrap {
   position: relative;
@@ -787,10 +790,6 @@ body {
   .banner-content {
     font-size: 1rem;
   }
-  /* 메인의 중간 메뉴바 안 보이게 */
-  #mid-nav-container {
-    display: none;
-  }
   /* 등록, 변경, 조회, faq 페이지에서의 중간 네브 바 가로로 정렬 (기본은 세로 정렬) */
   .mid-nav {
     flex-wrap: nowrap;
@@ -803,8 +802,8 @@ body {
     position: absolute;
   }
   .mid-nav .navbar-nav .nav-link {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
+    padding-right: 0.1rem;
+    padding-left: 0.1rem;
   }
   .mid-nav .navbar-nav-scroll {
     overflow: visible;
@@ -827,7 +826,6 @@ body {
   }
   .footer-text {
     font-size: 0.75rem;
-    padding-bottom: 2em;
   }
 
   .enrollbtn {
