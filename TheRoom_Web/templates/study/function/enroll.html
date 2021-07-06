@@ -75,16 +75,7 @@
                                placeholder="숫자만 입력해주세요. ('-' 제외)" onchange="check_value()">
                     </div>
                     <div class="mb-3 text-start">
-                        <label for="formLevel" class="form-label fw-bold">클래스</label>
-                        <select name="level" id="formLevel" onchange="check_value()" class="form-select">
-                            <option value="0" selected>선택해주세요.</option>
-                            <option value="1">보컬</option>
-                            <option value="2">악기</option>
-                            <option value="3">축가</option>
-                        </select>
-                    </div>
-                    <div class="mb-3 text-start">
-                        <label for="formDate" class="form-label fw-bold">상담 방문 날짜</label>
+                        <label for="formDate" class="form-label fw-bold">대여 날짜</label>
                         <input type="text" name="day1" class="form-control" id="formDate" placeholder="연도-월-일"
                                onchange="check_value()">
                         <script>
@@ -126,7 +117,7 @@
 
                             function check_value(){
                                 var phone = document.getElementById('formPhone').value.length;
-                                if($('option:selected')[0].value == '0'
+                                if($('#formTime').val() == ""
                                     || $('#formDate').val() == ""
                                     || phone<10){
                                         console.log("add1")
@@ -137,6 +128,11 @@
                                 }
                             }
                         </script>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label for="formTime" class="form-label fw-bold">대여 시각</label>
+                        <input type="time" class="form-control" name="number" id="formTime"
+                               onchange="check_value()">
                     </div>
                     <button type="submit" id="enroll_btn" class="btn btn-dark px-5 disabled">등록</button>
                 </div>
