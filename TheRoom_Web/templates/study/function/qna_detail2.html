@@ -1,0 +1,63 @@
+{% extends 'study/main/base.html' %} {% block title %}TheRoom{% endblock %} {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+
+<!-- 중간 카테고리 -->
+<nav class="navbar navbar-expand-md navbar-dark shadow-sm bg-dark" id="mid-nav-container">
+    <div class="container-fluid">
+        <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="">상담 신청</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link active" href="">1:1 문의</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" aria-current="page" href="">연습실 대여</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="">더룸 리뷰</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h3 class="menu_title mb-4 mt-5"> 1:1문의</h3>
+    <div class="divline"></div>
+
+
+<div class="writing_view">
+    <div class="title_box mt-5 mx-2">
+        <span class="title_view"><span class="title_title">제목</span>
+        <span class="title_value">제목 넣는 곳</span></span> 
+        <span class="date_view"><span class="date_title">작성일</span>
+        <span class="date_value">1999-03-08</span></span>
+    </div>
+
+    <div class="content_box">
+        <div class="content_view my-4 mx-5">
+        여기에는 내용을 넣는곳입니다. 와라랄라랄(최소높이는 400px?)
+    </div>
+    </div>
+    <div class="btn_container">
+        <div class="buttons mt-2 row g-1">
+            <div class="col">
+        <button class="enroll_btn py-1 px-4">수정</button>
+        </div>
+        <div class="col">
+            <button class="writing_close py-1 px-4">
+            <a href="#">삭제</a> </button>
+        </div>
+        </div>
+    </div>
+    <div class="comment_box">
+        <div class="comment_title">
+            답변
+        </div>
+        <div class="comment_value my-2 mx-5">답변 넣는 곳</div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
