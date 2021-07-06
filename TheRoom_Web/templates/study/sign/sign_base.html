@@ -26,9 +26,11 @@
 
 
         <!-- 상단 카테고리 -->
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-dark bg-dark">
             <div class="container" style="max-width: 60rem;">
-                <a class="navbar-brand fw-bold" href="{% url 'index' %}"><img class=logo_wts src="/static/img/logo_WTS.svg"></img>원투스픽</a>
+                <a class="navbar-brand fw-bold" href="{% url 'index' %}"><img class="logo_theroom me-2"
+                    src="{% static 'img/logo/theroom-logo-sm-trans.png'%}">더
+룸</a>
                     <ul class="nav-items">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{% url 'index' %}">홈</a>
