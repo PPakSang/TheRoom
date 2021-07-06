@@ -3,20 +3,20 @@
 <link rel="stylesheet" href="{% static 'index.css' %}">
 
     <!-- 중간 카테고리 -->
-    <nav class="navbar navbar-expand-md navbar-dark shadow-sm bg-dark" id="mid-nav-container">
+    <nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav" id="mid-nav-container">
         <div class="container-fluid">
-            <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+            <ul class="navbar-nav mx-auto mb-md-0">
                 <li class="nav-item mx-3">
-                    <a class="nav-link active" href="">상담 신청</a>
+                    <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link" href="">1:1 문의</a>
+                    <a class="nav-link active" href="{% url 'qna_view' 1 %}">1:1 문의</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link" aria-current="page" href="">연습실 대여</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link" href="">더룸 리뷰</a>
+                    <a class="nav-link" href="">더 룸 리뷰</a>
                 </li>
             </ul>
         </div>
@@ -27,26 +27,28 @@
     <div class="divline"></div>
         <form action="" method="POST">
             {% csrf_token %}
-            <div class="writing_box row">
-                <div class=" mt-4">
-                    <span class="input_title pe-2" >제목</span>
-                    <input name="title" type="text" class="title_input" >
-                </div>
-                
-                <div class="content_box mt-3">
-                    <div class="mb-1">내용</div>
-                    <input name="text" type="text" class="content_input">
-                </div>
+            <div class="writing_box mt-4">
+                <table class="writing_table">
+                    <tr class="first_col">
+                        <td class="title_title">제목</td>
+                        <td><input name="title" type="text" class="title_input" autofocus="autofocus" required="required" autocomplete="off"></td>
+                    </tr>
+                    <tr class="second_col">
+                        <td colspan="2">
+                            <textarea name="content_input" class="content_input" cols="50" rows="10" required="required"></textarea>
+                    </td>
+                    </tr>
+                </table>
+                <div class="writing_notice mt-1">문의 후 10분간 재문의가 제한되니 유의해주세요!</div>
             </div>
 
             <div class="btn_container">
-                <div class="buttons mt-2 row g-1">
+                <div class="buttons mt-1 row g-0">
                     <div class="col">
-                <input type="submit" value="등록" class="enroll_btn py-1 px-4"></button>
-                </div>
+                        <input type="submit" value="등록" class="enroll_btn py-1 px-4">
+                    </div>
                 <div class="col">
-                    <button class="writing_close py-1 px-4">
-                    <a href="#">취소</a> </button>
+                    <a class="writing_close py-1 px-4" href="{% url 'qna_view' 1 %}">취소</a>
                 </div>
                 </div>
             </div>

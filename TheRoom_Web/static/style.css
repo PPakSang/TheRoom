@@ -6,6 +6,7 @@
   --more-accent-color: #ed9402;
   --text-basic-color: gray;
   --border-color: #e0edee;
+  --border-color-lightgray: #9e9e9e;
 }
 
 html {
@@ -435,30 +436,65 @@ body {
 
 .writing_box {
   display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
   justify-self: center;
+  text-align: center;
 }
 
-.writing_box .title_input {
+.writing_table {
   width: 85%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-top: 1px solid var(--border-color-lightgray);
+  border-bottom: 1px solid var(--border-color-lightgray);
 }
 
-.writing_box .content_input {
-  width: 90%;
-  height: 400px;
+.writing_table td {
+  padding: 8px 15px;
 }
 
-.writing_box .content_input:focus {
-  border: #3f464d;
+.writing_table .first_col {
+  border-bottom: 1px solid var(--border-color-lightgray);
+}
+
+.writing_table .first_col .title_title {
+  border-right: 1px solid var(--border-color-lightgray);
+  width: 10%;
+}
+
+.writing_table .content_input {
+  height: 300px;
+  resize: none;
+}
+
+.writing_table .title_input,
+.writing_table .content_input {
+  border: 0;
+  width: 100%;
+}
+
+.writing_table .title_input:focus,
+.writing_table .content_input:focus {
+  outline: none;
+  box-shadow: 0 0 1px 1px #0086db;
+}
+
+.writing_notice {
+  color: var(--border-color-lightgray);
+  font-size: 0.8rem;
 }
 
 .btn_container {
   display: flex;
   justify-content: flex-end;
+  width: 95%;
 }
 
 .buttons {
-  width: 200px;
-  margin-right: 10px;
+  width: 180px;
 }
 
 .buttons .enroll_btn {
