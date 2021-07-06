@@ -371,10 +371,15 @@ def faq_view(request):  # 자주묻는질문 화면
 @login_required(login_url='/user/login')
 def qna_list(request):  # 커뮤니티
     if request.user.is_staff:
+        page = int(request.GET['page'])
         qnas = Qna.objects.all().order_by('-pk')
-        qnas = render_to_string('study/function/qna_list_base.html',context={"qnas":qnas})
+        page_len = qnas.count()//2 + qnas.count()%2
+
+        qnas = qnas[2*(page-1):2*page]
+        qnas = render_to_string('study/function/qna_list_base.html',context={"qnas":qnas,"is_staff":True})
         context = {
             "qnas":qnas,
+            "page_len":page_len
         }
         context = json.dumps(context)
         return HttpResponse(context)
@@ -395,7 +400,7 @@ def qna_list(request):  # 커뮤니티
 
 
 def qna_view(request,num):
-    return render(request,'study/function/qna_list.html',{"num":num})
+    return render(request,'study/function/qna_view.html',{"num":num})
 
 
 @login_required(login_url='/user/login')

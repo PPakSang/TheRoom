@@ -67,7 +67,7 @@ class Qna(models.Model):
     answer = models.TextField(blank=True)
 
     def __str__(self) -> str:
-        return self.user.username
+        return "유저 : "+self.user.username +"/제목 :"+ self.title
 
 class Review(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
