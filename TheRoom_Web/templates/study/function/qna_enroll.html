@@ -2,7 +2,6 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
 
-<div class="headnav bg-dark" style="height: 40px; color: aliceblue;">네비게이션바</div>
     <!-- 중간 카테고리 -->
     <nav class="navbar navbar-expand-md navbar-dark shadow-sm bg-dark" id="mid-nav-container">
         <div class="container-fluid">
@@ -24,7 +23,7 @@
     </nav>
 
     <div class="container">
-    <h3 class="menu_title mb-4 mt-5"> 커뮤니티 <span class="submenu_writing">/ 글쓰기</span> </h3> 
+    <h3 class="menu_title mb-4 mt-5"> 1:1문의 <span class="submenu_writing">/ 글쓰기</span> </h3> 
     <div class="divline"></div>
         <form action="" method="POST">
             {% csrf_token %}
@@ -39,13 +38,17 @@
                     <input name="text" type="text" class="content_input">
                 </div>
             </div>
-    
-            <div class="buttons mt-2 row g-2">
+
+            <div class="btn_container">
+                <div class="buttons mt-2 row g-1">
+                    <div class="col">
+                <input type="submit" value="등록" class="enroll_btn py-1 px-4"></button>
+                </div>
                 <div class="col">
-            <input type="submit" class="modify_btn py-1 px-4">
-            </div>
-            <div class="col">
-            <a class="writing_close py-1 px-4" href="#">취소</a>
+                    <button class="writing_close py-1 px-4">
+                    <a href="#">취소</a> </button>
+                </div>
+                </div>
             </div>
         </form>
     </div>
