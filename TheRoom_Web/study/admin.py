@@ -6,8 +6,7 @@ from .models import *
 
 @admin.register(Student)
 class Student_Admin(admin.ModelAdmin):
-    list_display = ['__str__','day1','day2','day3','day4']
-    list_filter = ['day1','day2']
+
     search_fields = ['name']
 
 

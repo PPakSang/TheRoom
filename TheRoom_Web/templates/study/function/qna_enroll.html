@@ -26,25 +26,28 @@
     <div class="container">
     <h3 class="menu_title mb-4 mt-5"> 커뮤니티 <span class="submenu_writing">/ 글쓰기</span> </h3> 
     <div class="divline"></div>
-    <div class="writing_box">
-        <div class=" mt-4">
-            <span class="input_title pe-2" >제목</span>
-            <input type="text" class="title_input" >
-        </div>
-        
-        <div class="content_box mt-3">
-            <div class="mb-1">내용</div>
-            <input type="text" class="content_input">
-        </div>
-    </div>
-
-    <div class="buttons mt-2 row g-2">
-        <div class="col">
-    <button class="modify_btn py-1 px-4">등록</button>
-    </div>
-    <div class="col">
-    <a class="writing_close py-1 px-4" href="#">취소</a>
-    </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="writing_box">
+                <div class=" mt-4">
+                    <span class="input_title pe-2" >제목</span>
+                    <input name="title" type="text" class="title_input" >
+                </div>
+                
+                <div class="content_box mt-3">
+                    <div class="mb-1">내용</div>
+                    <input name="text" type="text" class="content_input">
+                </div>
+            </div>
+    
+            <div class="buttons mt-2 row g-2">
+                <div class="col">
+            <input type="submit" class="modify_btn py-1 px-4">
+            </div>
+            <div class="col">
+            <a class="writing_close py-1 px-4" href="#">취소</a>
+            </div>
+        </form>
     </div>
 
 {% endblock %}

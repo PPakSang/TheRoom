@@ -185,12 +185,9 @@ def get_left_day(student):
 def index(request):  # 메인 화면
     imgs = Study_img.objects.all()
     try:
-        student = Student.objects.get(user_id=request.user.pk)
-        left_day = get_left_day(student)
-        if left_day == 0:
-            return render(request, 'study/main/index.html', {"enroll": "재등록하기", "is_zero": True, "imgs": imgs})
-        else:
-            return render(request, 'study/main/index.html', {"enroll": "재등록하기", "is_zero": False, "imgs": imgs})
+        student = Student.objects.get(user_id=request.user.pk)  
+        return render(request, 'study/main/index.html', {"enroll": "재등록하기","day1":student.day1,"imgs": imgs})
+
     except:
         return render(request, 'study/main/index.html', {"enroll": "등록하기", "imgs": imgs})
 
@@ -199,10 +196,9 @@ def index(request):  # 메인 화면
 def enroll(request):  # 등록하기 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
-        left_day = get_left_day(student)
-        if left_day != 0:  # 아직 남았다면
+        if student.day1 > datetime.date.today() != 0:  # 아직 남았다면
             messages.error(request, "이미 등록하셨습니다!")
-            return render(request, 'study/function/enroll.html', {"error": "스터디 연장 신청은 마지막 스터디 참여 후 가능합니다."})
+            return render(request, 'study/function/enroll.html', {"error": "날짜변경 또는 상담취소신청 가능합니다."})
         else:
             student.user_id = 0
             student.save()
@@ -222,11 +218,6 @@ def enroll(request):  # 등록하기 화면
 
             if form.is_valid():
                 form = form.save(commit=False)
-                for i in range(2, 5):
-                    setattr(form, f'day{i}', form.day1 + timedelta(weeks=i-1))
-                for i in range(2, 5):
-                    setattr(form, f'time{i}', form.time1)
-                form.base_date = form.day1
                 form.user_id = request.user.id
                 form.name = request.user.first_name
                 form.save()
@@ -390,7 +381,7 @@ def qna_list(request):  # 커뮤니티
     else:
         page = int(request.GET['page'])
         qnas = Qna.objects.filter(user = request.user).order_by('-pk')
-        page_len = qnas.count()//2 + 1
+        page_len = qnas.count()//2 + qnas.count()%2
 
         qnas = qnas[2*(page-1):2*page]
         qnas = render_to_string('study/function/qna_list_base.html',context={"qnas":qnas})
@@ -414,7 +405,6 @@ def qna_enroll(request):
             last = Qna.objects.filter(user=request.user).last()
             print(last.next_qna)
             if last.next_qna > datetime.datetime.today():
-                print("오류")
                 messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
                 return render(request,'study/function/qna_enroll.html')
             else:
@@ -427,7 +417,7 @@ def qna_enroll(request):
             qna.next_qna = datetime.datetime.now(
                 tz=None) + datetime.timedelta(minutes=10)
             qna.save()
-            return redirect('qna_view')
+            return redirect('qna_view',1)
     return render(request, 'study/function/qna_enroll.html')
 
 
@@ -441,14 +431,18 @@ def qna_detail(request, pk):
             qna.save()
         return render(request, 'study/function/qna_detail.html', context={"qna": qna})
     else:
-        qna = Qna.objects.get(user=request.user, pk=pk)
+        qna = Qna.objects.filter(user = request.user).last()
         if request.method == "POST":
-            if qna.next_qna > datetime.datetime.today():
-                qna.title = request.POST["title"]
-                qna.text = request.POST["text"]
-                qna.date = datetime.date.today()
-                qna.next_qna = datetime.datetime.today() + datetime.timedelta(minutes=10)
-                qna.save()
+            if qna.answer :
+                messages.error(request,"답변이 작성된 글은 수정이 불가능합니다.")
+                return render(request,'study/function/qna_detail.html',context={"qna":qna})
+            if qna.next_qna < datetime.datetime.today():
+                new_qna = Qna(user = request.user)
+                new_qna.title = request.POST["title"]
+                new_qna.text = request.POST["text"]
+                new_qna.date = datetime.date.today()
+                new_qna.next_qna = datetime.datetime.today() + datetime.timedelta(minutes=10)
+                new_qna.save()
             else:
                 messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
         return render(request,'study/function/qna_detail.html',context={"qna":qna})
@@ -653,7 +647,7 @@ def signup_hw(request):  # 회원가입 화면
                 })
 
                 act_email = EmailMessage(
-                    '[원투스픽] 인증을 위한 메일입니다', message, to=[email])
+                    '[더룸] 인증을 위한 메일입니다', message, to=[email])
                 # try:
                 #     act_email.send()
 
@@ -694,7 +688,7 @@ def re_send(request, email):  # 이메일 재전송
             "domain": current_site.domain,
             "token": token,
         })
-        re_email = EmailMessage('[원투스픽] 인증메일 재발송입니다', message, to=[email])
+        re_email = EmailMessage('[더룸] 인증메일 재발송입니다', message, to=[email])
         re_email.send()
         return HttpResponse('success')
     except Exception as e:

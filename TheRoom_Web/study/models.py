@@ -19,23 +19,11 @@ class Student(models.Model):
    
     number = models.CharField(max_length=11, validators=[MinLengthValidator(10)])
     
-    level_status = (('1','왕초급'),('2','초급'),('3','중급'))
+    level_status = (('1','보컬'),('2','악기'),('3','축가'))
     level = models.CharField(max_length=1,choices=level_status,blank=True)
-
-    time_status = (('0','평일'),('1','주말1시'),('2','주말4시'))
     
-    time1 = models.CharField(max_length=1,default='0',choices=time_status,blank=True, verbose_name='첫번째 참여시간')
-    time2 = models.CharField(max_length=1,default='0',choices=time_status,blank=True, verbose_name='두번째 참여시간')
-    time3 = models.CharField(max_length=1,default='0',choices=time_status,blank=True, verbose_name='세번째 참여시간')
-    time4 = models.CharField(max_length=1,default='0',choices=time_status,blank=True, verbose_name='네번째 참여시간')
+    day1 = models.DateField(default=datetime.date.today(),verbose_name='방문 날짜')
     
-    base_date = models.DateField(default=datetime.date.today(),verbose_name='기준 주차')
-    
-    day1 = models.DateField(default=datetime.date.today(),verbose_name='첫번째 참여일')
-    day2 = models.DateField(default=datetime.date.today(),verbose_name='두번째 참여일')
-    day3 = models.DateField(default=datetime.date.today(),verbose_name='세번째 참여일')
-    day4 = models.DateField(default=datetime.date.today(),verbose_name='네번째 참여일')
-    plus_day = models.DateField(default=datetime.date.today() - datetime.timedelta(days=365),verbose_name='보너스 참여일')
 
     deposit_status = (("1","미입금"),("2","예약금"),("3","완납"),)
     deposit = models.CharField(max_length=1,default='1',choices=deposit_status)
@@ -89,7 +77,7 @@ class Review(models.Model):
 
 
     
-    #Qna 남기고나서 다음 Qna 는 10분뒤에 남길 수 있도록
+    #Review 남기고나서 다음 Review 는 10분뒤에 남길 수 있도록
     next_qna = models.DateTimeField(blank = True)
 
 
