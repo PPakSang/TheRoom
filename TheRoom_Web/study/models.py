@@ -15,14 +15,47 @@ import os
 
 
 class Student(models.Model): 
+    name = models.CharField(max_length=10,validators=[MinLengthValidator(2)],verbose_name='이름')
+   
+    number = models.CharField(max_length=11, validators=[MinLengthValidator(10)],verbose_name='전화번호')
+    
+    level_status = (('1','상담'),('2','보컬'),('3','악기'),('4','축가'))
+    level = models.CharField(max_length=1,choices=level_status,blank=True,verbose_name='클래스')
+    
+    day1 = models.DateField(default=datetime.date.today(),verbose_name='방문 날짜')
+    lesson_day = models.DateTimeField(default=datetime.datetime.today(),verbose_name='상담/레슨 날짜')
+    
+
+    deposit_status = (("1","미입금"),("2","예약금"),("3","완납"),)
+    deposit = models.CharField(max_length=1,default='1',choices=deposit_status,verbose_name='입금여부')
+
+    pay_way_status = (("0","미납"),("1","계좌"),("2","카드"),("3","현금"))
+    pay_way = models.CharField(max_length=1,default='0',choices=pay_way_status,verbose_name='입금방식')
+    
+
+    user_id = models.IntegerField(default=0)
+
+    check_status = (('1','미확인'),('2','확인'))
+    check_in = models.CharField(default='1',max_length=1,verbose_name='레슨 여부(1,2)')
+    comment = models.TextField(blank=True, null=True, verbose_name="참고사항")
+
+    is_mailed = models.IntegerField(default = 0)
+    
+
+    def __str__(self) -> str:
+        return self.name + f'({self.number[3:]})'
+
+    def get_absolute_url(self):
+        return redirect('detail',pk = self.id)
+
+
+
+class Room(models.Model): 
     name = models.CharField(max_length=10,validators=[MinLengthValidator(2)])
    
     number = models.CharField(max_length=11, validators=[MinLengthValidator(10)])
-    
-    level_status = (('1','보컬'),('2','악기'),('3','축가'))
-    level = models.CharField(max_length=1,choices=level_status,blank=True)
-    
-    day1 = models.DateField(default=datetime.date.today(),verbose_name='방문 날짜')
+
+    day1 = models.DateTimeField(default=datetime.datetime.today(),verbose_name='대여 시각')
     
 
     deposit_status = (("1","미입금"),("2","예약금"),("3","완납"),)
@@ -32,22 +65,17 @@ class Student(models.Model):
     pay_way = models.CharField(max_length=1,default='0',choices=pay_way_status)
     
     
-    changed_day = models.DateField(default=datetime.date.today(),verbose_name='등록하기 한날')
-
-    
     user_id = models.IntegerField(default=0)
 
-
-    check_in = models.TextField(blank=True, null=True, verbose_name="출석체크")
     comment = models.TextField(blank=True, null=True, verbose_name="참고사항")
 
-    is_mailed = models.IntegerField(default = 0)
-    
+
     def __str__(self) -> str:
         return self.name + f'({self.number[3:]})'
 
     def get_absolute_url(self):
         return redirect('detail',pk = self.id)
+
 
 
 

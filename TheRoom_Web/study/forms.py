@@ -9,7 +9,7 @@ class Enroll_form(forms.ModelForm):
         model = Student
         fields = ['level','number','day1']
             
-    
+
     
     
 class Signup_form(forms.Form):

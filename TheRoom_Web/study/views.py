@@ -42,15 +42,9 @@ def only_admin(request, option):
             return render(request, 'study/admin.html', {'students': students, 'new_students': new_students})
 
         if option == 'today':
-            new_students = Student.objects.filter(day1=datetime.date.today())
-            students = Student.objects.filter(day2=datetime.date.today())
-            students = students | Student.objects.filter(
-                day3=datetime.date.today())
-            students = students | Student.objects.filter(
-                day4=datetime.date.today())
-            students = students | Student.objects.filter(
-                plus_day=datetime.date.today())
-            return render(request, 'study/admin.html', {'new_students': new_students, 'students': students})
+            new_students = Student.objects.filter(lesson_day__date=datetime.date.today())
+            
+            return render(request, 'study/admin.html', {'new_students': new_students})
 
         if option == 'name':
             if request.method == 'POST':
@@ -191,21 +185,19 @@ def index(request):  # 메인 화면
     except:
         return render(request, 'study/main/index.html', {"enroll": "등록하기", "imgs": imgs})
 
-@login_required(login_url='/user/login/')
-def enroll_lesson(request): # 레슨 신청 화면
-    return render(request, 'study/function/enroll_lesson.html')
+
 
 @login_required(login_url='/user/login/')
-def enroll(request):  # 등록하기 화면
+def lesson_enroll(request): # 레슨 신청 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
         if student.day1 > datetime.date.today() != 0:  # 아직 남았다면
             messages.error(request, "이미 등록하셨습니다!")
-            return render(request, 'study/function/enroll.html', {"error": "날짜변경 또는 상담취소신청 가능합니다."})
+            return render(request, 'study/function/lesson_enroll.html', {"error": "날짜변경 또는 상담취소신청 가능합니다."})
         else:
             student.user_id = 0
             student.save()
-            return render(request, 'study/function/enroll.html')
+            return render(request, 'study/function/lesson_enroll.html')
     except:
         if request.method == 'POST':
             form = Enroll_form(request.POST)
@@ -213,11 +205,11 @@ def enroll(request):  # 등록하기 화면
 
             if day1 < datetime.date.today():  # 지난 날 신청할 때
                 messages.error(request, "등록 실패!")
-                return render(request, 'study/function/enroll.html', {"error": "지난날은 신청할 수 없습니다."})
+                return render(request, 'study/function/lesson_enroll.html', {"error": "지난날은 신청할 수 없습니다."})
 
             if day1 == datetime.date.today() + timedelta(days=1) and datetime.datetime.today().hour >= 22:  # 당일 10시 넘어서 다음날 신청할 때
                 messages.error(request, "등록 실패!")
-                return render(request, 'study/function/enroll.html', {"error": "22시 이후에는 다음날 신청이 불가합니다."})
+                return render(request, 'study/function/lesson_enroll.html', {"error": "22시 이후에는 다음날 신청이 불가합니다."})
 
             if form.is_valid():
                 form = form.save(commit=False)
@@ -225,10 +217,40 @@ def enroll(request):  # 등록하기 화면
                 form.name = request.user.first_name
                 form.save()
 
-                return redirect('inquire')
+                return redirect('index')
             else:
                 messages.error(request, '등록 실패!')
-                return render(request, 'study/function/enroll.html')
+                return render(request, 'study/function/lesson_enroll.html')
+        return render(request, 'study/function/lesson_enroll.html')
+
+
+
+
+
+@login_required(login_url='/user/login/')
+def enroll(request):  # 등록하기 화면
+    try:
+        room = Room.objects.get(user_id=request.user.id)
+        messages.error(request, "이미 등록하셨습니다!")
+        return render(request, 'study/function/enroll.html', {"error": "예약변경 또는 예약취소 가능합니다."})
+
+    except:
+        if request.method == 'POST':
+            number = request.POST['number']
+            day1 = datetime.datetime.fromisoformat(f"{request.POST['date']} {request.POST['time']}:00")
+
+            if day1 < datetime.datetime.today():  # 지난 날 신청할 때
+                messages.error(request, "등록 실패!")
+                return render(request, 'study/function/enroll.html', {"error": "지난날은 신청할 수 없습니다."})
+
+
+            room = Room(
+                number=number,
+                day1=day1,
+                user_id=request.user.id,
+                name=request.user.first_name)
+            room.save()
+
         return render(request, 'study/function/enroll.html')
 
 
