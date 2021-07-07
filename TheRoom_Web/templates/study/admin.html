@@ -12,8 +12,8 @@
 <div class="container">
     <div>
         <div id="logo_box">
-            <img id="logo" src="{% static 'img/logo_WTS.svg'%}" alt="">
-            <div class="fs-1">원투스픽 출석체크</div>
+            <img id="logo" src="{% static 'img/logo/theroom-logo-sm-trans.png'%}" alt="">
+            <div class="fs-1" style="margin: 0 30px;">THE ROOM</div>
         </div>
         <div class="form_box">
             <form action="name" method="POST" autocomplete="off">
@@ -36,18 +36,17 @@
     </div>
 
     <a href="{% url 'adminpage' 'all'%}" class="adminMenu">전체보기</a>
-    <a href="{% url 'adminpage' 'today'%}" class="adminMenu">금일참여명단</a>
-    <a href="{% url 'adminpage' 'new'%}" class="adminMenu">금일신규등록</a>
-    <a href="{% url 'deposit_view' 'all'%}">입금확인</a><br>
+    <a href="{% url 'adminpage' 'today'%}" class="adminMenu">금일레슨/상담</a>
+    <a href="{% url 'adminpage' 'new'%}" class="adminMenu">미확인신청</a>
+    <a href="{% url 'deposit_view' 'all'%}">연습실대여</a><br>
     <table class="table">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">출석체크</th>
             <th scope="col">이름</th>
             <th scope="col">전화번호</th>
-            <th scope="col">참여정보</th>
-            <th>입금여부</th>
+            <th scope="col">상담/클래스</th>
+            <th>상담/레슨날짜</th>
             <th>참고사항</th>
             <th scope="col">회원정보</th>
         </tr>
@@ -57,13 +56,12 @@
         {% for student in new_students%}
         <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td><span id="{{student.pk}}" class="btn btn-primary check_in">출석</span></td>
             <td>{{student.name}}</td>
             <td>{{student.number}}</td>
-            <td>{{student.check_in}}</td>
-            <td>{{student.get_deposit_display}} / {{student.get_pay_way_display}}</td>
+            <td>{{student.get_level_display}}</td>
+            <td>{{student.lesson_day|date:'Y-m-d / h시'}}</td>
             <td><button type="button" name="{{forloop.counter}}" id="comment_open_{{forloop.counter}}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="comment(this)">열기</button></td>
-            <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">회원정보</a></td>
+            <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">수정하기</a></td>
             <div id="comment{{forloop.counter}}" style="display: none;">{{student.comment}}</div>
         </tr>
 
@@ -72,10 +70,9 @@
         {% for student in students%}
         <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td><span id="{{student.pk}}" class="btn btn-primary check_in">출석</span></td>
             <td>{{student.name}}</td>
             <td>{{student.number}}</td>
-            <td>{{student.check_in}}</td>
+            <td>{{student.get_level_display}}</td>
             <td>{{student.get_deposit_display}} / {{student.get_pay_way_display}}</td>
             <td><button type="button" name="{{forloop.counter}}" id="comment_open_{{forloop.counter}}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="comment(this)">열기</button></td>
             <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">회원정보</a></td>

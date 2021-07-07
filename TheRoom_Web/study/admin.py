@@ -19,3 +19,9 @@ class Faq_Admin(admin.ModelAdmin):
 @admin.register(Study_img)
 class Img_Admin(admin.ModelAdmin):
     pass
+
+
+
+@admin.register(Room)
+class Room_Admin(admin.ModelAdmin):
+    pass
