@@ -125,7 +125,13 @@ body {
   color: #fff;
   text-align: right;
 }
-
+.review-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 12;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /*신청버튼 floating ver*/
 .enrollbtn {
   max-width: 200px;
@@ -884,5 +890,42 @@ body {
   }
   .inquire-explain {
     text-align: left;
+  }
+}
+
+
+
+/* 리뷰 carousel 반응형 */
+@media screen and (max-width: 992px) {
+  .review-text {
+    -webkit-line-clamp: 10;
+  }
+}
+@media screen and (max-width: 850px) {
+  .review-text {
+    -webkit-line-clamp: 8;
+  }
+}
+@media screen and (max-width: 650px) {
+  .review-text {
+    -webkit-line-clamp: 5;
+  }
+  .btn-more {
+    font-size: 0.5rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .review-caption-right {
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 0.5rem;
+  }
+  .review-caption-left {
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 0.5rem;
+  }
+  .review-title {
+    font-size: 0.8rem;
   }
 }

@@ -66,7 +66,7 @@
             <form method="POST" action="" autocomplete="off">
                 {%csrf_token%}
                 <p class="mb-0 mt-3 mt-md-5">입력해주세요</p>
-                <h3 class="fw-bold">연습실 대여 상담</h3>
+                <h3 class="fw-bold">연습실 대여 신청</h3>
                 <div class="stick mb-3 mb-md-5"></div>
                 <div class="bg-light rounded p-3 shadow">
                     <div class="mb-3 text-start">
@@ -78,7 +78,27 @@
                         <label for="formDate" class="form-label fw-bold">대여 날짜</label>
                         <input type="text" name="day1" class="form-control" id="formDate" placeholder="연도-월-일"
                                onchange="check_value()">
-                        <script>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label for="formTime" class="form-label fw-bold">대여 시간</label>
+                        <select name="time" id="formTime" onchange="check_value()" class="form-select">
+                            <option value="0" selected>선택해주세요.</option>
+                            <option value="1">10:00 ~ 12:00</option>
+                            <option value="2">11:00 ~ 13:00</option>
+                            <option value="3">12:00 ~ 14:00</option>
+                            <option value="4">13:00 ~ 15:00</option>
+                            <option value="5">14:00 ~ 16:00</option>
+                            <option value="6">15:00 ~ 17:00</option>
+                            <option value="7">16:00 ~ 18:00</option>
+                            <option value="8">17:00 ~ 19:00</option>
+                            <option value="9">18:00 ~ 20:00</option>
+                            <option value="10">19:00 ~ 21:00</option>
+                            <option value="11">20:00 ~ 22:00</option>
+                            <option value="12">21:00 ~ 23:00</option>
+                            <option value="13">22:00 ~ 24:00</option>
+                        </select>
+                    </div>
+                    <script>
                             $(function() {
                                 $('#formDate').datepicker({
                                     format: "yyyy-mm-dd", //데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
@@ -107,7 +127,7 @@
 
                                 }); //datepicker end
                             }); //ready end
-                            
+
                             function date_add_disabled(){
                                 $('#enroll_btn').addClass('disabled')
                             }
@@ -117,7 +137,7 @@
 
                             function check_value(){
                                 var phone = document.getElementById('formPhone').value.length;
-                                if($('#formTime').val() == ""
+                                if($('option:selected')[0].value == '0'
                                     || $('#formDate').val() == ""
                                     || phone<10){
                                         console.log("add1")
@@ -128,12 +148,6 @@
                                 }
                             }
                         </script>
-                    </div>
-                    <div class="mb-3 text-start">
-                        <label for="formTime" class="form-label fw-bold">대여 시각</label>
-                        <input type="time" class="form-control" name="number" id="formTime"
-                               min="10:00:00" max="22:00:00" onchange="check_value()">
-                    </div>
                     <button type="submit" id="enroll_btn" class="btn btn-dark px-5 disabled">등록</button>
                 </div>
             </form>
