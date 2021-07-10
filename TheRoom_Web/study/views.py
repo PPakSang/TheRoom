@@ -295,35 +295,12 @@ def enroll(request):  # 등록하기 화면
 def inquire(request):  # 조회하기 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
-        days = get_days(student)
-        left_day = 4
-        day = 1
-        next_day = None
-        for i in days:
-            if (i - datetime.date.today()).days >= 0:
-                next_day = i
-                next_time = getattr(student, f'time{day}')
-                break
-            day += 1
-            left_day -= 1
-        if next_day == None:
-            next_time = '추가등록이 필요합니다'
-            next_day = '추가등록이 필요합니다'
-        else:
-            times = ['평일', '주말1시', '주말4시']
-            next_time = times[int(next_time)]
-        base_dates = get_basedates(student)
+
     except Exception as e:
-        print(e)
         return redirect('enroll')
 
     return render(request, 'study/function/inquire.html',
-                  {'student': student,
-                   'days': days,
-                   'next_day': next_day,
-                   'left_day': left_day,
-                   'base_dates': base_dates,
-                   'next_time': next_time}
+                  {'student': student}
                   )
 
 
