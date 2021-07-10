@@ -36,7 +36,7 @@ class Student(models.Model):
     user_id = models.IntegerField(default=0)
 
     check_status = (('1','미확인'),('2','확인'))
-    check_in = models.CharField(default='1',max_length=1,verbose_name='레슨 여부(1,2)')
+    check_in = models.CharField(default='1',choices=check_status,max_length=1,verbose_name='확인여부')
     comment = models.TextField(blank=True, null=True, verbose_name="참고사항")
 
     is_mailed = models.IntegerField(default = 0)
@@ -51,18 +51,18 @@ class Student(models.Model):
 
 
 class Room(models.Model): 
-    name = models.CharField(max_length=10,validators=[MinLengthValidator(2)])
+    name = models.CharField(max_length=10,validators=[MinLengthValidator(2)],verbose_name='이름')
    
-    number = models.CharField(max_length=11, validators=[MinLengthValidator(10)])
+    number = models.CharField(max_length=11, validators=[MinLengthValidator(10)],verbose_name='전화번호')
 
     day1 = models.DateTimeField(default=datetime.datetime.today(),verbose_name='대여 시각')
     
 
     deposit_status = (("1","미입금"),("2","예약금"),("3","완납"),)
-    deposit = models.CharField(max_length=1,default='1',choices=deposit_status)
+    deposit = models.CharField(max_length=1,default='1',choices=deposit_status,verbose_name='입금여부')
 
     pay_way_status = (("0","미납"),("1","계좌"),("2","카드"),("3","현금"))
-    pay_way = models.CharField(max_length=1,default='0',choices=pay_way_status)
+    pay_way = models.CharField(max_length=1,default='0',choices=pay_way_status,verbose_name='입금방식')
     
     
     user_id = models.IntegerField(default=0)

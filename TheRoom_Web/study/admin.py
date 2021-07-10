@@ -8,6 +8,8 @@ from .models import *
 class Student_Admin(admin.ModelAdmin):
 
     search_fields = ['name']
+    list_filter = ['lesson_day']
+    list_display = ['name','number','lesson_day']
 
 
 

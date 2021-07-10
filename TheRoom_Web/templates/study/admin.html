@@ -47,6 +47,7 @@
             <th scope="col">전화번호</th>
             <th scope="col">상담/클래스</th>
             <th>상담/레슨날짜</th>
+            <th>관리자확인</th>
             <th>참고사항</th>
             <th scope="col">회원정보</th>
         </tr>
@@ -59,7 +60,12 @@
             <td>{{student.name}}</td>
             <td>{{student.number}}</td>
             <td>{{student.get_level_display}}</td>
+            {% if student.check_in == '1'%}
+            <td>{{student.day1|date:'Y-m-d'}} / 상담</td>
+            {% else %}
             <td>{{student.lesson_day|date:'Y-m-d / h시'}}</td>
+            {% endif %}
+            <td>{{student.get_check_in_display}}</td>
             <td><button type="button" name="{{forloop.counter}}" id="comment_open_{{forloop.counter}}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="comment(this)">열기</button></td>
             <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">수정하기</a></td>
             <div id="comment{{forloop.counter}}" style="display: none;">{{student.comment}}</div>
@@ -73,9 +79,10 @@
             <td>{{student.name}}</td>
             <td>{{student.number}}</td>
             <td>{{student.get_level_display}}</td>
-            <td>{{student.get_deposit_display}} / {{student.get_pay_way_display}}</td>
+            <td>{{student.lesson_day|date:'Y-m-d / h시'}}</td>
+            <td>{{student.get_check_in_display}}</td>
             <td><button type="button" name="{{forloop.counter}}" id="comment_open_{{forloop.counter}}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="comment(this)">열기</button></td>
-            <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">회원정보</a></td>
+            <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">수정하기</a></td>
             <div id="comment{{forloop.counter}}" style="display: none;">{{student.comment}}</div>
         </tr>
         {%endfor%}

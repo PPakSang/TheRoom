@@ -38,7 +38,7 @@ def only_admin(request, option):
 
         if option == 'all':
             new_students = Student.objects.filter(deposit='1')
-            students = Student.objects.all().exclude(deposit='1')
+            students = Student.objects.all().exclude(deposit='1').order_by('-lesson_day')
             return render(request, 'study/admin.html', {'students': students, 'new_students': new_students})
 
         if option == 'today':
@@ -56,8 +56,9 @@ def only_admin(request, option):
                 students = Student.objects.filter(
                     number=request.POST['number'])
                 return render(request, 'study/admin.html', {'students': students})
+
         if option == 'new':
-            new_students = Student.objects.filter(day1=datetime.date.today())
+            new_students = Student.objects.filter(check_in="1")
             return render(request, 'study/admin.html', {'new_students': new_students})
     else:
         return redirect('index')
@@ -65,7 +66,7 @@ def only_admin(request, option):
 
 def check_deposit(request, option, user_id, way):
     if request.user.is_staff:
-        student = Student.objects.get(pk=user_id)
+        student = Room.objects.get(pk=user_id)
         student.deposit = option
         student.pay_way = way
         student.save()
@@ -78,34 +79,38 @@ def deposit_view(request, option):
     if request.user.is_staff:
         if option == 'name':
             if request.method == 'POST':
-                students = Student.objects.filter(name=request.POST['name'])
-                return render(request, 'study/depositview.html', {"students": students})
+                rooms = Room.objects.filter(name=request.POST['name']).order_by('-day1')
+                return render(request, 'study/depositview.html', {"rooms": rooms})
         if option == 'number':
             if request.method == 'POST':
-                students = Student.objects.filter(
+                rooms = Room.objects.filter(
                     number=request.POST['number'])
-                return render(request, 'study/depositview.html', {"students": students})
+                return render(request, 'study/depositview.html', {"rooms": rooms})
         if option == 'not':
-            students = Student.objects.all().exclude(deposit="3")
-            return render(request, 'study/depositview.html', {"students": students})
+            rooms = Room.objects.all().exclude(deposit="3")
+            return render(request, 'study/depositview.html', {"rooms": rooms})
         if option == 'today':
-            students = Student.objects.all().exclude(deposit='3')
-            students = students.filter(day1=datetime.date.today())
-            return render(request, 'study/depositview.html', {"students": students})
+            rooms = Room.objects.all().exclude(deposit='3')
+            rooms = rooms.filter(day1__date=datetime.date.today())
+            return render(request, 'study/depositview.html', {"rooms": rooms})
 
-        students = Student.objects.all()
-        return render(request, 'study/depositview.html', {"students": students})
+        if option == 'todayall':
+            rooms = Room.objects.all().filter(day1__date=datetime.date.today())
+            return render(request, 'study/depositview.html', {"rooms": rooms})
+
+        rooms = Room.objects.all()
+        return render(request, 'study/depositview.html', {"rooms": rooms})
     else:
         return redirect('index')
 
 
 def check_in(request, user_id):
     if request.user.is_staff:
-        student = Student.objects.get(pk=user_id)
-        student.check_in = str(student.check_in) + \
+        room = Student.objects.get(pk=user_id)
+        room.check_in = str(room.check_in) + \
             str(datetime.date.today())+'/'
         print()
-        student.save()
+        room.save()
         return redirect('adminpage', 'today')
     else:
         return redirect('index')
@@ -179,8 +184,15 @@ def get_left_day(student):
 def index(request):  # 메인 화면
     imgs = Study_img.objects.all()
     try:
-        student = Student.objects.get(user_id=request.user.pk)  
-        return render(request, 'study/main/index.html', {"enroll": "재등록하기","day1":student.day1,"imgs": imgs})
+        student = Student.objects.get(user_id=request.user.pk)
+        if student.check_in == '1':
+            #아직 레슨일정 안잡혔을때
+            is_enrolled = False
+            day1 = student.day1
+        else:
+            is_enrolled = True
+            day1 = student.lesson_day
+        return render(request, 'study/main/index.html', {"enroll": "재등록하기","is_enrolled" : is_enrolled,"day1":day1,"imgs": imgs})
 
     except:
         return render(request, 'study/main/index.html', {"enroll": "등록하기", "imgs": imgs})
@@ -433,7 +445,6 @@ def qna_enroll(request):
     if request.method == "POST":
         try:
             last = Qna.objects.filter(user=request.user).last()
-            print(last.next_qna)
             if last.next_qna > datetime.datetime.today():
                 messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
                 return render(request,'study/function/qna_enroll.html')
