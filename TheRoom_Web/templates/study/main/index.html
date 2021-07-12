@@ -88,8 +88,8 @@
             <div class="stick"></div>
         </div>
     </div>
-    <div class="row mb-3 gx-3">
-        <div class="col-6">
+    <div class="row flex-column flex-md-row mb-3 gx-3">
+        <div class="col mb-3 mb-md-0">
             <div class="youtubeWrap">
                 <iframe src="https://www.youtube.com/embed/9s5nuM31TqU"
                         title="YouTube video player" frameborder="0"
@@ -98,7 +98,7 @@
                 </iframe>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col">
             <div class="youtubeWrap">
                 <iframe src="https://www.youtube.com/embed/moFB-j5iY2E"
                         title="YouTube video player" frameborder="0"
@@ -107,8 +107,8 @@
             </div>
         </div>
     </div>
-    <div class="row mb-lg-5 gx-3">
-        <div class="col-6">
+    <div class="row d-none d-md-flex flex-column flex-md-row mb-lg-5 gx-3">
+        <div class="col mb-3 mb-md-0">
             <div class="youtubeWrap">
                 <iframe src="https://www.youtube.com/embed/AwrFPJk_BGU"
                         title="YouTube video player" frameborder="0"
@@ -116,7 +116,7 @@
                         allowfullscreen></iframe>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col">
             <div class="youtubeWrap">
                 <iframe src="https://www.youtube.com/embed/zn4gB8ZVS5c"
                         title="YouTube video player" frameborder="0"
@@ -251,7 +251,7 @@
             </div>
         </div>
         <!-- 우측 고정 이미지 -->
-        <div class="col-md-4 mt-4 mt-md-0">
+        <div class="col-md-4 d-none d-md-block mt-4 mt-md-0">
             <img src="{% static 'img/room/4.jpg' %}" class="d-block w-100 rounded" alt="이미지를 불러올 수 없습니다.">
             <img src="{% static 'img/room/5.jpg' %}" class="d-block w-100 mt-4 rounded" alt="이미지를 불러올 수 없습니다.">
         </div>
@@ -283,7 +283,7 @@
 
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                 mapOption = {
-                    center: new kakao.maps.LatLng(37.5597959162956, 126.92418462694194), // 지도의 중심좌표
+                    center: new kakao.maps.LatLng(37.560603, 126.924556), // 지도의 중심좌표
                     level: lv // 지도의 확대 레벨
                 };
 
