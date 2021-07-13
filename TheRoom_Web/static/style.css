@@ -137,6 +137,9 @@ body {
 .card-text {
   font-size: 0.9rem;
 }
+.card-header {
+  background-color: #FBF6F3;
+}
 /*신청버튼 floating ver*/
 .enrollbtn {
   max-width: 200px;
