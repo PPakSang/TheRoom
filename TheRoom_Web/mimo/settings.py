@@ -194,8 +194,8 @@ MESSAGE_TAGS = {
 # AWS_xxx 의 변수들은 aws-S3, boto3 모듈을 위한 변수들이다.
 
 # 엑세스 키와 시크릿 키는 다른 파일로 작성, 임포트하여 사용
-# AWS_ACCESS_KEY_ID = secret["AWS_ID"]
-# AWS_SECRET_ACCESS_KEY = secret["AWS_SECRET_KEY"]
+AWS_ACCESS_KEY_ID = secret["AWS_ID"]
+AWS_SECRET_ACCESS_KEY = secret["AWS_SECRET_KEY"]
 
 # AWS_REGION = 'ap-northeast-2'
 # AWS_STORAGE_BUCKET_NAME = 'theroom-hd'
