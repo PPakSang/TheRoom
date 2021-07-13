@@ -132,6 +132,11 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* 강사진 카드 */
+.card-text {
+  font-size: 0.9rem;
+}
 /*신청버튼 floating ver*/
 .enrollbtn {
   max-width: 200px;

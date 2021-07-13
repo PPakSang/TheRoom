@@ -2,17 +2,20 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
 <!-- 중간 카테고리 -->
-<nav class="navbar navbar-expand-md navbar-light shadow-sm mid-nav">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav">
     <div class="container-fluid">
-        <ul class="navbar-nav mx-auto mb-0">
-            <li class="nav-item mx-2 mx-md-3">
-                <a class="nav-link" href="{% url 'enroll' %}">등록하기</a>
+        <ul class="navbar-nav mx-auto mb-md-0">
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
             </li>
-            <li class="nav-item mx-2 mx-md-3">
-                <a class="nav-link active" aria-current="page" href="#">조회하기</a>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'qna_view' 1 %}">1:1 문의</a>
             </li>
-            <li class="nav-item mx-2 mx-md-3">
-                <a class="nav-link" href="{% url 'change' %}">변경하기</a>
+            <li class="nav-item mx-3">
+                <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
@@ -20,23 +23,6 @@
 
 
 <div class="py-2 text-center container">
-    <!-- 안내사항 -->
-    <div class="row py-3 gx-0">
-    <p class="mb-0 mt-3 mt-md-5">숙지해주세요</p>
-            <h3 class="fw-bold">안내사항</h3>
-            <div class="stick mb-3 mb-md-5"></div>
-            <div class="explain inquire-explain bg-light shadow rounded">
-            <h5 class="mb-2">등록 후 꼭! 입금해주셔야 스터디 참여가능합니다<br><small class="sub_text" style="color: black;">참여 전날 밤(22시)까지 예약금
-                10,000원을 입금하셔야 정상적으로 스터디 참여가능합니다. <br>미입금 혹은 해당 시간이 지난 후 입금시 참여 제한될 수 있습니다.<br><span
-                        style="color: #007aff;">*국민은행 91234-342165 (김성진 원투스픽 / 예약금 10,000원)</span></small></h5>
-            <h5 class="mb-2">회원정보가 정확하지 않을 시 문의주세요!<br><small class="sub_text" style="color: black;">회원정보, 스터디 참여 날짜 정보가 부정확한
-                경우<br>회원정보에 변동이 있을 경우, 아래를 통해 문의주세요. <br><a
-                        href="http://pf.kakao.com/_ZRzXK">kakao(카카오톡)</a></small></h5>
-            <h5>보너스 참여 날짜는 아래에 표시되지않습니다!<br><small class="sub_text" style="color: black;">모든 보너스 참여일에 대한 부분은
-                오프라인/카카오톡 문의를 통해 확인해주세요!</small></h5>
-        </div>
-    </div>
-
 
     <div class="row gx-md-5" id="enroll">
         <!-- 회원 정보 -->
@@ -149,6 +135,24 @@
                 </table>
                 -->
             </div>
+        </div>
+    </div>
+
+
+    <!-- 안내사항 -->
+    <div class="row py-3 gx-0">
+    <p class="mb-0 mt-3 mt-md-5">숙지해주세요</p>
+            <h3 class="fw-bold">안내사항</h3>
+            <div class="stick mb-3 mb-md-5"></div>
+            <div class="explain inquire-explain bg-light shadow rounded">
+            <h5 class="mb-2">등록 후 꼭! 입금해주셔야 스터디 참여가능합니다<br><small class="sub_text" style="color: black;">참여 전날 밤(22시)까지 예약금
+                10,000원을 입금하셔야 정상적으로 스터디 참여가능합니다. <br>미입금 혹은 해당 시간이 지난 후 입금시 참여 제한될 수 있습니다.<br><span
+                        style="color: #007aff;">*국민은행 91234-342165 (김성진 원투스픽 / 예약금 10,000원)</span></small></h5>
+            <h5 class="mb-2">회원정보가 정확하지 않을 시 문의주세요!<br><small class="sub_text" style="color: black;">회원정보, 스터디 참여 날짜 정보가 부정확한
+                경우<br>회원정보에 변동이 있을 경우, 아래를 통해 문의주세요. <br><a
+                        href="http://pf.kakao.com/_ZRzXK">kakao(카카오톡)</a></small></h5>
+            <h5>보너스 참여 날짜는 아래에 표시되지않습니다!<br><small class="sub_text" style="color: black;">모든 보너스 참여일에 대한 부분은
+                오프라인/카카오톡 문의를 통해 확인해주세요!</small></h5>
         </div>
     </div>
 </div>

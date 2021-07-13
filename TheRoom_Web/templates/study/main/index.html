@@ -59,7 +59,7 @@
 
 
 <!-- 중간 카테고리 -->
-<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav" id="mid-nav-container">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav">
     <div class="container-fluid">
         <ul class="navbar-nav mx-auto mb-md-0">
             <li class="nav-item mx-3">
@@ -80,7 +80,7 @@
 
 
 <!-- 유튜브 -->
-<div class="py-3 text-center container" id="rules">
+<div class="py-3 text-center container">
     <div class="row py-3 py-md-5 gx-0">
         <div class="col-lg-6 col-md-8 mx-auto">
             <p class="my-0">더 룸을 소개합니다</p>
@@ -88,8 +88,8 @@
             <div class="stick"></div>
         </div>
     </div>
-    <div class="row mb-3 gx-3">
-        <div class="col-6">
+    <div class="row flex-column flex-md-row mb-3 gx-3">
+        <div class="col mb-3 mb-md-0">
             <div class="youtubeWrap">
                 <iframe src="https://www.youtube.com/embed/9s5nuM31TqU"
                         title="YouTube video player" frameborder="0"
@@ -98,7 +98,7 @@
                 </iframe>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col">
             <div class="youtubeWrap">
                 <iframe src="https://www.youtube.com/embed/moFB-j5iY2E"
                         title="YouTube video player" frameborder="0"
@@ -107,8 +107,8 @@
             </div>
         </div>
     </div>
-    <div class="row mb-lg-5 gx-3">
-        <div class="col-6">
+    <div class="row d-none d-md-flex flex-column flex-md-row mb-lg-5 gx-3">
+        <div class="col mb-3 mb-md-0">
             <div class="youtubeWrap">
                 <iframe src="https://www.youtube.com/embed/AwrFPJk_BGU"
                         title="YouTube video player" frameborder="0"
@@ -116,7 +116,7 @@
                         allowfullscreen></iframe>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col">
             <div class="youtubeWrap">
                 <iframe src="https://www.youtube.com/embed/zn4gB8ZVS5c"
                         title="YouTube video player" frameborder="0"
@@ -152,7 +152,8 @@
                     <img src="{% static 'img/review/1.jpg' %}" class="d-block w-100" alt="...">
                     <div class="review-caption-right d-block" style="color: black">
                         <h5 class="review-title mb-2 mb-lg-4">홍길동님의 후기</h5>
-                        <p class="review-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                        <p class="review-text">Lorem Ipsum is simply dummy text of the printing and typesetting
+                            industry. Lorem Ipsum has
                             been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
                             galley of type and scrambled it to make a type specimen book. It has survived not only five
                             centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
@@ -166,7 +167,8 @@
                     <img src="{% static 'img/review/2.jpg' %}" class="d-block w-100" alt="..." id="reviewImg">
                     <div class="review-caption-left d-block">
                         <h5 class="review-title mb-2 mb-lg-4">김짱구님의 후기</h5>
-                        <p class="review-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                        <p class="review-text">Lorem Ipsum is simply dummy text of the printing and typesetting
+                            industry. Lorem Ipsum has
                             been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
                             galley of type and scrambled it to make a type specimen book. It has survived not only five
                             centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
@@ -180,7 +182,8 @@
                     <img src="{% static 'img/review/3.jpg' %}" class="d-block w-100" alt="...">
                     <div class="review-caption-right d-block">
                         <h5 class="review-title mb-2 mb-lg-4">고등어님의 후기</h5>
-                        <p class="review-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                        <p class="review-text">Lorem Ipsum is simply dummy text of the printing and typesetting
+                            industry. Lorem Ipsum has
                             been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
                             galley of type and scrambled it to make a type specimen book. It has survived not only five
                             centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
@@ -206,8 +209,81 @@
 </div>
 
 
+<!-- 강사진 -->
+<div class="py-3 text-center container">
+    <div class="row py-3 py-md-5 gx-0">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <p class="my-0">더 룸의 멘토님들</p>
+            <h3 class="fw-bold">강사진</h3>
+            <div class="stick"></div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-2 row-cols-md-4 g-3 g-md-4 mb-lg-5">
+        <div class="col">
+            <div class="card h-100">
+                <img src="{% static 'img/mentor/1.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h6 class="card-title">김천재</h6>
+                    <p class="card-text text-start">ㆍ 무슨 콩쿠르 1위<br>
+                    ㆍ 무슨 대회 금상 수상<br>
+                    ㆍ 어쩌구 콩쿠르 심사위원</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">피아노 강사</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <img src="{% static 'img/mentor/2.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h6 class="card-title">이천재</h6>
+                    <p class="card-text text-start">ㆍ 경력 1<br>
+                    ㆍ 경력 2<br>
+                    ㆍ 경력 3<br>
+                    ㆍ 경력 4<br>
+                    ㆍ 경력 5</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">보컬 강사</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <img src="{% static 'img/mentor/3.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h6 class="card-title">박천재</h6>
+                    <p class="card-text text-start">ㆍ 경력 1<br>
+                    ㆍ 경력 2<br>
+                    ㆍ 경력 3<br>
+                    ㆍ 경력 4</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">작곡 강사</small>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <img src="{% static 'img/mentor/4.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h6 class="card-title">정천재</h6>
+                    <p class="card-text text-start">ㆍ 경력 1<br>
+                    ㆍ 경력 2<br>
+                    ㆍ 경력 3</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">기타 강사</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- 연습실 사진 -->
-<div class="py-3 text-center container" id="mentors">
+<div class="py-3 text-center container">
     <div class="row py-3 py-md-5 gx-0">
         <div class="col-lg-6 col-md-8 mx-auto">
             <p class="my-0">쾌적한 환경</p>
@@ -251,7 +327,7 @@
             </div>
         </div>
         <!-- 우측 고정 이미지 -->
-        <div class="col-md-4 mt-4 mt-md-0">
+        <div class="col-md-4 d-none d-md-block mt-4 mt-md-0">
             <img src="{% static 'img/room/4.jpg' %}" class="d-block w-100 rounded" alt="이미지를 불러올 수 없습니다.">
             <img src="{% static 'img/room/5.jpg' %}" class="d-block w-100 mt-4 rounded" alt="이미지를 불러올 수 없습니다.">
         </div>
@@ -283,7 +359,7 @@
 
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                 mapOption = {
-                    center: new kakao.maps.LatLng(37.5597959162956, 126.92418462694194), // 지도의 중심좌표
+                    center: new kakao.maps.LatLng(37.560603, 126.924556), // 지도의 중심좌표
                     level: lv // 지도의 확대 레벨
                 };
 
@@ -325,6 +401,7 @@
                 content: content,
                 yAnchor: 1
             });
+
         </script>
     </div>
     <div class="row mb-lg-5 gx-0 text-start bg-light border rounded">
