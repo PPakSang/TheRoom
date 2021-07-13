@@ -3,69 +3,103 @@
 <link rel="stylesheet" href="{% static 'index.css' %}">
 
 <!-- 중간 카테고리 -->
-<nav class="navbar navbar-expand-md navbar-dark shadow-sm bg-dark">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav">
     <div class="container-fluid">
-        <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+        <ul class="navbar-nav mx-auto mb-md-0">
             <li class="nav-item mx-3">
-                <a class="nav-link" href="">상담 신청</a>
+                <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link active" href="">1:1 문의</a>
+                <a class="nav-link active" href="{% url 'qna_view' 1 %}">1:1 문의</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" aria-current="page" href="">연습실 대여</a>
+                <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="">더룸 리뷰</a>
+                <a class="nav-link" href="">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
 </nav>
 
-<div class="container">
+<div class="container" id="container">
     <h3 class="menu_title mb-4 mt-5"> 1:1문의</h3>
     <div class="divline"></div>
 
 
-<div class="writing_view">
-    <div class="title_box mt-5 mx-2">
-        <span class="title_view"><span class="title_title">제목</span>
-        <span class="title_value">{{qna.title}}</span></span> 
-        <span class="date_view"><span class="date_title">작성일</span>
-        <span class="date_value">{{qna.date|date:"Y-m-d"}}</span></span>
-    </div>
+    <div class="detail_view">
+        <div class="detail_box mt-4">
+            <table class="detail_table" id="detail_table">
+                <tr class="first_col">
+                    <td class="title_title">제목</td>
+                    <td class="detail_title" colspan="3" id="title">{{qna.title}}</td>
+                    <td class="title_date">작성일</td>
+                    <td class="detail_date">{{qna.date|date:"Y-m-d"}}</td>
+                </tr>
+                <tr class="second_col">
+                    <td colspan="6" id="content">
+                        <div class="detail_content">
+                            {{qna.text}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    <div class="content_box">
-        <div class="content_view my-4 mx-5">
-        {{qna.text}}
-    </div>
-    </div>
-    <div class="btn_container">
-        <div class="buttons mt-2 row g-1">
-            <div class="col">
-        <button class="enroll_btn py-1 px-4">수정</button>
+        <div class="btn_container">
+            <div class="buttons mt-2 row g-1">
+                <div class="col" id="modify_btn">
+                    <button class="modify_btn py-1 px-4" onclick="modify_func()">수정</button>
+                </div>
+                <div class="col" id="delete_btn">
+                    <button class="detail_delete_btn">
+                        <input type="submit" class="delete_btn  py-1 px-4" value="삭제"></button>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <button class="writing_close py-1 px-4">
-            <a href="#">삭제</a> </button>
+        <div class="comment_box">
+            <div class="comment_title">
+                답변
+            </div>
+            <form action="" method="POST">
+                {% if request.user.is_staff %}
+                <table class="detail_comment_table">
+                    <td>
+                        <textarea name="answer" class="comment_input" placeholder="답변을 입력해주세요" cols="30"
+                            rows="10">{{qna.answer}}</textarea>
+                    </td>
+                </table>
+                <div class="detail_comment_btn">
+                    <input type="submit" value="답변하기" class="comment_btn py-1">
+                </div>
+            </form>
+            {% else %}
+            <div class="comment_notice py-4"> 아직 답변이 없습니다</div>
+            <div class="comment_value my-2 mx-5">{% if qna.answer %}{{qna.answer}}{% else %}답변이 아직 등록되지않았습니다.{% endif %}
+            </div>
+            {% endif %}
         </div>
+        <div class=" my-5">
+            <button class="detail_list_btn"><a class="list_btn" href="{% url 'qna_view' 1 %}">목록</a></button>
         </div>
-    </div>
-    <div class="comment_box">
-        {% if request.user.is_staff %}
-        <form action="" method="POST">
-            {% csrf_token %}
-            <textarea name="answer" placeholder="배캐 이게 관리자일때 떠야하는 화면, 댓글달기 바로 뜨는거"  cols="30" rows="10">{{qna.answer}}</textarea>
-            <input type="submit" value="답변하기">
-        </form>
-        {% else %}
-        <div class="comment_title">
-            답변
-        </div>
-        <div class="comment_value my-2 mx-5">{% if qna.answer %}{{qna.answer}}{% else %}답변이 아직 등록되지않았습니다.{% endif %}</div>
-        {% endif %}
     </div>
 </div>
-</div>
+
+<script>
+    function modify_func() {
+        var getTable = document.getElementById("detail_table");
+        var getModiBtn = document.getElementById("modify_btn");
+        var getDelBtn = document.getElementById("delete_btn");
+
+        var putTable = "<tr class='first_col'><td class='title_title'>제목</td><td><input name='title' type='text' class='title_input' placeholder='제목을 입력해주세요' autofocus='autofocus' required='required' autocomplete='off'></td></tr><tr class='second_col'><td colspan='2'><textarea name='text' class='content_input' placeholder='내용을 입력해주세요' cols='50' rows='10' required='required'></textarea></td></tr>";
+        var putModiBtn = "<input type='submit' class='enroll_btn  py-1 px-4' value='수정'>";
+        var putDelBtn = "<button class='writing_close_btn'><a class='close_btn py-1 px-4' href='{% url 'qna_view' 1 %}'>취소</a></button>";
+
+        getTable.innerHTML = putTable;
+        getModiBtn.innerHTML = putModiBtn;
+        getDelBtn.innerHTML = putDelBtn;
+
+    }
+</script>
 
 {% endblock %}
