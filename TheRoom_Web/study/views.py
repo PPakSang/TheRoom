@@ -1,3 +1,4 @@
+from django.db.models.query_utils import Q
 import boto3
 from django.conf import settings
 from datetime import timedelta, tzinfo
@@ -37,28 +38,28 @@ def only_admin(request, option):
     if request.user.is_staff:
 
         if option == 'all':
-            new_students = Student.objects.filter(deposit='1')
-            students = Student.objects.all().exclude(deposit='1').order_by('-lesson_day')
+            new_students = Student.objects.filter(deposit='1').exclude(user_id = 0)
+            students = Student.objects.all().exclude(deposit='1').order_by('-lesson_day').exclude(user_id = 0)
             return render(request, 'study/admin.html', {'students': students, 'new_students': new_students})
 
         if option == 'today':
-            new_students = Student.objects.filter(lesson_day__date=datetime.date.today())
+            new_students = Student.objects.filter(lesson_day__date=datetime.date.today()).exclude(user_id=0)
             
             return render(request, 'study/admin.html', {'new_students': new_students})
 
         if option == 'name':
             if request.method == 'POST':
-                students = Student.objects.filter(name=request.POST['name'])
+                students = Student.objects.filter(name=request.POST['name']).exclude(user_id = 0)
                 return render(request, 'study/admin.html', {'students': students})
 
         if option == 'number':
             if request.method == 'POST':
                 students = Student.objects.filter(
-                    number=request.POST['number'])
+                    number=request.POST['number']).exclude(user_id = 0)
                 return render(request, 'study/admin.html', {'students': students})
 
         if option == 'new':
-            new_students = Student.objects.filter(check_in="1")
+            new_students = Student.objects.filter(check_in="1").exclude(user_id = 0)
             return render(request, 'study/admin.html', {'new_students': new_students})
     else:
         return redirect('index')
@@ -195,7 +196,7 @@ def index(request):  # 메인 화면
         return render(request, 'study/main/index.html', {"enroll": "재등록하기","is_enrolled" : is_enrolled,"day1":day1,"imgs": imgs})
 
     except:
-        return render(request, 'study/main/index.html', {"enroll": "등록하기", "imgs": imgs})
+        return render(request, 'study/main/index.html', {"enroll": "등록하기", "no_enroll":True, "imgs": imgs})
 
 
 
@@ -229,7 +230,7 @@ def lesson_enroll(request): # 레슨 신청 화면
                 form.name = request.user.first_name
                 form.save()
 
-                return redirect('index')
+                return redirect('inquire')
             else:
                 messages.error(request, '등록 실패!')
                 return render(request, 'study/function/lesson_enroll.html')
@@ -295,11 +296,25 @@ def enroll(request):  # 등록하기 화면
 def inquire(request):  # 조회하기 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
-
-    except Exception as e:
-        return redirect('enroll')
-
-    return render(request, 'study/function/inquire.html',
+    except:
+        return redirect('lesson')
+    if request.method == 'POST':    
+        student = Student.objects.get(user_id=request.user.id)
+        if request.POST['day1'] == '0':
+            student.user_id = 0
+            student.save()
+            return redirect('lesson')
+        day1 = datetime.date.fromisoformat(request.POST['day1'])
+        if day1 < datetime.date.today():  # 당일변경/확인 후 막기
+            messages.error(request, "변경 실패!")
+            return render(request, 'study/function/inquire.html', {'student': student})
+        else:
+            student.day1 = day1
+            student.save()
+            return render(request, 'study/function/inquire.html', {'student': student})
+    else:
+        
+        return render(request, 'study/function/inquire.html',
                   {'student': student}
                   )
 
@@ -331,7 +346,6 @@ def change(request):  # 변경하기 화면
         return redirect('enroll')
     if request.method == 'POST':
         student = Student.objects.get(user_id=request.user.id)
-
         try:
             i = int(request.POST['i'])  # 몇주차 변경하는지
             if getattr(student, f'day{i}') <= datetime.date.today():  # 당일변경 막기

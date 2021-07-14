@@ -109,7 +109,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">예</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="cancel()">예</button>
             </div>
         </div>
     </div>
@@ -129,19 +129,23 @@
             <div class="modal-body">
                 <label for="toDatePicker" class="form-label fw-bold">날짜 선택</label>
                 <input type="text" name="changeDay" class="form-control" id="toDatePicker" placeholder="연도-월-일"
-                       autocomplete="off" onchange="check_value()">
+                       autocomplete="off" onchange="check_value(); input_value();">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="">취소</button>
                 <button type="button" id="date_ch" class="btn btn-dark disabled" data-bs-dismiss="modal"
-                        onclick="toDate()">변경하기
+                        onclick="clicker()">변경하기
                 </button>
             </div>
         </div>
     </div>
 </div>
 
-
+<form action="" method="POST" style="display: none;">
+    {% csrf_token %}
+    <input type="text" id="day1" name="day1">
+    <input type="submit" id="day1_click">
+</form>
 
 <!-- date picker -->
 <script>
@@ -189,6 +193,17 @@
         else{
             date_remove_disabled()
         }
+    }
+
+    function input_value(){
+        $('#day1').val($('#toDatePicker').val())
+    }
+    function clicker(){
+        $('#day1_click').click()
+    }
+    function cancel(){
+        $('#day1').val('0')
+        $('#day1_click').click()
     }
 </script>
 {% endblock %}
