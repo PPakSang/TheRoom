@@ -145,6 +145,9 @@ body {
 .card-text {
   font-size: 0.9rem;
 }
+.card-header {
+  background-color: #fffdf4;
+}
 /*신청버튼 floating ver*/
 .enrollbtn {
   max-width: 200px;
@@ -345,6 +348,12 @@ body {
   background: rgba(0, 0, 0, 0.075);
   color: #212529;
 }
+
+/* inquire 페이지 */
+.inquire-content {
+  font-size: 0.9rem;
+}
+
 /* 아코디언 색 변경 */
 
 .accordion-button:not(.collapsed) {
