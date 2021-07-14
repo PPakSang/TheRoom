@@ -22,10 +22,6 @@ body {
   /* font-weight: 100, 300, 400, 500, 700, 900 */
 }
 
-#container {
-  height: calc(100vh-144px);
-}
-
 /*네비바 더룸 로고*/
 .logo_theroom {
   width: 4rem;
