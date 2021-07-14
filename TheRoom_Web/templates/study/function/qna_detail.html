@@ -16,7 +16,7 @@
                 <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="">더 룸 리뷰</a>
+                <a class="nav-link" href="{% url 'review'%}">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
@@ -24,21 +24,21 @@
 
 <div class="container" id="container">
     <h3 class="menu_title mb-4 mt-5"> 1:1문의</h3>
-    <div class="divline"></div>
+    <div class="divline mb-5"></div>
 
 
     <div class="detail_view">
-        <div class="detail_box mt-4">
+        <div class="detail_box">
             <table class="detail_table" id="detail_table">
                 <tr class="first_col">
                     <td class="title_title">제목</td>
-                    <td class="detail_title" colspan="3" id="title">{{qna.title}}</td>
+                    <td class="detail_title" colspan="3" id="title" style="text-align: start;">{{qna.title}}</td>
                     <td class="title_date">작성일</td>
                     <td class="detail_date">{{qna.date|date:"Y-m-d"}}</td>
                 </tr>
                 <tr class="second_col">
                     <td colspan="6" id="content">
-                        <div class="detail_content">
+                        <div class="detail_content my-2" style="text-align: start;">
                             {{qna.text}}
                         </div>
                     </td>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="col" id="delete_btn">
                     <button class="detail_delete_btn">
-                        <input type="submit" class="delete_btn  py-1 px-4" value="삭제"></button>
+                        <input type="submit" class="delete_btn  py-1 px-4" value="삭제" onclick="del_Alert()"></button>
                 </div>
             </div>
         </div>
@@ -74,12 +74,10 @@
                 </div>
             </form>
             {% else %}
-            <div class="comment_notice py-4"> 아직 답변이 없습니다</div>
-            <div class="comment_value my-2 mx-5">{% if qna.answer %}{{qna.answer}}{% else %}답변이 아직 등록되지않았습니다.{% endif %}
-            </div>
+            <div class="comment_notice py-4">{% if qna.answer %}{{qna.answer}}{% else %}아직 답변이 등록되지않았습니다{% endif %}</div>
             {% endif %}
         </div>
-        <div class=" my-5">
+        <div class="my-5">
             <button class="detail_list_btn"><a class="list_btn" href="{% url 'qna_view' 1 %}">목록</a></button>
         </div>
     </div>
@@ -98,6 +96,11 @@
         getTable.innerHTML = putTable;
         getModiBtn.innerHTML = putModiBtn;
         getDelBtn.innerHTML = putDelBtn;
+
+    }
+
+    function del_Alert(){
+        let delConfirm = confirm("이 글을 삭제하시겠습니까?");
 
     }
 </script>

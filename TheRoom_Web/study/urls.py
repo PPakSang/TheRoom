@@ -38,7 +38,7 @@ urlpatterns = [
     path('category/enroll/', enroll, name='enroll'),
     path('category/change/', change, name='change'),
     path('category/faq/', faq_view, name='faq'),
-    
+
 
     # policy
 
@@ -61,10 +61,11 @@ urlpatterns = [
     path('qnalist/', qna_list, name='qna_list'),
     path('category/qna/detail/<pk>', qna_detail, name='qna_detail'),
     path('category/qna/enroll', qna_enroll, name='qna_enroll'),
-    path('category/qna/<num>',qna_view,name='qna_view'),
+    path('category/qna/<num>', qna_view, name='qna_view'),
+    path('category/review', review, name='review'),
 
 
-    path('testt/',test3),
+    path('testt/', test3),
 
 
     path('lesson/', lesson_enroll, name='lesson')

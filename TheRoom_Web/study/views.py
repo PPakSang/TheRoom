@@ -38,28 +38,33 @@ def only_admin(request, option):
     if request.user.is_staff:
 
         if option == 'all':
-            new_students = Student.objects.filter(deposit='1').exclude(user_id = 0)
-            students = Student.objects.all().exclude(deposit='1').order_by('-lesson_day').exclude(user_id = 0)
+            new_students = Student.objects.filter(
+                deposit='1').exclude(user_id=0)
+            students = Student.objects.all().exclude(
+                deposit='1').order_by('-lesson_day').exclude(user_id=0)
             return render(request, 'study/admin.html', {'students': students, 'new_students': new_students})
 
         if option == 'today':
-            new_students = Student.objects.filter(lesson_day__date=datetime.date.today()).exclude(user_id=0)
-            
+            new_students = Student.objects.filter(
+                lesson_day__date=datetime.date.today()).exclude(user_id=0)
+
             return render(request, 'study/admin.html', {'new_students': new_students})
 
         if option == 'name':
             if request.method == 'POST':
-                students = Student.objects.filter(name=request.POST['name']).exclude(user_id = 0)
+                students = Student.objects.filter(
+                    name=request.POST['name']).exclude(user_id=0)
                 return render(request, 'study/admin.html', {'students': students})
 
         if option == 'number':
             if request.method == 'POST':
                 students = Student.objects.filter(
-                    number=request.POST['number']).exclude(user_id = 0)
+                    number=request.POST['number']).exclude(user_id=0)
                 return render(request, 'study/admin.html', {'students': students})
 
         if option == 'new':
-            new_students = Student.objects.filter(check_in="1").exclude(user_id = 0)
+            new_students = Student.objects.filter(
+                check_in="1").exclude(user_id=0)
             return render(request, 'study/admin.html', {'new_students': new_students})
     else:
         return redirect('index')
@@ -80,7 +85,8 @@ def deposit_view(request, option):
     if request.user.is_staff:
         if option == 'name':
             if request.method == 'POST':
-                rooms = Room.objects.filter(name=request.POST['name']).order_by('-day1')
+                rooms = Room.objects.filter(
+                    name=request.POST['name']).order_by('-day1')
                 return render(request, 'study/depositview.html', {"rooms": rooms})
         if option == 'number':
             if request.method == 'POST':
@@ -187,21 +193,20 @@ def index(request):  # 메인 화면
     try:
         student = Student.objects.get(user_id=request.user.pk)
         if student.check_in == '1':
-            #아직 레슨일정 안잡혔을때
+            # 아직 레슨일정 안잡혔을때
             is_enrolled = False
             day1 = student.day1
         else:
             is_enrolled = True
             day1 = student.lesson_day
-        return render(request, 'study/main/index.html', {"enroll": "재등록하기","is_enrolled" : is_enrolled,"day1":day1,"imgs": imgs})
+        return render(request, 'study/main/index.html', {"enroll": "재등록하기", "is_enrolled": is_enrolled, "day1": day1, "imgs": imgs})
 
     except:
-        return render(request, 'study/main/index.html', {"enroll": "등록하기", "no_enroll":True, "imgs": imgs})
-
+        return render(request, 'study/main/index.html', {"enroll": "등록하기", "no_enroll": True, "imgs": imgs})
 
 
 @login_required(login_url='/user/login/')
-def lesson_enroll(request): # 레슨 신청 화면
+def lesson_enroll(request):  # 레슨 신청 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
         if student.day1 > datetime.date.today() != 0:  # 아직 남았다면
@@ -237,9 +242,6 @@ def lesson_enroll(request): # 레슨 신청 화면
         return render(request, 'study/function/lesson_enroll.html')
 
 
-
-
-
 @login_required(login_url='/user/login/')
 def enroll(request):  # 등록하기 화면
     try:
@@ -250,12 +252,12 @@ def enroll(request):  # 등록하기 화면
     except:
         if request.method == 'POST':
             number = request.POST['number']
-            day1 = datetime.datetime.fromisoformat(f"{request.POST['date']} {request.POST['time']}:00")
+            day1 = datetime.datetime.fromisoformat(
+                f"{request.POST['date']} {request.POST['time']}:00")
 
             if day1 < datetime.datetime.today():  # 지난 날 신청할 때
                 messages.error(request, "등록 실패!")
                 return render(request, 'study/function/enroll.html', {"error": "지난날은 신청할 수 없습니다."})
-
 
             room = Room(
                 number=number,
@@ -298,7 +300,7 @@ def inquire(request):  # 조회하기 화면
         student = Student.objects.get(user_id=request.user.id)
     except:
         return redirect('lesson')
-    if request.method == 'POST':    
+    if request.method == 'POST':
         student = Student.objects.get(user_id=request.user.id)
         if request.POST['day1'] == '0':
             student.user_id = 0
@@ -313,10 +315,10 @@ def inquire(request):  # 조회하기 화면
             student.save()
             return render(request, 'study/function/inquire.html', {'student': student})
     else:
-        
+
         return render(request, 'study/function/inquire.html',
-                  {'student': student}
-                  )
+                      {'student': student}
+                      )
 
 
 # @login_required(login_url='/login/')
@@ -395,40 +397,41 @@ def faq_view(request):  # 자주묻는질문 화면
     return render(request, 'study/function/faq.html')
 
 
-
 @login_required(login_url='/user/login')
 def qna_list(request):  # 커뮤니티
     if request.user.is_staff:
         page = int(request.GET['page'])
         qnas = Qna.objects.all().order_by('-pk')
-        page_len = qnas.count()//2 + qnas.count()%2
+        page_len = qnas.count()//2 + qnas.count() % 2
 
         qnas = qnas[2*(page-1):2*page]
-        qnas = render_to_string('study/function/qna_list_base.html',context={"qnas":qnas,"is_staff":True})
+        qnas = render_to_string(
+            'study/function/qna_list_base.html', context={"qnas": qnas, "is_staff": True})
         context = {
-            "qnas":qnas,
-            "page_len":page_len
+            "qnas": qnas,
+            "page_len": page_len
         }
         context = json.dumps(context)
         return HttpResponse(context)
     else:
         page = int(request.GET['page'])
-        qnas = Qna.objects.filter(user = request.user).order_by('-pk')
-        page_len = qnas.count()//2 + qnas.count()%2
+        qnas = Qna.objects.filter(user=request.user).order_by('-pk')
+        page_len = qnas.count()//2 + qnas.count() % 2
 
         qnas = qnas[2*(page-1):2*page]
-        qnas = render_to_string('study/function/qna_list_base.html',context={"qnas":qnas})
+        qnas = render_to_string(
+            'study/function/qna_list_base.html', context={"qnas": qnas})
 
         context = {
-            "qnas":qnas,
-            "page_len":page_len
+            "qnas": qnas,
+            "page_len": page_len
         }
         context = json.dumps(context)
         return HttpResponse(context)
 
 
-def qna_view(request,num):
-    return render(request,'study/function/qna_view.html',{"num":num})
+def qna_view(request, num):
+    return render(request, 'study/function/qna_view.html', {"num": num})
 
 
 @login_required(login_url='/user/login')
@@ -437,8 +440,8 @@ def qna_enroll(request):
         try:
             last = Qna.objects.filter(user=request.user).last()
             if last.next_qna > datetime.datetime.today():
-                messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
-                return render(request,'study/function/qna_enroll.html')
+                messages.error(request, "문의 후 10분간 재문의가 제한됩니다.")
+                return render(request, 'study/function/qna_enroll.html')
             else:
                 raise Exception
         except:
@@ -449,7 +452,7 @@ def qna_enroll(request):
             qna.next_qna = datetime.datetime.now(
                 tz=None) + datetime.timedelta(minutes=10)
             qna.save()
-            return redirect('qna_view',1)
+            return redirect('qna_view', 1)
     return render(request, 'study/function/qna_enroll.html')
 
 
@@ -463,23 +466,21 @@ def qna_detail(request, pk):
             qna.save()
         return render(request, 'study/function/qna_detail.html', context={"qna": qna})
     else:
-        qna = Qna.objects.filter(user = request.user).last()
+        qna = Qna.objects.filter(user=request.user).last()
         if request.method == "POST":
-            if qna.answer :
-                messages.error(request,"답변이 작성된 글은 수정이 불가능합니다.")
-                return render(request,'study/function/qna_detail.html',context={"qna":qna})
+            if qna.answer:
+                messages.error(request, "답변이 작성된 글은 수정이 불가능합니다.")
+                return render(request, 'study/function/qna_detail.html', context={"qna": qna})
             if qna.next_qna < datetime.datetime.today():
-                new_qna = Qna(user = request.user)
+                new_qna = Qna(user=request.user)
                 new_qna.title = request.POST["title"]
                 new_qna.text = request.POST["text"]
                 new_qna.date = datetime.date.today()
                 new_qna.next_qna = datetime.datetime.today() + datetime.timedelta(minutes=10)
                 new_qna.save()
             else:
-                messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
-        return render(request,'study/function/qna_detail.html',context={"qna":qna})
-
-
+                messages.error(request, "문의 후 10분간 재문의가 제한됩니다.")
+        return render(request, 'study/function/qna_detail.html', context={"qna": qna})
 
 
 # @login_required(login_url='/login/')
@@ -858,8 +859,7 @@ def deleteimg(request, pk):
     return HttpResponse('삭제완료')
 
 
-
-#Qna
+# Qna
 @login_required(login_url="/user/login")
 def test(request):
     if request.method == "POST":
@@ -871,3 +871,6 @@ def test(request):
     else:
         return render(request, "test/test.html")
 
+
+def review(request):  # 리뷰페이지
+    return render(request, 'study/function/review.html')

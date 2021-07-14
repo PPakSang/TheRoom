@@ -605,7 +605,7 @@ body {
 }
 
 .detail_table .detail_content {
-  height: 100px;
+  height: 300px;
   text-align: center;
 }
 
@@ -637,6 +637,10 @@ body {
   background-color: white;
   border: 2px solid var(--sub-basic-color);
   border-radius: 3px;
+}
+
+.detail_comment_btn .comment_btn:hover {
+  background-color: var(--border-color-lightgray);
 }
 
 .detail_list_btn {
@@ -677,6 +681,7 @@ body {
 .comment_notice {
   color: var(--sub-basic-color);
   text-align: center;
+  min-height: 100px;
 }
 
 .detail_comment_table {
@@ -700,6 +705,74 @@ body {
 .detail_comment_table .comment_input:focus {
   outline: none;
   box-shadow: 0 0 1px 1px #0086db;
+}
+
+/*리뷰*/
+
+.review_container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+}
+
+.review_container .review_write_btn {
+  align-self: flex-end;
+  margin-right: 5%;
+  background-color: var(--main-basic-color);
+  border: 1px solid var(--main-basic-color);
+  border-radius: 3px;
+}
+
+.review_container .review_write_btn a {
+  text-decoration: none;
+  color: aliceblue;
+  font-size: 0.95rem;
+}
+
+.review_container .review_write_btn:hover {
+  background-color: var(--sub-basic-color);
+}
+
+.review_box {
+  border: 1px solid var(--border-color-lightgray);
+  box-shadow: 2px 2px 2px 2px var(--border-color-lightgray);
+  border-radius: 5px;
+  padding: 15px 20px;
+  width: 70%;
+}
+
+.review_box .review_title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.review_box .review_content {
+  width: 100%;
+}
+
+.review_box .review_content.clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.review_box .more_btn_box {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.more_btn_box .more_btn {
+  border: none;
+  color: #0086db;
+  background-color: white;
+  font-size: 0.8rem;
 }
 
 /*login 혜원*/
