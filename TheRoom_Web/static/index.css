@@ -1,9 +1,7 @@
-.container{
-    max-width: 60rem;
-  }
+.container {
+  max-width: 60rem;
+}
 
-
-
-.qna{
-  min-height: 522px;
+main {
+  min-height: calc(100vh - 144px);
 }
