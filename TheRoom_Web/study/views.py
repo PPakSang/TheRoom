@@ -331,16 +331,9 @@ def inquire(request):  # 조회하기 화면
             student.save()
             return redirect('inquire')
     else:
-<<<<<<< HEAD
         return render(request, 'study/function/inquire.html',
                   {'student': student,"is_enrolled" : is_enrolled,"day1":day}
                   )
-=======
-
-        return render(request, 'study/function/inquire.html',
-                      {'student': student}
-                      )
->>>>>>> 55bbd20e47a8bc72ce2ed96bc72b32abebbc039f
 
 
 # @login_required(login_url='/login/')

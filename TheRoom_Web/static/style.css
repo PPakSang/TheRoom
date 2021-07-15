@@ -433,6 +433,8 @@ body {
 }
 
 .page-item.active .page-link{
+  background: #212529;
+  border-color: #dee2e6;
   font-weight: bold;
 }
 .writing_link_div {
