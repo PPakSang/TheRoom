@@ -63,6 +63,7 @@
             </div>
             <form action="" method="POST">
                 {% if request.user.is_staff %}
+                {% csrf_token %}
                 <table class="detail_comment_table">
                     <td>
                         <textarea name="answer" class="comment_input" placeholder="답변을 입력해주세요" cols="30"

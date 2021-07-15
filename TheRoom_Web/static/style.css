@@ -436,6 +436,9 @@ body {
   color: black;
 }
 
+.page-item.active .page-link{
+  font-weight: bold;
+}
 .writing_link_div {
   display: flex;
   justify-content: flex-end;

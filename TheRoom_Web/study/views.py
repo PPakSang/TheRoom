@@ -204,9 +204,18 @@ def index(request):  # 메인 화면
 def lesson_enroll(request): # 레슨 신청 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
+        
+        if student.check_in == '1':
+            #아직 레슨일정 안잡혔을때
+            is_enrolled = False
+            day1 = student.day1
+        else:
+            is_enrolled = True
+            day1 = student.lesson_day
+
         if student.day1 > datetime.date.today() != 0:  # 아직 남았다면
             messages.error(request, "이미 등록하셨습니다!")
-            return render(request, 'study/function/lesson_enroll.html', {"error": "날짜변경 또는 상담취소신청 가능합니다."})
+            return render(request, 'study/function/lesson_enroll.html',{"error": "날짜변경 또는 상담취소신청 가능합니다.","is_enrolled" : is_enrolled,"day1":day1})
         else:
             student.user_id = 0
             student.save()
@@ -218,11 +227,11 @@ def lesson_enroll(request): # 레슨 신청 화면
 
             if day1 < datetime.date.today():  # 지난 날 신청할 때
                 messages.error(request, "등록 실패!")
-                return render(request, 'study/function/lesson_enroll.html', {"error": "지난날은 신청할 수 없습니다."})
+                return render(request, 'study/function/lesson_enroll.html', {"error": "지난날은 신청할 수 없습니다.", "no_enroll":True})
 
             if day1 == datetime.date.today() + timedelta(days=1) and datetime.datetime.today().hour >= 22:  # 당일 10시 넘어서 다음날 신청할 때
                 messages.error(request, "등록 실패!")
-                return render(request, 'study/function/lesson_enroll.html', {"error": "22시 이후에는 다음날 신청이 불가합니다."})
+                return render(request, 'study/function/lesson_enroll.html', {"error": "22시 이후에는 다음날 신청이 불가합니다.", "no_enroll":True})
 
             if form.is_valid():
                 form = form.save(commit=False)
@@ -233,8 +242,8 @@ def lesson_enroll(request): # 레슨 신청 화면
                 return redirect('inquire')
             else:
                 messages.error(request, '등록 실패!')
-                return render(request, 'study/function/lesson_enroll.html')
-        return render(request, 'study/function/lesson_enroll.html')
+                return render(request, 'study/function/lesson_enroll.html',{"no_enroll":True})
+        return render(request, 'study/function/lesson_enroll.html',{"no_enroll":True})
 
 
 
@@ -296,6 +305,13 @@ def enroll(request):  # 등록하기 화면
 def inquire(request):  # 조회하기 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
+        if student.check_in == '1':
+        #아직 레슨일정 안잡혔을때
+            is_enrolled = False
+            day = student.day1
+        else:
+            is_enrolled = True
+            day = student.lesson_day
     except:
         return redirect('lesson')
     if request.method == 'POST':    
@@ -307,15 +323,14 @@ def inquire(request):  # 조회하기 화면
         day1 = datetime.date.fromisoformat(request.POST['day1'])
         if day1 < datetime.date.today():  # 당일변경/확인 후 막기
             messages.error(request, "변경 실패!")
-            return render(request, 'study/function/inquire.html', {'student': student})
+            return redirect('inquire')
         else:
             student.day1 = day1
             student.save()
-            return render(request, 'study/function/inquire.html', {'student': student})
+            return redirect('inquire')
     else:
-        
         return render(request, 'study/function/inquire.html',
-                  {'student': student}
+                  {'student': student,"is_enrolled" : is_enrolled,"day1":day}
                   )
 
 
@@ -428,7 +443,20 @@ def qna_list(request):  # 커뮤니티
 
 
 def qna_view(request,num):
-    return render(request,'study/function/qna_view.html',{"num":num})
+    try:
+        student = Student.objects.get(user_id = request.user.id)
+        if student.check_in == '1':
+            #아직 레슨일정 안잡혔을때
+            is_enrolled = False
+            day1 = student.day1
+        else:
+            is_enrolled = True
+            day1 = student.lesson_day
+    except:
+        return render(request,'study/function/qna_view.html',{"num":num,"no_enroll":True})
+
+        
+    return render(request,'study/function/qna_view.html',{"num":num,"is_enrolled" : is_enrolled,"day1":day1})
 
 
 @login_required(login_url='/user/login')
@@ -479,6 +507,90 @@ def qna_detail(request, pk):
                 messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
         return render(request,'study/function/qna_detail.html',context={"qna":qna})
 
+
+@login_required(login_url='/user/login')
+def review_list(request):  # 커뮤니티
+    page = int(request.GET['page'])
+    reviews = Review.objects.filter(user = request.user).order_by('-pk')
+    page_len = reviews.count()//2 + reviews.count()%2
+
+    reviews = reviews[2*(page-1):2*page]
+    reviews = render_to_string('study/function/review_list_base.html',context={"reviews":reviews})
+
+    context = {
+        "reviews":reviews,
+        "page_len":page_len
+    }
+    context = json.dumps(context)
+    return HttpResponse(context)
+
+def review_view(request,num):
+    try:
+        student = Student.objects.get(user_id = request.user.id)
+        if student.check_in == '1':
+            #아직 레슨일정 안잡혔을때
+            is_enrolled = False
+            day1 = student.day1
+        else:
+            is_enrolled = True
+            day1 = student.lesson_day
+    except:
+        return render(request,'study/function/review_view.html',{"num":num,"no_enroll":True})
+
+        
+    return render(request,'study/function/review_view.html',{"num":num,"is_enrolled" : is_enrolled,"day1":day1})
+
+
+
+@login_required(login_url='/user/login')
+def review_enroll(request):
+    if request.method == "POST":
+        try:
+            if Review.objects.get(user = request.user):
+                messages.error(request,"리뷰는 한번만 작성 가능합니다")
+                return render(request,'study/function/review_enroll.html')
+            elif not Student.objects.exists(user_id = request.user.id) or Student.objects.filter(user_id = request.user.id)[0].check_in == '1':
+                messages.error(request,"레슨이 진행된 이후에 리뷰작성 가능합니다")
+                return redirect('review_view',1)
+            else:
+                raise Exception
+        except:
+            review = Review(user=request.user)
+            review.title = request.POST["title"]
+            review.text = request.POST["text"]
+            review.date = datetime.date.today()
+            review.next_review = datetime.datetime.now(
+                tz=None) + datetime.timedelta(minutes=10)
+            review.save()
+            return redirect('review_view',1)
+    return render(request, 'study/function/review_enroll.html')
+
+
+@login_required(login_url='/user/login')
+def review_detail(request, pk):
+    if request.user.is_staff:
+        # 답변하기
+        review = Review.objects.get(pk=pk)
+        if request.method == "POST":
+            review.answer = request.POST["answer"]
+            review.save()
+        return render(request, 'study/function/review_detail.html', context={"review": review})
+    else:
+        review = Review.objects.get(pk = pk)
+        if request.method == "POST":
+            if review.answer :
+                messages.error(request,"답변이 작성된 리뷰는 수정이 불가능합니다.")
+                return render(request,'study/function/review_detail.html',context={"review":review})
+            elif review.user == request.user:
+                new_review = review(user = request.user)
+                new_review.title = request.POST["title"]
+                new_review.text = request.POST["text"]
+                new_review.date = datetime.date.today()
+                new_review.save()
+            else :
+                messages.error(request,"타인의 리뷰는 수정할 수 없습니다")
+                return render(request,'study/function/review_detail.html',context={"review":review})
+        return render(request,'study/function/review_detail.html',context={"review":review})
 
 
 

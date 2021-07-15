@@ -104,9 +104,6 @@ class Review(models.Model):
     date = models.DateField(auto_now=True)
 
 
-    
-    #Review 남기고나서 다음 Review 는 10분뒤에 남길 수 있도록
-    next_qna = models.DateTimeField(blank = True)
 
 
 
