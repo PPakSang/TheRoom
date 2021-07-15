@@ -253,10 +253,25 @@ def lesson_enroll(request):  # 레슨 신청 화면
 
 @login_required(login_url='/user/login/')
 def enroll(request):  # 등록하기 화면
+    student = Student.objects.filter(user_id = request.user.id)
+    if student.exists():
+        no_enroll = False
+        if student[0].check_in == '1':
+            #아직 레슨일정 안잡혔을때
+            is_enrolled = False
+            day = student[0].day1
+        else:
+            is_enrolled = True
+            day = student[0].lesson_day
+    else : 
+        no_enroll = True
     try:
         room = Room.objects.get(user_id=request.user.id)
         messages.error(request, "이미 등록하셨습니다!")
-        return render(request, 'study/function/enroll.html', {"error": "예약변경 또는 예약취소 가능합니다."})
+        return render(request, 'study/function/enroll.html', {"error": "예약변경 또는 예약취소 가능합니다.",
+        "is_enrolled" : is_enrolled,
+        "day1":day,
+        "no_enroll":no_enroll})
 
     except:
         if request.method == 'POST':
@@ -266,8 +281,10 @@ def enroll(request):  # 등록하기 화면
 
             if day1 < datetime.datetime.today():  # 지난 날 신청할 때
                 messages.error(request, "등록 실패!")
-                return render(request, 'study/function/enroll.html', {"error": "지난날은 신청할 수 없습니다."})
-
+                return render(request, 'study/function/enroll.html', {"error": "예약변경 또는 예약취소 가능합니다.",
+                "is_enrolled" : is_enrolled,
+                "day1":day,
+                "no_enroll":no_enroll})
             room = Room(
                 number=number,
                 day1=day1,
@@ -275,7 +292,10 @@ def enroll(request):  # 등록하기 화면
                 name=request.user.first_name)
             room.save()
 
-        return render(request, 'study/function/enroll.html')
+        return render(request, 'study/function/enroll.html',{
+        "is_enrolled" : is_enrolled,
+        "day1":day,
+        "no_enroll":no_enroll})
 
 
 # class Enroll(LoginRequiredMixin,generic.CreateView): #등록하기
@@ -552,7 +572,7 @@ def review_enroll(request):
             if Review.objects.get(user = request.user):
                 messages.error(request,"리뷰는 한번만 작성 가능합니다")
                 return render(request,'study/function/review_enroll.html')
-            elif not Student.objects.exists(user_id = request.user.id) or Student.objects.filter(user_id = request.user.id)[0].check_in == '1':
+            elif not Student.objects.filter(user_id = request.user.id).exists() or Student.objects.filter(user_id = request.user.id)[0].check_in == '1':
                 messages.error(request,"레슨이 진행된 이후에 리뷰작성 가능합니다")
                 return redirect('review_view',1)
             else:

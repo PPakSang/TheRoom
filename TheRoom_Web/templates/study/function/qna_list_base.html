@@ -2,7 +2,7 @@
     <a href="detail/{{qna.pk}}">
         <ul class="py-3 px-2">
             <li class="col-6" id="qna_list_title">{{ qna.title }}{% if is_staff %}(작성자:{{qna.user.first_name}}){% endif %}</li>
-            <li class="col-3"id="qna_list_date">{{ qna.date|date:"Y-m-d" }}</li>
+            <li class="col-3"id="qna_list_date">{{ qna.next_qna.date|date:"Y-m-d" }}</li>
             <li class="col-3"id="qna_list_progress">{% if qna.answer %}답변완료{% else %}답변대기{% endif %}</li>
         </ul>
     </a>
