@@ -255,8 +255,8 @@ def lesson_enroll(request):  # 레슨 신청 화면
 def enroll(request):  # 등록하기 화면
     try:
         room = Room.objects.get(user_id=request.user.id)
-        messages.error(request, "이미 등록하셨습니다!")
-        return render(request, 'study/function/enroll.html', {"error": "예약변경 또는 예약취소 가능합니다."})
+        messages.error(request, "이미 연습실을 대여하셨습니다!")
+        return render(request, 'study/function/enroll.html', {"error": "조회 및 대여 취소 가능합니다."})
 
     except:
         if request.method == 'POST':
@@ -331,16 +331,9 @@ def inquire(request):  # 조회하기 화면
             student.save()
             return redirect('inquire')
     else:
-<<<<<<< HEAD
         return render(request, 'study/function/inquire.html',
                   {'student': student,"is_enrolled" : is_enrolled,"day1":day}
                   )
-=======
-
-        return render(request, 'study/function/inquire.html',
-                      {'student': student}
-                      )
->>>>>>> 55bbd20e47a8bc72ce2ed96bc72b32abebbc039f
 
 
 # @login_required(login_url='/login/')
