@@ -267,8 +267,8 @@ def enroll(request):  # 등록하기 화면
         no_enroll = True
     try:
         room = Room.objects.get(user_id=request.user.id)
-        messages.error(request, "이미 등록하셨습니다!")
-        return render(request, 'study/function/enroll.html', {"error": "예약변경 또는 예약취소 가능합니다.",
+        messages.error(request, "이미 연습실을 대여하셨습니다!")
+        return render(request, 'study/function/enroll.html', {"error": "조회 및 대여 취소 가능합니다.",
         "is_enrolled" : is_enrolled,
         "day1":day,
         "no_enroll":no_enroll})
