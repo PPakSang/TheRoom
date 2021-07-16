@@ -1002,7 +1002,7 @@ def deleteimg(request, pk):
     key = img.pic.name
     # 키는 버킷이름 다음에 위치하는 경로
     s3_client.delete_object(
-        Bucket='elasticbeanstalk-ap-northeast-2-293437042513', Key='media/'+key)
+        Bucket='elasticbeanstalk-ap-northeast-2-926096212919', Key='media/'+key)
     img.delete()
     return HttpResponse('삭제완료')
 
