@@ -265,37 +265,51 @@ def enroll(request):  # 등록하기 화면
             day = student[0].lesson_day
     else : 
         no_enroll = True
+    
     try:
         room = Room.objects.get(user_id=request.user.id)
+        if request.method == 'POST':
+            if request.POST['date'] == '0':
+                Room.objects.get(user_id = request.user.id).delete()
+                return redirect('enroll')
         messages.error(request, "이미 연습실을 대여하셨습니다!")
         return render(request, 'study/function/enroll.html', {"error": "조회 및 대여 취소 가능합니다.",
         "is_enrolled" : is_enrolled,
         "day1":day,
-        "no_enroll":no_enroll})
+        "no_enroll":no_enroll,
+        "is_reserved":True,
+        "room":room,
+        "time_from":room.day1.time,
+        "time_to":(room.day1+datetime.timedelta(hours=2)).time})
 
     except:
         if request.method == 'POST':
             number = request.POST['number']
             day1 = datetime.datetime.fromisoformat(
                 f"{request.POST['date']} {request.POST['time']}:00")
-
             if day1 < datetime.datetime.today():  # 지난 날 신청할 때
                 messages.error(request, "등록 실패!")
                 return render(request, 'study/function/enroll.html', {"error": "예약변경 또는 예약취소 가능합니다.",
                 "is_enrolled" : is_enrolled,
                 "day1":day,
-                "no_enroll":no_enroll})
+                "no_enroll":no_enroll,
+                "is_reserved":True,
+                "room":room,
+                "time":room.day1.time.time()})
             room = Room(
                 number=number,
                 day1=day1,
                 user_id=request.user.id,
                 name=request.user.first_name)
             room.save()
-
+            return redirect('enroll')
+            
         return render(request, 'study/function/enroll.html',{
         "is_enrolled" : is_enrolled,
         "day1":day,
-        "no_enroll":no_enroll})
+        "no_enroll":no_enroll,
+        "is_reserved":False,
+        })
 
 
 # class Enroll(LoginRequiredMixin,generic.CreateView): #등록하기
