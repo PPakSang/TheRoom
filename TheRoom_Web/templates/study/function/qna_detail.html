@@ -30,13 +30,13 @@
     <div class="detail_view">
         <div class="detail_box">
             <table class="detail_table" id="detail_table">
-                <tr class="first_col">
+                <tr class="first_col" id="first_col">
                     <td class="title_title">제목</td>
                     <td class="detail_title" colspan="3" id="title" style="text-align: start;">{{qna.title}}</td>
                     <td class="title_date">작성일</td>
                     <td class="detail_date">{{qna.date|date:"Y-m-d"}}</td>
                 </tr>
-                <tr class="second_col">
+                <tr class="second_col" id="second_col">
                     <td colspan="6" id="content">
                         <div class="detail_content my-2" style="text-align: start;">
                             {{qna.text | linebreaksbr}}
@@ -86,15 +86,18 @@
 
 <script>
     function modify_func() {
-        var getTable = document.getElementById("detail_table");
+        var getColFirst = document.getElementById("first_col");
+        var getColSecond = document.getElementById("second_col");
         var getModiBtn = document.getElementById("modify_btn");
         var getDelBtn = document.getElementById("delete_btn");
-
-        var putTable = "<tr class='first_col'><td class='title_title'>제목</td><td><input name='title' type='text' class='title_input' placeholder='제목을 입력해주세요' autofocus='autofocus' required='required' autocomplete='off'></td></tr><tr class='second_col'><td colspan='2'><textarea name='text' class='content_input' placeholder='내용을 입력해주세요' cols='50' rows='10' required='required'></textarea></td></tr>";
+        
+        var putColFirst = "<td class='title_title'>제목</td><td><input name='title' type='text' class='title_input' placeholder='제목을 입력해주세요' autofocus='autofocus' required='required' autocomplete='off' value={{qna.title}}></td>";
+        var putColSecond ="<td colspan='2' style='padding: 1px;'><textarea name='text' class='content_input' placeholder='내용을 입력해주세요' cols='50' rows='10' required='required'>{{qna.text | linebreaksbr}}</textarea></td>";
         var putModiBtn = "<input type='submit' class='enroll_btn  py-1 px-4' value='수정'>";
         var putDelBtn = "<button class='writing_close_btn'><a class='close_btn py-1 px-4' href='{% url 'qna_view' 1 %}'>취소</a></button>";
 
-        getTable.innerHTML = putTable;
+        getColFirst.innerHTML = putColFirst;
+        getColSecond.innerHTML= putColSecond;
         getModiBtn.innerHTML = putModiBtn;
         getDelBtn.innerHTML = putDelBtn;
 
