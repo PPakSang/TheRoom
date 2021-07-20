@@ -61,7 +61,7 @@ body {
 }
 
 #topBtn a:hover {
-  color: #212529;
+  color: var(--text-color-lightgray);
 }
 
 /* 중간메뉴바 sticky일 때 색 */
@@ -197,7 +197,7 @@ body {
 }
 
 .btn:hover {
-  background-color: var(--accent-color);
+  background-color: var(--sub-basic-color);
 }
 
 .main-btn {

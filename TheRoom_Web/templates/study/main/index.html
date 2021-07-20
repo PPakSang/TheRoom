@@ -72,7 +72,7 @@
                 <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="">더 룸 리뷰</a>
+                <a class="nav-link" href="{% url 'review'%}">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
@@ -222,27 +222,37 @@
         <div class="col">
             <div class="card h-100">
                 <img src="{% static 'img/mentor/1.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-header">김천재</div>
+                <div class="card-header">박수진</div>
                 <div class="card-body">
-                    <p class="card-text text-start">ㆍ 무슨 콩쿠르 1위<br>
-                    ㆍ 무슨 대회 금상 수상<br>
-                    ㆍ 어쩌구 콩쿠르 심사위원</p>
+                    <ul class="card-text text-start ps-3">
+                        <li>경희대대학원 포스트모던음악과</li>
+                        <li>동아방송대 실용음악과보컬전공</li>
+                        <li>현 KAC한국예술원 실용음악계열 외래교수</li>
+                        <li>울랄라세션, 매드클라운 소속 어베인뮤직엔터테인먼트 트레이너</li>
+                        <li>부산 청소년 가요제 은상</li>
+                        <li>부산 일본 가요제 대상</li>
+                        <li>가스펠 그룹 헤리티지 전 멤버(소프라노)</li>
+                    </ul>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">피아노 강사</small>
+                    <small class="text-muted">보컬 강사</small>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100">
                 <img src="{% static 'img/mentor/2.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-header">이천재</div>
+                <div class="card-header">포스트맨 성태</div>
                 <div class="card-body">
-                    <p class="card-text text-start">ㆍ 경력 1<br>
-                    ㆍ 경력 2<br>
-                    ㆍ 경력 3<br>
-                    ㆍ 경력 4<br>
-                    ㆍ 경력 5</p>
+                    <ul class="card-text text-start ps-3">
+                        <li>엠투엠 2집 데뷔</li>
+                        <li>콘서트 BIG4 프로젝트 싱글 "Big4ofvoice inmy dream"</li>
+                        <li>엠투엠 드라마 넌 어느별에서 왔니 OST-Miracle</li>
+                        <li>엠투엠 싱글 못된남자</li>
+                        <li>엠투엠 3집 Colorful Voices</li>
+                        <li>엠투엠 조영수 All Star - 여보야</li>
+                        <li>엠투엠 드라마 밤이면 밤마다 OST - 내 꿈이여</li>
+                    </ul>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">보컬 강사</small>
@@ -252,26 +262,32 @@
         <div class="col">
             <div class="card h-100">
                 <img src="{% static 'img/mentor/3.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-header">박천재</div>
+                <div class="card-header">박소현</div>
                 <div class="card-body">
-                    <p class="card-text text-start">ㆍ 경력 1<br>
-                    ㆍ 경력 2<br>
-                    ㆍ 경력 3<br>
-                    ㆍ 경력 4</p>
+                    <ul class="card-text text-start ps-3">
+                        <li>작사 동아리 리더</li>
+                        <li>서경대학교 문화콘텐츠학부 싱어송라이터 과정 졸업 (복수전공 철학)</li>
+                        <li>작사 수업 진행 경험 다수</li>
+                    </ul>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">작곡 강사</small>
+                    <small class="text-muted">작사 강사</small>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card h-100">
                 <img src="{% static 'img/mentor/4.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-header">정천재</div>
+                <div class="card-header">모름</div>
                 <div class="card-body">
-                    <p class="card-text text-start">ㆍ 경력 1<br>
-                    ㆍ 경력 2<br>
-                    ㆍ 경력 3</p>
+                    <ul class="card-text text-start ps-3">
+                        <li>전 드림홈스쿨 문화센터 중,고등 밴드부강사</li>
+                        <li>재즈다,부기우기 등 재즈클럽공연</li>
+                        <li>달리아-널위한기도 기타세션참여</li>
+                        <li>개인레슨경험 다수</li>
+                        <li>계룡군문화축제 프린지공연 다수 참여</li>
+                        <li>'monofeed' 전담기타세션으로 활동 중</li>
+                    </ul>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">기타 강사</small>
