@@ -504,7 +504,7 @@ def qna_enroll(request):
                 messages.error(request, "문의 후 10분간 재문의가 제한됩니다.")
                 return render(request, 'study/function/qna_enroll.html')
             else:
-                raise Exception
+                raise Exception()
         except:
             qna = Qna(user=request.user)
             qna.title = request.POST["title"]
