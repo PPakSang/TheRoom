@@ -428,6 +428,13 @@ body {
   text-align: center;
 }
 
+.qna_index .qna_title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
 .qna_list a {
   text-decoration: none;
   color: black;
@@ -644,6 +651,10 @@ body {
 .detail_table .second_col td {
   padding-top: 0;
   padding-left: 0;
+}
+
+.detail_table .detail_title {
+  text-align: left;
 }
 
 .detail_table .title_title,
@@ -1093,12 +1104,16 @@ body {
     visibility: hidden;
   }
 
-  #channel-chat-button {
-    visibility: hidden;
-  }
-
   #kakao_q {
     display: block;
+  }
+
+  .review_container {
+    width: 95%;
+  }
+
+  .detail_date {
+    width: 27%;
   }
 }
 
