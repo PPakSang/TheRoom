@@ -4,7 +4,7 @@ from django.conf import settings
 from datetime import timedelta, tzinfo
 from typing import ContextManager
 from django.db.models import fields
-from django.db.models.query import QuerySet
+from django.db.models.query import NamedValuesListIterable, QuerySet
 from django.http import response, HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
@@ -45,10 +45,13 @@ def only_admin(request, option):
             return render(request, 'study/admin.html', {'students': students, 'new_students': new_students})
 
         if option == 'today':
+            lesson_students = Student.objects.filter(
+                lesson_day__date=datetime.date.today(), check_in = '2').exclude(user_id=0)
             new_students = Student.objects.filter(
-                lesson_day__date=datetime.date.today()).exclude(user_id=0)
+                day1 = datetime.date.today(), check_in = '1'
+            ).exclude(user_id=0)
 
-            return render(request, 'study/admin.html', {'new_students': new_students})
+            return render(request, 'study/admin.html', {'lesson_students':lesson_students,'new_students': new_students})
 
         if option == 'name':
             if request.method == 'POST':
@@ -264,6 +267,8 @@ def enroll(request):  # 등록하기 화면
             is_enrolled = True
             day = student[0].lesson_day
     else : 
+        is_enrolled = False
+        day = 1
         no_enroll = True
     
     try:
@@ -289,13 +294,7 @@ def enroll(request):  # 등록하기 화면
                 f"{request.POST['date']} {request.POST['time']}:00")
             if day1 < datetime.datetime.today():  # 지난 날 신청할 때
                 messages.error(request, "등록 실패!")
-                return render(request, 'study/function/enroll.html', {"error": "예약변경 또는 예약취소 가능합니다.",
-                "is_enrolled" : is_enrolled,
-                "day1":day,
-                "no_enroll":no_enroll,
-                "is_reserved":True,
-                "room":room,
-                "time":room.day1.time.time()})
+                return redirect('enroll')
             room = Room(
                 number=number,
                 day1=day1,

@@ -73,6 +73,25 @@
 
         {%endfor%}
 
+        {% for student in lesson_students%}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{student.name}}</td>
+            <td>{{student.number}}</td>
+            <td>{{student.get_level_display}}</td>
+            {% if student.check_in == '1'%}
+            <td>{{student.lesson_day.date|date:'Y-m-d'}} / 상담</td>
+            {% else %}
+            <td>{{student.lesson_day|date:'Y-m-d / h시'}}</td>
+            {% endif %}
+            <td>{{student.get_check_in_display}}</td>
+            <td><button type="button" name="{{forloop.counter}}" id="comment_open_{{forloop.counter}}" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="comment(this)">열기</button></td>
+            <td><a href="/admin/study/student/{{student.pk}}/change/" target="_blank">수정하기</a></td>
+            <div id="comment{{forloop.counter}}" style="display: none;">{{student.comment}}</div>
+        </tr>
+
+        {%endfor%}
+
         {% for student in students%}
         <tr>
             <th scope="row">{{forloop.counter}}</th>
