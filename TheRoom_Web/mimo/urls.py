@@ -21,6 +21,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('study.urls')),
-] 
-# ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) #웹서버가 참조할 위치 static root, 그걸 어떻게 매핑할거냐 static url
+]
+if settings.DEBUG == True:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) #웹서버가 참조할 위치 static root, 그걸 어떻게 매핑할거냐 static url
 

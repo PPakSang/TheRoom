@@ -19,7 +19,7 @@ class Student(models.Model):
    
     number = models.CharField(max_length=11, validators=[MinLengthValidator(10)],verbose_name='전화번호')
     
-    level_status = (('1','상담'),('2','보컬'),('3','악기'),('4','축가'))
+    level_status = (('1','상담'),('2','보컬'),('3','작사'),('4','통기타'))
     level = models.CharField(max_length=1,choices=level_status,blank=True,verbose_name='클래스')
     
     day1 = models.DateField(default=datetime.date.today(),verbose_name='방문 날짜')

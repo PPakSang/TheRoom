@@ -60,22 +60,10 @@
             </div>
         </div>
 
+        
+        
 
-        <!-- 상담 일정 변경 버튼 -->
-        <!--
-        <div class="col-md-4 py-3">
-            <p class="mb-0 mt-3 mt-md-5">선택해주세요.</p>
-            <h3 class="fw-bold">상담 일정 변경</h3>
-            <div class="stick mb-3 mb-md-5"></div>
-            <button class="btn btn-dark w-100 py-3 mb-2 mb-md-3"
-                    data-bs-toggle="modal" data-bs-target="#cancelModal">상담 취소
-            </button>
-            <button class="btn btn-dark w-100 py-3"
-                    data-bs-toggle="modal" data-bs-target="#toModal">상담 날짜 변경
-            </button>
-        </div>
-        -->
-
+        {% if is_enrolled %}
         <!-- 레슨 일정 변경 안내사항 -->
 
         <div class="col-md-4 py-3">
@@ -88,6 +76,21 @@
             <button class="btn btn-dark w-100 py-2">카카오톡 문의하기</button>
         </div>
     </div>
+    {% else %}
+    <!-- 상담 일정 변경 버튼 -->
+        
+        <div class="col-md-4 py-3">
+            <p class="mb-0 mt-3 mt-md-5">선택해주세요.</p>
+            <h3 class="fw-bold">상담 일정 변경</h3>
+            <div class="stick mb-3 mb-md-5"></div>
+            <button class="btn btn-dark w-100 py-3 mb-2 mb-md-3"
+                    data-bs-toggle="modal" data-bs-target="#cancelModal">상담 취소
+            </button>
+            <button class="btn btn-dark w-100 py-3"
+                    data-bs-toggle="modal" data-bs-target="#toModal">상담 날짜 변경
+            </button>
+        </div>
+    {% endif %}
 
 
     <!-- 안내사항 -->
