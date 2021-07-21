@@ -63,7 +63,7 @@ urlpatterns = [
     path('category/qna/enroll', qna_enroll, name='qna_enroll'),
     path('category/qna/<num>', qna_view, name='qna_view'),
     path('category/review', review, name='review'),
-
+    path('category/review/enroll', review_enroll, name='review_enroll'),
 
     path('testt/', test3),
 

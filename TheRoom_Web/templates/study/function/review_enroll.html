@@ -1,0 +1,111 @@
+{% extends 'study/main/base.html' %} {% block title %}TheRoom{% endblock %} {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+
+<!-- 중간 카테고리 -->
+<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav">
+    <div class="container-fluid">
+        <ul class="navbar-nav mx-auto mb-md-0">
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link active" href="{% url 'qna_view' 1 %}">1:1 문의</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'review'%}">더 룸 리뷰</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" id="container">
+    <h3 class="menu_title mb-4 mt-5"> 더 룸 리뷰 <span class="submenu_writing">/ 리뷰쓰기</span> </h3>
+    <div class="divline"></div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="writing_box mt-5">
+            <table class="writing_table">
+                <tr class="second_col">
+                    <td colspan="2" style="padding: 1px;">
+                        <div class="toolbar px-2 py-1">
+
+                            <select class="fontSize form-select" name="job" id='fonstSize_select'>
+                                <option value="3">10px</option>
+                                <option value="4">12px</option>
+                                <option value="5">16px</option>
+                                <option value="6">20px</option>
+                                <option value="7">30px</option>
+                            </select>
+
+                            <div class="editor_link mx-4">
+                                <a href="" data-command='bold'>
+                                    <i class='fa fa-bold'></i>
+                                </a>
+                                <a href="" data-command='italic'>
+                                    <i class='fa fa-italic'></i>
+                                </a>
+                                <a href="" data-command='underline'>
+                                    <i class='fa fa-underline'></i>
+                                </a>
+                                <a href="" data-command='strikeThrough' style="margin-right: 8px;">
+                                    <i class='fa fa-strikethrough'></i>
+                                </a>
+
+                                <a href="" data-command='justifyLeft'>
+                                    <i class='fa fa-align-left'></i>
+                                </a>
+                                <a href="" data-command='justifyCenter'>
+                                    <i class='fa fa-align-center'></i>
+                                </a>
+                                <a href="" data-command='justifyRight'>
+                                    <i class='fa fa-align-right'></i>
+                                </a>
+                                <a href="" data-command='justifyFull' style="margin-right: 8px;">
+                                    <i class='fa fa-align-justify'></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div name="text" class="content_input editor" contenteditable="true" required="required">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="writing_notice mt-1">최소 200자 이상을 입력하셔야 등록이 가능합니다</div>
+        </div>
+
+        <div class="btn_container">
+            <div class="buttons mt-1 row g-0">
+                <div class="col">
+                    <input type="submit" value="등록" class="enroll_btn py-1 px-4">
+                </div>
+                <div class="col">
+                    <button class="writing_close_btn"><a class="close_btn py-1 px-4"
+                            href="{% url 'review' %}">취소</a></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.querySelectorAll('.toolbar a') 
+        .forEach(aEl => aEl.addEventListener('click', function (e) {
+            e.preventDefault();
+            const command = aEl.dataset.command;
+
+            document.execCommand(command);
+
+        }));
+
+    document.getElementById('fonstSize_select').addEventListener('change', function (e) {
+        document.execCommand('fontSize', false, e.target.value);
+    });
+
+</script>
+
+
+{% endblock %}
