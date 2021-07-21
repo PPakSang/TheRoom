@@ -408,6 +408,17 @@ body {
   background-color: #919191;
 }
 
+.container.qna {
+  height: calc(100vh - 288px);
+  position: relative;
+}
+
+.view_bottom {
+  position: absolute;
+  width: 90%;
+  bottom: 0px;
+}
+
 .qna_index ul,
 .qna_list ul {
   display: flex;
@@ -651,10 +662,6 @@ body {
 .detail_table .second_col td {
   padding-top: 0;
   padding-left: 0;
-}
-
-.detail_table .detail_title {
-  text-align: left;
 }
 
 .detail_table .title_title,
