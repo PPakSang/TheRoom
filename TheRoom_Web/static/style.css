@@ -36,14 +36,6 @@ body {
   transform: translate(-50%, 0%);
 }
 
-#channel-chat-button {
-  position: fixed;
-  transform: scale(0.6);
-  bottom: 65px;
-  right: 10px;
-  z-index: 9999;
-}
-
 #kakao_q {
   display: none;
 }
@@ -449,7 +441,7 @@ body {
   color: black;
 }
 
-.page-item.active .page-link{
+.page-item.active .page-link {
   background: #212529;
   border-color: #dee2e6;
   font-weight: bold;
@@ -602,7 +594,6 @@ body {
 .toolbar .editor_link {
   margin: auto;
 }
-
 
 /*글보기*/
 .detail_view {
@@ -757,7 +748,6 @@ body {
   outline: none;
   box-shadow: 0 0 1px 1px #0086db;
 }
-
 
 /*리뷰*/
 
