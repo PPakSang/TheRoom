@@ -24,29 +24,31 @@
 </nav>
 
 <div class="container qna">
-<h3 class="menu_title mb-4 mt-5"> 커뮤니티</h3>
-<div class="divline"></div>
-<div class="qna_index">
-    <ul class="p-2">
-        <li class="col-6" id="qna_title">제목</li>
-        <li class="col-3"id="qna_date">작성일</li>
-        <li class="col-3"id="qna_progress">진행</li>
-    </ul>
-</div>
-<div class="divline"></div>
+    <h3 class="menu_title mb-4 mt-5"> 커뮤니티</h3>
+    <div class="divline"></div>
+    <div class="qna_index">
+        <ul class="p-2">
+            <li class="col-6" id="qna_title">제목</li>
+            <li class="col-3" id="qna_date">작성일</li>
+            <li class="col-3" id="qna_progress">진행</li>
+        </ul>
+    </div>
+    <div class="divline"></div>
 
-<div class="qna_list">
-</div>
+    <div class="qna_list">
+    </div>
 
-<div class="writing_link_div">
-<a class="writing_link px-4 py-2" href="{% url 'qna_enroll' %}"> 글쓰기</a>
-</div>
+    <div class="view_bottom">
+        <div class="writing_link_div">
+            <a class="writing_link px-4 py-2" href="{% url 'qna_enroll' %}"> 글쓰기</a>
+        </div>
 
-    <ul class="pagination mt-3 justify-content-center">
-    </ul>
-</div>
+        <ul class="pagination mt-3 justify-content-center">
+        </ul>
+    </div>
 
-<div style="display: none;" id="num">{{num}}</div>
+    <div style="display: none;" id="num">{{num}}</div>
+</div>
 
 <script src="{% static 'main.js' %}"></script>
 {% endblock %}

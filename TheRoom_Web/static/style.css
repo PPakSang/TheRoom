@@ -205,7 +205,7 @@ body {
 .btn-dark:hover {
   background-color: var(--sub-basic-color);
 }
-.btn-secondary:hover{
+.btn-secondary:hover {
   background-color: var(--sub-basic-color);
 }
 
@@ -387,7 +387,7 @@ body {
   content: "｜";
 }
 
-/*커뮤니티*/
+/*커뮤니티 글목록*/
 .divline,
 .divline2,
 .divline3 {
@@ -750,11 +750,18 @@ body {
 }
 
 /*리뷰*/
-
-.review_container {
+.row_center {
   display: flex;
   justify-content: center;
   width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-self: center;
+}
+
+.review_container {
+  display: flex;
+  width: 70%;
   flex-direction: column;
   align-items: center;
   justify-self: center;
@@ -762,7 +769,6 @@ body {
 
 .review_container .review_write_btn {
   align-self: flex-end;
-  margin-right: 5%;
   background-color: var(--main-basic-color);
   border: 1px solid var(--main-basic-color);
   border-radius: 3px;
@@ -783,7 +789,7 @@ body {
   box-shadow: 2px 2px 2px 2px var(--border-color-lightgray);
   border-radius: 5px;
   padding: 15px 20px;
-  width: 70%;
+  width: 100%;
 }
 
 .review_box .review_title {
