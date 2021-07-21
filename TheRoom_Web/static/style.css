@@ -208,6 +208,12 @@ body {
 }
 
 .btn:hover {
+  background-color: var(--accent-color);
+}
+.btn-dark:hover {
+  background-color: var(--sub-basic-color);
+}
+.btn-secondary:hover{
   background-color: var(--sub-basic-color);
 }
 
