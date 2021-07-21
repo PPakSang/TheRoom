@@ -138,12 +138,20 @@ body {
 }
 
 /* 강사진 카드 */
-.card-text {
-  font-size: 0.9rem;
-}
 .card-header {
   background-color: #fffdf4;
 }
+.card-text {
+  font-size: 0.9rem;
+  list-style-type: none;
+}
+.card-text li:before {
+    content: "-";
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0px 5px 6px 0px;
+}
+
 /*신청버튼 floating ver*/
 .enrollbtn {
   max-width: 200px;
