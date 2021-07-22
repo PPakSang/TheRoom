@@ -1021,3 +1021,6 @@ def test(request):
 
 def review(request):  # 리뷰페이지
     return render(request, 'study/function/review.html')
+
+def review_enroll(request):  # 리뷰등록 페이지
+    return render(request, 'study/function/review_enroll.html')

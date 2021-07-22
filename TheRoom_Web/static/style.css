@@ -36,14 +36,6 @@ body {
   transform: translate(-50%, 0%);
 }
 
-#channel-chat-button {
-  position: fixed;
-  transform: scale(0.6);
-  bottom: 65px;
-  right: 10px;
-  z-index: 9999;
-}
-
 #kakao_q {
   display: none;
 }
@@ -138,12 +130,23 @@ body {
 }
 
 /* 강사진 카드 */
-.card-text {
-  font-size: 0.9rem;
-}
 .card-header {
   background-color: #fffdf4;
 }
+.card-text {
+  font-size: 0.9rem;
+  list-style-type: none;
+}
+.card-text li:before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  width: 4px;
+  height: 1px;
+  background: #262626;
+}
+
 /*신청버튼 floating ver*/
 .enrollbtn {
   max-width: 200px;
@@ -197,6 +200,12 @@ body {
 }
 
 .btn:hover {
+  background-color: var(--accent-color);
+}
+.btn-dark:hover {
+  background-color: var(--sub-basic-color);
+}
+.btn-secondary:hover {
   background-color: var(--sub-basic-color);
 }
 
@@ -378,7 +387,7 @@ body {
   content: "｜";
 }
 
-/*커뮤니티*/
+/*커뮤니티 글목록*/
 .divline,
 .divline2,
 .divline3 {
@@ -397,6 +406,17 @@ body {
 .divline3 {
   height: 1px;
   background-color: #919191;
+}
+
+.container.qna {
+  height: calc(100vh - 288px);
+  position: relative;
+}
+
+.view_bottom {
+  position: absolute;
+  width: 90%;
+  bottom: 0px;
 }
 
 .qna_index ul,
@@ -419,6 +439,13 @@ body {
   text-align: center;
 }
 
+.qna_index .qna_title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
 .qna_list a {
   text-decoration: none;
   color: black;
@@ -432,7 +459,7 @@ body {
   color: black;
 }
 
-.page-item.active .page-link{
+.page-item.active .page-link {
   background: #212529;
   border-color: #dee2e6;
   font-weight: bold;
@@ -578,14 +605,24 @@ body {
   background-color: #f5f5f5;
 }
 .toolbar .fontSize {
-  max-width: 65px;
-  font-size: 1.1rem;
+  max-width: 80px;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.toolbar .fontSize option {
+  font-size: 0.8rem;
+}
+
+.toolbar a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  color: #0086db;
 }
 
 .toolbar .editor_link {
   margin: auto;
 }
-
 
 /*글보기*/
 .detail_view {
@@ -741,13 +778,19 @@ body {
   box-shadow: 0 0 1px 1px #0086db;
 }
 
-
 /*리뷰*/
-
-.review_container {
+.row_center {
   display: flex;
   justify-content: center;
   width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-self: center;
+}
+
+.review_container {
+  display: flex;
+  width: 70%;
   flex-direction: column;
   align-items: center;
   justify-self: center;
@@ -755,7 +798,6 @@ body {
 
 .review_container .review_write_btn {
   align-self: flex-end;
-  margin-right: 5%;
   background-color: var(--main-basic-color);
   border: 1px solid var(--main-basic-color);
   border-radius: 3px;
@@ -776,7 +818,7 @@ body {
   box-shadow: 2px 2px 2px 2px var(--border-color-lightgray);
   border-radius: 5px;
   padding: 15px 20px;
-  width: 70%;
+  width: 100%;
 }
 
 .review_box .review_title {
@@ -1069,12 +1111,16 @@ body {
     visibility: hidden;
   }
 
-  #channel-chat-button {
-    visibility: hidden;
-  }
-
   #kakao_q {
     display: block;
+  }
+
+  .review_container {
+    width: 95%;
+  }
+
+  .detail_date {
+    width: 27%;
   }
 }
 

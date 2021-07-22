@@ -93,7 +93,7 @@
         
         var putColFirst = "<td class='title_title'>제목</td><td><input name='title' type='text' class='title_input' placeholder='제목을 입력해주세요' autofocus='autofocus' required='required' autocomplete='off' value={{qna.title}}></td>";
         var putColSecond ="<td colspan='2' style='padding: 1px;'><textarea name='text' class='content_input' placeholder='내용을 입력해주세요' cols='50' rows='10' required='required'>{{qna.text | linebreaksbr}}</textarea></td>";
-        var putModiBtn = "<input type='submit' class='enroll_btn  py-1 px-4' value='수정'>";
+        var putModiBtn = "<input type='submit' class='enroll_btn  py-1 px-4' value='확인'>";
         var putDelBtn = "<button class='writing_close_btn'><a class='close_btn py-1 px-4' href='{% url 'qna_view' 1 %}'>취소</a></button>";
 
         getColFirst.innerHTML = putColFirst;
@@ -106,6 +106,9 @@
     function del_Alert(){
         let delConfirm = confirm("이 글을 삭제하시겠습니까?");
 
+        if(delConfirm){
+
+        }
     }
 </script>
 
