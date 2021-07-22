@@ -429,7 +429,7 @@ body {
   text-align: center;
 }
 
-.qna_index .qna_title {
+#qna_list_title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
