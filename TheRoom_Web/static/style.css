@@ -135,16 +135,6 @@ body {
 }
 .card-text {
   font-size: 0.9rem;
-  list-style-type: none;
-}
-.card-text li:before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 6px;
-  width: 4px;
-  height: 1px;
-  background: #262626;
 }
 
 /*신청버튼 floating ver*/
