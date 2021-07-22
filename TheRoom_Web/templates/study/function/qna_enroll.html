@@ -74,7 +74,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div name="text" class="content_input editor" contenteditable="true" required="required">
+                        <div class="content_input editor" id="text_box" contenteditable="true" required="required">
                         </div>
                     </td>
                 </tr>
@@ -85,7 +85,8 @@
         <div class="btn_container">
             <div class="buttons mt-1 row g-0">
                 <div class="col">
-                    <input type="submit" value="등록" class="enroll_btn py-1 px-4">
+                    <textarea name="text" id="text" style="display: none;"></textarea>
+                    <input type="submit" value="등록" class="enroll_btn py-1 px-4" onclick="text_input()">
                 </div>
                 <div class="col">
                     <button class="writing_close_btn"><a class="close_btn py-1 px-4"
@@ -109,7 +110,9 @@
     document.getElementById('fonstSize_select').addEventListener('change', function (e) {
         document.execCommand('fontSize', false, e.target.value);
     });
-
+    function text_input(){
+        $('#text').val($('#text_box').html())
+    }
 </script>
 
 
