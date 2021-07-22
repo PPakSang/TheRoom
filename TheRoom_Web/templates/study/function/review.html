@@ -2,6 +2,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
 
+
 <!-- 중간 카테고리 -->
 <nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav">
     <div class="container-fluid">
@@ -10,79 +11,45 @@
                 <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="{% url 'qna_view' 1 %}">1:1 문의</a>
+                <a class="nav-link" href="{% url 'qna_view' 1 %}">1:1문의</a>
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link active" href="">더 룸 리뷰</a>
+                <a class="nav-link active" href="{% url 'review'%}">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
 </nav>
 
-
-<div class="container">
+<div class="container qna">
     <h3 class="menu_title mb-4 mt-5"> 더 룸 리뷰</h3>
-    <div class="divline mb-5"></div>
-    <div class="row_center">
-        <div class="review_container">
-            <button class="review_write_btn py-1 px-2 mb-2">
-                <a href="{% url 'review_enroll'%}">리뷰 쓰기</a> </button>
-            <div class="review_box mt-3">
-                <div class="review_title"><span class="review_name">백혜원</span> | <span
-                        class="review_date">2012-03-01</span>
-                </div>
-                <div class="review_content clamp" id="review_content">
-                    너무 좋아요^^ 친절하고! 안녕하세요안녕하세요안녕하세요
-                    안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-                    안녕하세요안녕하세요
-                    안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-                    안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-                    안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-                    안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요
-                </div>
-            </div>
-        </div>
+    <div class="divline"></div>
+    <div class="qna_index">
+        <ul class="p-2">
+            <li class="col-6" id="qna_title">제목</li>
+            <li class="col-3" id="qna_date">작성일</li>
+            <li class="col-3" id="qna_progress">진행</li>
+        </ul>
+    </div>
+    <div class="divline"></div>
+
+    <div class="qna_list">
+    </div>
+
+
+    <div class="writing_link_div">
+        <a class="writing_link px-4 py-2" href="{% url 'review_enroll'%}"> 리뷰쓰기</a>
+    </div>
+    <div class="view_bottom">
+        <ul class="pagination mt-3 justify-content-center">
+        </ul>
+
+        <div style="display: none;" id="num">{{num}}</div>
     </div>
 </div>
+</div>
 
-<script text="javascript/text">
-    $(document).ready(function () {
-
-        $('.review_box').each(function () {
-            var content = $(this).children('.review_content');
-            var content_txt = content.text();
-            var content_txt_short = content_txt.substring(0, 150) + "...";
-            var btn_more = $('<a href="javascript:void(0)" class="more_btn">더보기</a>');
-
-            $(this).append(btn_more);
-
-            if (content_txt.length >= 150) {
-
-            } else {
-                btn_more.hide()
-            }
-
-            btn_more.click(toggle_content);
-
-            function toggle_content() {
-                if ($(this).hasClass('clicked')) {
-                    // 접기 상태
-                    $(this).html('더보기');
-                    content.addClass('clamp');
-                    $(this).removeClass('clicked');
-                } else {
-                    // 더보기 상태
-                    $(this).html('접기');
-                    content.removeClass('clamp');
-                    $(this).addClass('clicked');
-
-                }
-            }
-        });
-    });
-</script>
-
+<script src="{% static 'main.js' %}"></script>
 {% endblock %}

@@ -560,8 +560,7 @@ body {
   width: 180px;
 }
 
-.buttons .enroll_btn,
-.buttons .modify_btn {
+.buttons .enroll_btn {
   background-color: var(--main-basic-color);
   color: aliceblue;
   border: 1px;
@@ -571,8 +570,27 @@ body {
   font-size: 0.95rem;
 }
 
+.buttons .modify_btn {
+  display: flex;
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: center;
+}
+
+.buttons .modify_link {
+  border: 1px;
+  text-decoration: none;
+  color: aliceblue;
+  background-color: var(--main-basic-color);
+  border-style: solid;
+  border-color: var(--sub-basic-color);
+  border-radius: 3px;
+  font-size: 0.95rem;
+}
+
 .buttons .enroll_btn:hover,
-.buttons .modify_btn:hover {
+.buttons .modify_link:hover {
   background-color: var(--sub-basic-color);
 }
 

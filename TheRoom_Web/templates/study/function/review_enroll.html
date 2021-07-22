@@ -29,6 +29,11 @@
         {% csrf_token %}
         <div class="writing_box mt-5">
             <table class="writing_table">
+                <tr class="first_col">
+                    <td class="title_title">제목</td>
+                    <td><input name="title" type="text" class="title_input" autofocus="autofocus"
+                            required="required" autocomplete="off"></td>
+                </tr>
                 <tr class="second_col">
                     <td colspan="2" style="padding: 1px;">
                         <div class="toolbar px-2 py-1">
@@ -69,22 +74,23 @@
                                 </a>
                             </div>
                         </div>
-                        <div name="text" class="content_input editor" contenteditable="true" required="required">
+                        <div class="content_input editor" id="text_box" contenteditable="true" required="required">
                         </div>
                     </td>
                 </tr>
             </table>
-            <div class="writing_notice mt-1">최소 200자 이상을 입력하셔야 등록이 가능합니다</div>
+            <div class="writing_notice mt-1">리뷰는 한 개만 쓸 수 있으니 유의해주세요!</div>
         </div>
 
         <div class="btn_container">
             <div class="buttons mt-1 row g-0">
                 <div class="col">
-                    <input type="submit" value="등록" class="enroll_btn py-1 px-4">
+                    <textarea name="text" id="text" style="display: none;"></textarea>
+                    <input type="submit" value="등록" class="enroll_btn py-1 px-4" onclick="text_input()">
                 </div>
                 <div class="col">
                     <button class="writing_close_btn"><a class="close_btn py-1 px-4"
-                            href="{% url 'review' %}">취소</a></button>
+                            href="{% url 'review' 1 %}">취소</a></button>
                 </div>
             </div>
         </div>
@@ -104,7 +110,9 @@
     document.getElementById('fonstSize_select').addEventListener('change', function (e) {
         document.execCommand('fontSize', false, e.target.value);
     });
-
+    function text_input(){
+        $('#text').val($('#text_box').html())
+    }
 </script>
 
 
