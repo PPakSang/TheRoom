@@ -401,7 +401,7 @@ body {
 }
 
 .container.qna {
-  height: calc(100vh - 288px);
+  min-height: calc(100vh - 288px);
   position: relative;
 }
 

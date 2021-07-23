@@ -22,7 +22,7 @@
     </div>
 </nav>
 
-<div class="container" id="container">
+<div class="container qna" id="container">
     <h3 class="menu_title mb-4 mt-5"> 1:1 문의</h3>
     <div class="divline mb-5"></div>
 
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="comment_box">
+        <div class="comment_box mb-4">
             <div class="comment_title">
                 답변
             </div>
@@ -79,7 +79,7 @@
             <div class="comment_notice py-4">{% if qna.answer %}{{qna.answer}}{% else %}아직 답변이 등록되지않았습니다{% endif %}</div>
             {% endif %}
         </div>
-        <div class="my-5">
+        <div class="mt-5 mb-2">
             <button class="detail_list_btn"><a class="list_btn" href="{% url 'qna_view' 1 %}">목록</a></button>
         </div>
     </div>
