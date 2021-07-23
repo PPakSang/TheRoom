@@ -82,9 +82,11 @@ body {
 }
 .dropdown-link {
   text-decoration: none;
+  color: #0086db;
 }
 .dropdown-link:hover {
   text-decoration: underline;
+  color: #0086db;
 }
 /* 유튜브 반응형 */
 .youtubeWrap {
