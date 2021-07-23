@@ -537,6 +537,10 @@ body {
   box-shadow: 0 0 1px 1px #0086db;
 }
 
+.content_input.editor {
+  text-align: left;
+}
+
 .writing_notice {
   color: var(--text-color-lightgray);
   font-size: 0.8rem;
