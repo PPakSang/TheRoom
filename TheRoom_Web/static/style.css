@@ -574,7 +574,7 @@ body {
   text-align: center;
 }
 
-.buttons .modify_link {
+.buttons .modify_btn {
   border: 1px;
   text-decoration: none;
   color: aliceblue;
@@ -586,7 +586,7 @@ body {
 }
 
 .buttons .enroll_btn:hover,
-.buttons .modify_link:hover {
+.buttons .modify_btn:hover {
   background-color: var(--sub-basic-color);
 }
 
@@ -639,7 +639,7 @@ body {
 }
 
 /*글보기*/
-.detail_view {
+.detailView_con {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -702,7 +702,8 @@ body {
   margin: 0;
 }
 
-.delete_btn {
+.delete_btn,
+.buttons .writing_close_btn {
   border: 1px;
   text-decoration: none;
   color: var(--sub-basic-color);
