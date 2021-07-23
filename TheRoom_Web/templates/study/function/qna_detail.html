@@ -44,12 +44,14 @@
                     </tr>
                 </table>
             </div>
-
+            {% if request.user == qna.user %}
             <div class="btn_container">
                 <div class="buttons mt-2 row g-1">
+                    {% if not qna.answer %}
                     <div class="col" id="modify_btn">
                         <button class="modify_btn py-1 px-4" onclick="modify_func()">수정</button>
                     </div>
+                    {% endif %}
                     <div class="col" id="delete_btn">
                         <button class="detail_delete_btn">
                             <input type="submit" class="delete_btn  py-1 px-4" value="삭제"
@@ -57,6 +59,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             <div class="comment_box mb-4">
                 <div class="comment_title">
                     답변
@@ -84,11 +87,13 @@
         </div>
         <div class="writingView_con d-none">
             <div class="writing_box mt-5">
+                <form action="" method="POST">
+                    {% csrf_token %}
                 <table class="writing_table">
                     <tr class="first_col">
                         <td class="title_title">제목</td>
                         <td><input name="title" type="text" class="title_input" autofocus="autofocus"
-                                required="required" autocomplete="off"></td>
+                                required="required" autocomplete="off" value="{{qna.title}}"></td>
                     </tr>
                     <tr class="second_col">
                         <td colspan="2" style="padding: 1px;">
@@ -137,17 +142,21 @@
                         </td>
                     </tr>
                 </table>
+                <input type="text" name="text" id="text">
             </div>
+            {% if request.user == qna.user %}
             <div class="btn_container">
                 <div class="buttons mt-2 row g-0">
                     <div class="col">
-                        <input type="submit" value="등록" class="enroll_btn py-1 px-4">
+                        <input type="submit" value="등록" class="enroll_btn py-1 px-4" onclick="text_input()">
                     </div>
                     <div class="col">
                         <button class="writing_close_btn py-1 px-4" onclick="back_func()">취소</button>
                     </div>
                 </div>
             </div>
+            {% endif %}
+        </form>
         </div>
         <div class="mt-5 mb-2">
             <button class="detail_list_btn"><a class="list_btn" href="{% url 'qna_view' 1 %}">목록</a></button>
@@ -188,7 +197,7 @@
         document.execCommand('fontSize', false, e.target.value);
     });
     function text_input() {
-        $('#text').val($('#text_box').html())
+        $('#text').val($('#content_input').html())
     }
 </script>
 

@@ -515,6 +515,18 @@ def qna_enroll(request):
             return redirect('qna_view', 1)
     return render(request, 'study/function/qna_enroll.html')
 
+@login_required(login_url='/user/login')
+def qna_delete(request,pk):
+    qna = Qna.objects.get(pk=pk)
+    
+    if qna.user == request.user or request.user.is_staff :
+        qna.delete()
+        return redirect('qna_view',1)
+    else :
+        messages.error(request,'타인의 글은 삭제가 불가능합니다.')
+        return redirect('qna_view',1)
+
+
 
 @login_required(login_url='/user/login')
 def qna_detail(request, pk):
@@ -532,12 +544,11 @@ def qna_detail(request, pk):
                 messages.error(request, "답변이 작성된 글은 수정이 불가능합니다.")
                 return render(request, 'study/function/qna_detail.html', context={"qna": qna})
             if qna.next_qna < datetime.datetime.today():
-                new_qna = Qna(user=request.user)
-                new_qna.title = request.POST["title"]
-                new_qna.text = request.POST["text"]
-                new_qna.date = datetime.date.today()
-                new_qna.next_qna = datetime.datetime.today() + datetime.timedelta(minutes=10)
-                new_qna.save()
+                qna.title = request.POST["title"]
+                qna.text = request.POST["text"]
+                qna.date = datetime.date.today()
+                qna.next_qna = datetime.datetime.today() + datetime.timedelta(minutes=10)
+                qna.save()
             else:
                 messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
         return render(request,'study/function/qna_detail.html',context={"qna":qna})
