@@ -695,13 +695,6 @@ body {
   text-align: center;
 }
 
-.detail_delete_btn {
-  border: none;
-  background-color: none;
-  padding: 0;
-  margin: 0;
-}
-
 .delete_btn,
 .buttons .writing_close_btn {
   border: 1px;
