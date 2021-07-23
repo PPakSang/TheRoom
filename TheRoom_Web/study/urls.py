@@ -58,14 +58,17 @@ urlpatterns = [
 
     # test
     path('test/', test, name='test'),
-    
+
     path('qnalist/', qna_list, name='qna_list'),
     path('category/qna/detail/<pk>', qna_detail, name='qna_detail'),
     path('category/qna/enroll', qna_enroll, name='qna_enroll'),
     path('category/qna/<num>', qna_view, name='qna_view'),
 
-    path('category/review', review, name='review'),
+    path('reviewlist/', review_list, name='review_list'),
+    path('category/review/detail/<pk>', review_detail, name='review_detail'),
     path('category/review/enroll', review_enroll, name='review_enroll'),
+    path('category/review/<num>', review_view, name='review_view'),
+    
 
     path('testt/', test3),
 

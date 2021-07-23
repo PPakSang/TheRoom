@@ -277,7 +277,6 @@ def enroll(request):  # 등록하기 화면
             if request.POST['date'] == '0':
                 Room.objects.get(user_id = request.user.id).delete()
                 return redirect('enroll')
-        messages.error(request, "이미 연습실을 대여하셨습니다!")
         return render(request, 'study/function/enroll.html', {"error": "조회 및 대여 취소 가능합니다.",
         "is_enrolled" : is_enrolled,
         "day1":day,
@@ -547,7 +546,8 @@ def qna_detail(request, pk):
 @login_required(login_url='/user/login')
 def review_list(request):  # 커뮤니티
     page = int(request.GET['page'])
-    reviews = Review.objects.filter(user = request.user).order_by('-pk')
+    reviews = Review.objects.all().order_by('-pk')
+    print(reviews)
     page_len = reviews.count()//2 + reviews.count()%2
 
     reviews = reviews[2*(page-1):2*page]
@@ -584,7 +584,7 @@ def review_enroll(request):
         try:
             if Review.objects.get(user = request.user):
                 messages.error(request,"리뷰는 한번만 작성 가능합니다")
-                return render(request,'study/function/review_enroll.html')
+                return redirect('review_view',1)
             elif not Student.objects.filter(user_id = request.user.id).exists() or Student.objects.filter(user_id = request.user.id)[0].check_in == '1':
                 messages.error(request,"레슨이 진행된 이후에 리뷰작성 가능합니다")
                 return redirect('review_view',1)
@@ -600,6 +600,7 @@ def review_enroll(request):
             review.save()
             return redirect('review_view',1)
     return render(request, 'study/function/review_enroll.html')
+
 
 
 @login_required(login_url='/user/login')
@@ -1017,10 +1018,3 @@ def test(request):
         post.save()
     else:
         return render(request, "test/test.html")
-
-
-def review(request):  # 리뷰페이지
-    return render(request, 'study/function/review.html')
-
-def review_enroll(request):  # 리뷰등록 페이지
-    return render(request, 'study/function/review_enroll.html')

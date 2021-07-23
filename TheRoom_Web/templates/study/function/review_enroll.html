@@ -16,7 +16,7 @@
                 <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="{% url 'review'%}">더 룸 리뷰</a>
+                <a class="nav-link" href="{% url 'review_view' 1%}">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="col">
                     <button class="writing_close_btn"><a class="close_btn py-1 px-4"
-                            href="{% url 'review' 1 %}">취소</a></button>
+                            href="{% url 'review_view' 1 %}">취소</a></button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,116 @@
+{% extends 'study/main/base.html' %} {% block title %}TheRoom{% endblock %} {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+
+<!-- 중간 카테고리 -->
+<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav">
+    <div class="container-fluid">
+        <ul class="navbar-nav mx-auto mb-md-0">
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link active" href="{% url 'qna_view' 1 %}">1:1 문의</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'review_view' 1%}">더 룸 리뷰</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container review" id="container">
+    <h3 class="menu_title mb-4 mt-5"> 1:1 문의</h3>
+    <div class="divline mb-5"></div>
+
+
+    <div class="detail_view">
+        <div class="detail_box">
+            <table class="detail_table" id="detail_table">
+                <tr class="first_col" id="first_col">
+                    <td class="title_title">제목</td>
+                    <td class="detail_title" colspan="3" id="title" style="text-align: start;">{{review.title}}</td>
+                    <td class="title_date">작성일</td>
+                    <td class="detail_date">{{review.date|date:"Y-m-d"}}</td>
+                </tr>
+                <tr class="second_col" id="second_col">
+                    <td colspan="6" id="content">
+                        <div class="detail_content my-2" style="text-align: start;">
+                            {{review.text | safe}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="btn_container">
+            <div class="buttons mt-2 row g-1">
+                <div class="col" id="modify_btn">
+                    <button class="modify_btn"><a class="modify_link py-1 px-4"
+                        href="{% url 'review_enroll'%}">수정</a></button>
+                </div>
+                <div class="col" id="delete_btn">
+                    <button class="detail_delete_btn">
+                        <input type="submit" class="delete_btn  py-1 px-4" value="삭제" onclick="del_Alert()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="comment_box mb-4">
+            <div class="comment_title">
+                답변
+            </div>
+            <form action="" method="POST">
+                {% if request.user.is_staff %}
+                {% csrf_token %}
+                <table class="detail_comment_table">
+                    <td>
+                        <textarea name="answer" class="comment_input" placeholder="답변을 입력해주세요" cols="30"
+                            rows="10">{{review.answer}}</textarea>
+                    </td>
+                </table>
+                <div class="detail_comment_btn">
+                    <input type="submit" value="답변하기" class="comment_btn py-1">
+                </div>
+            </form>
+            {% else %}
+            <div class="comment_notice py-4">{% if review.answer %}{{review.answer}}{% else %}아직 답변이 등록되지않았습니다{% endif %}</div>
+            {% endif %}
+        </div>
+        <div class="mt-5 mb-2">
+            <button class="detail_list_btn"><a class="list_btn" href="{% url 'review_view' 1 %}">목록</a></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function modify_func() {
+        var getColFirst = document.getElementById("first_col");
+        var getColSecond = document.getElementById("second_col");
+        var getModiBtn = document.getElementById("modify_btn");
+        var getDelBtn = document.getElementById("delete_btn");
+        
+        var putColFirst = "<td class='title_title'>제목</td><td><input name='title' type='text' class='title_input' placeholder='제목을 입력해주세요' autofocus='autofocus' required='required' autocomplete='off' value={{review.title}}></td>";
+        var putColSecond ="<td colspan='2' style='padding: 1px;'><textarea name='text' class='content_input' placeholder='내용을 입력해주세요' cols='50' rows='10' required='required'>{{review.text | linebreaksbr}}</textarea></td>";
+        var putModiBtn = "<input type='submit' class='enroll_btn  py-1 px-4' value='확인'>";
+        var putDelBtn = "<button class='writing_close_btn'><a class='close_btn py-1 px-4' href='{% url 'qna_view' 1 %}'>취소</a></button>";
+
+        getColFirst.innerHTML = putColFirst;
+        getColSecond.innerHTML= putColSecond;
+        getModiBtn.innerHTML = putModiBtn;
+        getDelBtn.innerHTML = putDelBtn;
+
+    }
+
+    function del_Alert(){
+        let delConfirm = confirm("이 글을 삭제하시겠습니까?");
+
+        if(delConfirm){
+
+        }
+    }
+</script>
+
+{% endblock %}
