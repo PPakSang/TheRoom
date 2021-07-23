@@ -527,7 +527,7 @@ def qna_detail(request, pk):
             qna.save()
         return render(request, 'study/function/qna_detail.html', context={"qna": qna})
     else:
-        qna = Qna.objects.filter(user=request.user).last()
+        qna = Qna.objects.filter(user=request.user,pk=pk).last()
         if request.method == "POST":
             if qna.answer:
                 messages.error(request, "답변이 작성된 글은 수정이 불가능합니다.")
