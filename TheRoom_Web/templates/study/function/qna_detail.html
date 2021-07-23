@@ -47,13 +47,11 @@
 
             <div class="btn_container">
                 <div class="buttons mt-2 row g-1">
-                    <div class="col" id="modify_btn">
+                    <div class="col">
                         <button class="modify_btn py-1 px-4" onclick="modify_func()">수정</button>
                     </div>
-                    <div class="col" id="delete_btn">
-                        <button class="detail_delete_btn">
-                            <input type="submit" class="delete_btn  py-1 px-4" value="삭제"
-                                onclick="del_Alert()"></button>
+                    <div class="col">
+                        <button class="delete_btn py-1 px-4" data-bs-toggle="modal" data-bs-target="#cancelModal">삭제</button>
                     </div>
                 </div>
             </div>
@@ -151,6 +149,26 @@
         </div>
         <div class="mt-5 mb-2">
             <button class="detail_list_btn"><a class="list_btn" href="{% url 'qna_view' 1 %}">목록</a></button>
+        </div>
+    </div>
+
+    <!-- Modal: 상담 취소 -->
+    <div class="modal fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel">글 삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">이 글을 삭제하시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="cancel()">예</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
