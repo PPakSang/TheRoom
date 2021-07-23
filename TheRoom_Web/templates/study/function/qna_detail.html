@@ -144,7 +144,9 @@
                 </div>
             </form>
             {% else %}
-            <div class="comment_notice py-4">{% if qna.answer %}{{qna.answer}}{% else %}아직 답변이 등록되지않았습니다{% endif %}
+            {% if qna.answer %}
+            <div class="comment_notice py-4" style="text-align: left;">{{qna.answer}}</div>{% else %}
+            <div class="comment_notice py-4">아직 답변이 등록되지않았습니다{% endif %}
             </div>
             {% endif %}
         </div>

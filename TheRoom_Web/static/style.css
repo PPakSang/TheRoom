@@ -639,6 +639,7 @@ body {
 }
 
 /*글보기*/
+.detail_view,
 .detailView_con {
   display: flex;
   justify-content: center;
