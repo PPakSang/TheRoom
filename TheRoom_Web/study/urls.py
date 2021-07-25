@@ -68,7 +68,10 @@ urlpatterns = [
     path('reviewlist/', review_list, name='review_list'),
     path('category/review/detail/<pk>', review_detail, name='review_detail'),
     path('category/review/enroll', review_enroll, name='review_enroll'),
+    path('category/review/myreview',my_review,name='my_review'),
     path('category/review/<num>', review_view, name='review_view'),
+    path('category/review/delete/<pk>', review_delete, name='review_delete'),
+    
     
 
     path('testt/', test3),
