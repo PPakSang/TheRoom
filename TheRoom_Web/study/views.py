@@ -477,6 +477,7 @@ def qna_list(request):  # 커뮤니티
         return HttpResponse(context)
 
 
+@login_required(login_url='/user/login')
 def qna_view(request,num):
     try:
         student = Student.objects.get(user_id = request.user.id)
