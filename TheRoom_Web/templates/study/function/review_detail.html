@@ -32,14 +32,14 @@
                 <table class="detail_table" id="detail_table">
                     <tr class="first_col" id="first_col">
                         <td class="title_title">제목</td>
-                        <td class="detail_title" colspan="3" id="title" style="text-align: start;">{{qna.title}}</td>
+                        <td class="detail_title" colspan="3" id="title" style="text-align: start;">{{review.title}}</td>
                         <td class="title_date">작성자</td>
-                        <td class="detail_date">{{qna.date|date:"Y-m-d"}}</td>
+                        <td class="detail_date">{{review.date|date:"Y-m-d"}}</td>
                     </tr>
                     <tr class="second_col" id="second_col">
                         <td colspan="6" id="content">
                             <div class="detail_content my-2" style="text-align: start;">
-                                {{qna.text | safe}}
+                                {{review.text | safe}}
                             </div>
                         </td>
                     </tr>
@@ -109,7 +109,7 @@
                             </div>
                             <div name="text" id="content_input" class="content_input editor" contenteditable="true"
                                 required="required">
-                                {{qna.text | safe}}
+                                {{review.text | safe}}
                             </div>
                         </td>
                     </tr>
@@ -127,7 +127,7 @@
             </div>
         </div>
         <div class="mt-5 mb-2">
-            <button class="detail_list_btn"><a class="list_btn" href="{% url 'reiview_view' 1 %}">목록</a></button>
+            <button class="detail_list_btn"><a class="list_btn" href="{% url 'review_view' 1 %}">목록</a></button>
         </div>
     </div>
 
