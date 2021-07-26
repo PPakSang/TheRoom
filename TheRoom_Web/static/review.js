@@ -72,7 +72,7 @@ function add_pagination(num,max_len) {
         if(i > max_len){
             break;
         }
-        page_html = page_html + '<li class="page_num page-item"><a href="/category/qna/'+i+'" class="page-link">' + i + '</a></li>'
+        page_html = page_html + '<li class="page_num page-item"><a href="/category/review/'+i+'" class="page-link">' + i + '</a></li>'
     }
     page_html = page_html + "<li class='rbtn page-item'><a class='page-link'>&raquo;</a></li>"
 

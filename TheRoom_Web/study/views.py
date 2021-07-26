@@ -501,7 +501,7 @@ def qna_enroll(request):
             last = Qna.objects.filter(user=request.user).last()
             if last.next_qna > datetime.datetime.today():
                 messages.error(request, "문의 후 10분간 재문의가 제한됩니다.")
-                return render(request, 'study/function/qna_enroll.html')
+                return render(request, 'study/function/qna_enroll.html',{'need_to_delete' : True})
             else:
                 raise Exception()
         except:
@@ -513,7 +513,7 @@ def qna_enroll(request):
                 tz=None) + datetime.timedelta(minutes=10)
             qna.save()
             return redirect('qna_view', 1)
-    return render(request, 'study/function/qna_enroll.html')
+    return render(request, 'study/function/qna_enroll.html',{'need_to_delete' : True})
 
 
 @login_required(login_url='/user/login')
@@ -536,13 +536,13 @@ def qna_detail(request, pk):
         if request.method == "POST":
             qna.answer = request.POST["answer"]
             qna.save()
-        return render(request, 'study/function/qna_detail.html', context={"qna": qna})
+        return render(request, 'study/function/qna_detail.html', context={"qna": qna,'need_to_delete' : True})
     else:
         qna = Qna.objects.filter(user=request.user, pk=pk).last()
         if request.method == "POST":
             if qna.answer:
                 messages.error(request, "답변이 작성된 글은 수정이 불가능합니다.")
-                return render(request, 'study/function/qna_detail.html', context={"qna": qna})
+                return render(request, 'study/function/qna_detail.html', context={"qna": qna,'need_to_delete' : True})
             if qna.next_qna < datetime.datetime.today():
                 qna.title = request.POST["title"]
                 qna.text = request.POST["text"]
@@ -551,7 +551,7 @@ def qna_detail(request, pk):
                 qna.save()
             else:
                 messages.error(request, "문의 후 10분간 재문의가 제한됩니다.")
-        return render(request, 'study/function/qna_detail.html', context={"qna": qna})
+        return render(request, 'study/function/qna_detail.html', context={"qna": qna,'need_to_delete' : True})
 
 
 @login_required(login_url='/user/login')
@@ -580,8 +580,9 @@ def review_list(request):  # 커뮤니티
     context = json.dumps(context)
     return HttpResponse(context)
 
-
+@login_required(login_url='/user/login')
 def review_view(request, num):
+    review = Review.objects.filter(user = request.user)
     try:
         student = Student.objects.get(user_id=request.user.id)
         if student.check_in == '1':
@@ -592,9 +593,9 @@ def review_view(request, num):
             is_enrolled = True
             day1 = student.lesson_day
     except:
-        return render(request, 'study/function/review_view.html', {"num": num, "no_enroll": True})
+        return render(request, 'study/function/review_view.html', {"num": num, "no_enroll": True,'review':review})
 
-    return render(request, 'study/function/review_view.html', {"num": num, "is_enrolled": is_enrolled, "day1": day1})
+    return render(request, 'study/function/review_view.html', {"num": num, "is_enrolled": is_enrolled, "day1": day1,'review':review})
 
 
 @login_required(login_url='/user/login')
@@ -618,7 +619,7 @@ def review_enroll(request):
                 tz=None) + datetime.timedelta(minutes=10)
             review.save()
             return redirect('review_view', 1)
-    return render(request, 'study/function/review_enroll.html')
+    return render(request, 'study/function/review_enroll.html',{'need_to_delete' : True})
 
 
 @login_required(login_url='/user/login')
@@ -641,13 +642,13 @@ def review_detail(request, pk):
         if request.method == "POST":
             review.answer = request.POST["answer"]
             review.save()
-        return render(request, 'study/function/review_detail.html', context={"review": review})
+        return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
     else:
         review = Review.objects.get(pk=pk)
         if request.method == "POST":
             if review.answer:
                 messages.error(request, "답변이 작성된 리뷰는 수정이 불가능합니다.")
-                return render(request, 'study/function/review_detail.html', context={"review": review})
+                return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
             elif review.user == request.user:
                 new_review = review(user=request.user)
                 new_review.title = request.POST["title"]
@@ -656,8 +657,8 @@ def review_detail(request, pk):
                 new_review.save()
             else:
                 messages.error(request, "타인의 리뷰는 수정할 수 없습니다")
-                return render(request, 'study/function/review_detail.html', context={"review": review})
-        return render(request, 'study/function/review_detail.html', context={"review": review})
+                return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
+        return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
 
 
 # @login_required(login_url='/login/')
