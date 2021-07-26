@@ -554,8 +554,11 @@ body {
 
 .buttons {
   width: 180px;
+}
+
+.buttons .col {
   display: flex;
-  justify-items: right;
+  direction: rtl;
 }
 
 .buttons .enroll_btn {
