@@ -169,7 +169,7 @@
                         <input type="submit" value="등록" class="enroll_btn py-1 px-4" onclick="text_input()">
                     </div>
                     <div class="col">
-                        <button class="writing_close_btn py-1 px-4" onclick="back_func()">취소</button>
+                        <button class="detail_close_btn py-1 px-4" onclick="back_func()">취소</button>
                     </div>
                 </div>
             </div>
@@ -196,7 +196,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="cancel()">예</button>
-                    <a href="{% url 'qna_delete' qna.pk %}" id="qna_delete"></a>
                 </div>
             </div>
         </div>
@@ -205,10 +204,6 @@
 
 
 <script text="javascript/text">
-
-    function cancel(){
-        $('#qna_delete')[0].click()
-    }
 
     function modify_func() {
         $('.detailView_con').addClass('d-none');
