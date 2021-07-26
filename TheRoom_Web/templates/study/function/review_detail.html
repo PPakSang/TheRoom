@@ -10,13 +10,13 @@
                 <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link active" href="{% url 'qna_view' 1 %}">1:1 문의</a>
+                <a class="nav-link" href="{% url 'qna_view' 1 %}">1:1 문의</a>
             </li>
             <li class="nav-item mx-3">
                 <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
             </li>
             <li class="nav-item mx-3">
-                <a class="nav-link" href="{% url 'review_view' 1%}">더 룸 리뷰</a>
+                <a class="nav-link active" href="{% url 'review_view' 1%}">더 룸 리뷰</a>
             </li>
         </ul>
     </div>
@@ -32,20 +32,20 @@
                 <table class="detail_table" id="detail_table">
                     <tr class="first_col" id="first_col">
                         <td class="title_title">제목</td>
-                        <td class="detail_title" colspan="3" id="title" style="text-align: start;">{{qna.title}}</td>
+                        <td class="detail_title" colspan="3" id="title" style="text-align: start;">{{review.title}}</td>
                         <td class="title_date">작성자</td>
-                        <td class="detail_date">{{qna.date|date:"Y-m-d"}}</td>
+                        <td class="detail_date">{{review.user.username}}</td>
                     </tr>
                     <tr class="second_col" id="second_col">
                         <td colspan="6" id="content">
                             <div class="detail_content my-2" style="text-align: start;">
-                                {{qna.text | safe}}
+                                {{review.text | safe}}
                             </div>
                         </td>
                     </tr>
                 </table>
             </div>
-
+            {% if review.user == request.user %}
             <div class="btn_container">
                 <div class="buttons mt-2 row g-1">
                     <div class="col">
@@ -57,6 +57,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
 
         <!--리뷰 수정 테이블-->
         <div class="writingView_con d-none">
@@ -109,7 +110,7 @@
                             </div>
                             <div name="text" id="content_input" class="content_input editor" contenteditable="true"
                                 required="required">
-                                {{qna.text | safe}}
+                                {{review.text | safe}}
                             </div>
                         </td>
                     </tr>
@@ -127,7 +128,7 @@
             </div>
         </div>
         <div class="mt-5 mb-2">
-            <button class="detail_list_btn"><a class="list_btn" href="{% url 'reiview_view' 1 %}">목록</a></button>
+            <button class="detail_list_btn"><a class="list_btn" href="{% url 'review_view' 1 %}">목록</a></button>
         </div>
     </div>
 
@@ -146,6 +147,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="cancel()">예</button>
+                    <a href="{% url 'review_delete' review.pk %}" id="review_delete" style="display: none;">삭제</a>
                 </div>
             </div>
         </div>
@@ -154,6 +156,11 @@
 
 
 <script text="javascript/text">
+
+    function cancel() {
+        $('#review_delete')[0].click()
+    }
+
 
     function modify_func() {
         $('.detailView_con').addClass('d-none');
