@@ -477,6 +477,7 @@ def qna_list(request):  # 커뮤니티
         return HttpResponse(context)
 
 
+@login_required(login_url='/user/login')
 def qna_view(request,num):
     try:
         student = Student.objects.get(user_id = request.user.id)
@@ -555,10 +556,19 @@ def qna_detail(request, pk):
 
 
 @login_required(login_url='/user/login')
+def my_review(request):
+    review = Review.objects.filter(user = request.user)
+    if review.exists():
+        return redirect('review_detail',review.last().pk)
+    else:
+        return redirect('review_enroll')
+    
+
+
+@login_required(login_url='/user/login')
 def review_list(request):  # 커뮤니티
     page = int(request.GET['page'])
     reviews = Review.objects.all().order_by('-pk')
-    print(reviews)
     page_len = reviews.count()//2 + reviews.count()%2
 
     reviews = reviews[2*(page-1):2*page]
@@ -612,6 +622,17 @@ def review_enroll(request):
             return redirect('review_view',1)
     return render(request, 'study/function/review_enroll.html')
 
+
+@login_required(login_url='/user/login')
+def review_delete(request,pk):
+    review = Review.objects.get(pk=pk)
+    
+    if review.user == request.user or request.user.is_staff :
+        review.delete()
+        return redirect('review_view',1)
+    else :
+        messages.error(request,'타인의 글은 삭제가 불가능합니다.')
+        return redirect('review_view',1)
 
 
 @login_required(login_url='/user/login')

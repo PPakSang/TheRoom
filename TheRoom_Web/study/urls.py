@@ -63,12 +63,15 @@ urlpatterns = [
     path('category/qna/detail/<pk>', qna_detail, name='qna_detail'),
     path('category/qna/enroll', qna_enroll, name='qna_enroll'),
     path('category/qna/<num>', qna_view, name='qna_view'),
-    path('category/qna/delete/<pk>', qna_view, name='qna_delete'),
+    path('category/qna/delete/<pk>', qna_delete, name='qna_delete'),
 
     path('reviewlist/', review_list, name='review_list'),
     path('category/review/detail/<pk>', review_detail, name='review_detail'),
     path('category/review/enroll', review_enroll, name='review_enroll'),
+    path('category/review/myreview',my_review,name='my_review'),
     path('category/review/<num>', review_view, name='review_view'),
+    path('category/review/delete/<pk>', review_delete, name='review_delete'),
+    
     
 
     path('testt/', test3),
