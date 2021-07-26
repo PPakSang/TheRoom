@@ -46,12 +46,12 @@ def only_admin(request, option):
 
         if option == 'today':
             lesson_students = Student.objects.filter(
-                lesson_day__date=datetime.date.today(), check_in = '2').exclude(user_id=0)
+                lesson_day__date=datetime.date.today(), check_in='2').exclude(user_id=0)
             new_students = Student.objects.filter(
-                day1 = datetime.date.today(), check_in = '1'
+                day1=datetime.date.today(), check_in='1'
             ).exclude(user_id=0)
 
-            return render(request, 'study/admin.html', {'lesson_students':lesson_students,'new_students': new_students})
+            return render(request, 'study/admin.html', {'lesson_students': lesson_students, 'new_students': new_students})
 
         if option == 'name':
             if request.method == 'POST':
@@ -212,9 +212,9 @@ def index(request):  # 메인 화면
 def lesson_enroll(request):  # 레슨 신청 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
-        
+
         if student.check_in == '1':
-            #아직 레슨일정 안잡혔을때
+            # 아직 레슨일정 안잡혔을때
             is_enrolled = False
             day1 = student.day1
         else:
@@ -223,7 +223,7 @@ def lesson_enroll(request):  # 레슨 신청 화면
 
         if student.day1 > datetime.date.today() != 0:  # 아직 남았다면
             messages.error(request, "이미 등록하셨습니다!")
-            return render(request, 'study/function/lesson_enroll.html',{"error": "날짜변경 또는 상담취소신청 가능합니다.","is_enrolled" : is_enrolled,"day1":day1})
+            return render(request, 'study/function/lesson_enroll.html', {"error": "날짜변경 또는 상담취소신청 가능합니다.", "is_enrolled": is_enrolled, "day1": day1})
         else:
             student.user_id = 0
             student.save()
@@ -235,11 +235,11 @@ def lesson_enroll(request):  # 레슨 신청 화면
 
             if day1 < datetime.date.today():  # 지난 날 신청할 때
                 messages.error(request, "등록 실패!")
-                return render(request, 'study/function/lesson_enroll.html', {"error": "지난날은 신청할 수 없습니다.", "no_enroll":True})
+                return render(request, 'study/function/lesson_enroll.html', {"error": "지난날은 신청할 수 없습니다.", "no_enroll": True})
 
             if day1 == datetime.date.today() + timedelta(days=1) and datetime.datetime.today().hour >= 22:  # 당일 10시 넘어서 다음날 신청할 때
                 messages.error(request, "등록 실패!")
-                return render(request, 'study/function/lesson_enroll.html', {"error": "22시 이후에는 다음날 신청이 불가합니다.", "no_enroll":True})
+                return render(request, 'study/function/lesson_enroll.html', {"error": "22시 이후에는 다음날 신청이 불가합니다.", "no_enroll": True})
 
             if form.is_valid():
                 form = form.save(commit=False)
@@ -250,41 +250,41 @@ def lesson_enroll(request):  # 레슨 신청 화면
                 return redirect('inquire')
             else:
                 messages.error(request, '등록 실패!')
-                return render(request, 'study/function/lesson_enroll.html',{"no_enroll":True})
-        return render(request, 'study/function/lesson_enroll.html',{"no_enroll":True})
+                return render(request, 'study/function/lesson_enroll.html', {"no_enroll": True})
+        return render(request, 'study/function/lesson_enroll.html', {"no_enroll": True})
 
 
 @login_required(login_url='/user/login/')
 def enroll(request):  # 등록하기 화면
-    student = Student.objects.filter(user_id = request.user.id)
+    student = Student.objects.filter(user_id=request.user.id)
     if student.exists():
         no_enroll = False
         if student[0].check_in == '1':
-            #아직 레슨일정 안잡혔을때
+            # 아직 레슨일정 안잡혔을때
             is_enrolled = False
             day = student[0].day1
         else:
             is_enrolled = True
             day = student[0].lesson_day
-    else : 
+    else:
         is_enrolled = False
         day = 1
         no_enroll = True
-    
+
     try:
         room = Room.objects.get(user_id=request.user.id)
         if request.method == 'POST':
             if request.POST['date'] == '0':
-                Room.objects.get(user_id = request.user.id).delete()
+                Room.objects.get(user_id=request.user.id).delete()
                 return redirect('enroll')
         return render(request, 'study/function/enroll.html', {"error": "조회 및 대여 취소 가능합니다.",
-        "is_enrolled" : is_enrolled,
-        "day1":day,
-        "no_enroll":no_enroll,
-        "is_reserved":True,
-        "room":room,
-        "time_from":room.day1.time,
-        "time_to":(room.day1+datetime.timedelta(hours=2)).time})
+                                                              "is_enrolled": is_enrolled,
+                                                              "day1": day,
+                                                              "no_enroll": no_enroll,
+                                                              "is_reserved": True,
+                                                              "room": room,
+                                                              "time_from": room.day1.time,
+                                                              "time_to": (room.day1+datetime.timedelta(hours=2)).time})
 
     except:
         if request.method == 'POST':
@@ -301,12 +301,12 @@ def enroll(request):  # 등록하기 화면
                 name=request.user.first_name)
             room.save()
             return redirect('enroll')
-            
-        return render(request, 'study/function/enroll.html',{
-        "is_enrolled" : is_enrolled,
-        "day1":day,
-        "no_enroll":no_enroll,
-        "is_reserved":False,
+
+        return render(request, 'study/function/enroll.html', {
+            "is_enrolled": is_enrolled,
+            "day1": day,
+            "no_enroll": no_enroll,
+            "is_reserved": False,
         })
 
 
@@ -340,7 +340,7 @@ def inquire(request):  # 조회하기 화면
     try:
         student = Student.objects.get(user_id=request.user.id)
         if student.check_in == '1':
-        #아직 레슨일정 안잡혔을때
+            # 아직 레슨일정 안잡혔을때
             is_enrolled = False
             day = student.day1
         else:
@@ -364,8 +364,8 @@ def inquire(request):  # 조회하기 화면
             return redirect('inquire')
     else:
         return render(request, 'study/function/inquire.html',
-                  {'student': student,"is_enrolled" : is_enrolled,"day1":day}
-                  )
+                      {'student': student, "is_enrolled": is_enrolled, "day1": day}
+                      )
 
 
 # @login_required(login_url='/login/')
@@ -478,21 +478,20 @@ def qna_list(request):  # 커뮤니티
 
 
 @login_required(login_url='/user/login')
-def qna_view(request,num):
+def qna_view(request, num):
     try:
-        student = Student.objects.get(user_id = request.user.id)
+        student = Student.objects.get(user_id=request.user.id)
         if student.check_in == '1':
-            #아직 레슨일정 안잡혔을때
+            # 아직 레슨일정 안잡혔을때
             is_enrolled = False
             day1 = student.day1
         else:
             is_enrolled = True
             day1 = student.lesson_day
     except:
-        return render(request,'study/function/qna_view.html',{"num":num,"no_enroll":True})
+        return render(request, 'study/function/qna_view.html', {"num": num, "no_enroll": True})
 
-        
-    return render(request,'study/function/qna_view.html',{"num":num,"is_enrolled" : is_enrolled,"day1":day1})
+    return render(request, 'study/function/qna_view.html', {"num": num, "is_enrolled": is_enrolled, "day1": day1})
 
 
 @login_required(login_url='/user/login')
@@ -516,17 +515,17 @@ def qna_enroll(request):
             return redirect('qna_view', 1)
     return render(request, 'study/function/qna_enroll.html')
 
-@login_required(login_url='/user/login')
-def qna_delete(request,pk):
-    qna = Qna.objects.get(pk=pk)
-    
-    if qna.user == request.user or request.user.is_staff :
-        qna.delete()
-        return redirect('qna_view',1)
-    else :
-        messages.error(request,'타인의 글은 삭제가 불가능합니다.')
-        return redirect('qna_view',1)
 
+@login_required(login_url='/user/login')
+def qna_delete(request, pk):
+    qna = Qna.objects.get(pk=pk)
+
+    if qna.user == request.user or request.user.is_staff:
+        qna.delete()
+        return redirect('qna_view', 1)
+    else:
+        messages.error(request, '타인의 글은 삭제가 불가능합니다.')
+        return redirect('qna_view', 1)
 
 
 @login_required(login_url='/user/login')
@@ -539,7 +538,7 @@ def qna_detail(request, pk):
             qna.save()
         return render(request, 'study/function/qna_detail.html', context={"qna": qna})
     else:
-        qna = Qna.objects.filter(user=request.user,pk=pk).last()
+        qna = Qna.objects.filter(user=request.user, pk=pk).last()
         if request.method == "POST":
             if qna.answer:
                 messages.error(request, "답변이 작성된 글은 수정이 불가능합니다.")
@@ -551,64 +550,63 @@ def qna_detail(request, pk):
                 qna.next_qna = datetime.datetime.today() + datetime.timedelta(minutes=10)
                 qna.save()
             else:
-                messages.error(request,"문의 후 10분간 재문의가 제한됩니다.")
-        return render(request,'study/function/qna_detail.html',context={"qna":qna})
+                messages.error(request, "문의 후 10분간 재문의가 제한됩니다.")
+        return render(request, 'study/function/qna_detail.html', context={"qna": qna})
 
 
 @login_required(login_url='/user/login')
 def my_review(request):
-    review = Review.objects.filter(user = request.user)
+    review = Review.objects.filter(user=request.user)
     if review.exists():
-        return redirect('review_detail',review.last().pk)
+        return redirect('review_detail', review.last().pk)
     else:
         return redirect('review_enroll')
-    
 
 
 @login_required(login_url='/user/login')
 def review_list(request):  # 커뮤니티
     page = int(request.GET['page'])
     reviews = Review.objects.all().order_by('-pk')
-    page_len = reviews.count()//2 + reviews.count()%2
+    page_len = reviews.count()//2 + reviews.count() % 2
 
     reviews = reviews[2*(page-1):2*page]
-    reviews = render_to_string('study/function/review_list_base.html',context={"reviews":reviews})
+    reviews = render_to_string(
+        'study/function/review_list_base.html', context={"reviews": reviews})
 
     context = {
-        "reviews":reviews,
-        "page_len":page_len
+        "reviews": reviews,
+        "page_len": page_len
     }
     context = json.dumps(context)
     return HttpResponse(context)
 
-def review_view(request,num):
+
+def review_view(request, num):
     try:
-        student = Student.objects.get(user_id = request.user.id)
+        student = Student.objects.get(user_id=request.user.id)
         if student.check_in == '1':
-            #아직 레슨일정 안잡혔을때
+            # 아직 레슨일정 안잡혔을때
             is_enrolled = False
             day1 = student.day1
         else:
             is_enrolled = True
             day1 = student.lesson_day
     except:
-        return render(request,'study/function/review_view.html',{"num":num,"no_enroll":True})
+        return render(request, 'study/function/review_view.html', {"num": num, "no_enroll": True})
 
-        
-    return render(request,'study/function/review_view.html',{"num":num,"is_enrolled" : is_enrolled,"day1":day1})
-
+    return render(request, 'study/function/review_view.html', {"num": num, "is_enrolled": is_enrolled, "day1": day1})
 
 
 @login_required(login_url='/user/login')
 def review_enroll(request):
     if request.method == "POST":
         try:
-            if Review.objects.get(user = request.user):
-                messages.error(request,"리뷰는 한번만 작성 가능합니다")
-                return redirect('review_view',1)
-            elif not Student.objects.filter(user_id = request.user.id).exists() or Student.objects.filter(user_id = request.user.id)[0].check_in == '1':
-                messages.error(request,"레슨이 진행된 이후에 리뷰작성 가능합니다")
-                return redirect('review_view',1)
+            if Review.objects.get(user=request.user):
+                messages.error(request, "리뷰는 한번만 작성 가능합니다")
+                return redirect('review_view', 1)
+            elif not Student.objects.filter(user_id=request.user.id).exists() or Student.objects.filter(user_id=request.user.id)[0].check_in == '1':
+                messages.error(request, "레슨이 진행된 이후에 리뷰작성 가능합니다")
+                return redirect('review_view', 1)
             else:
                 raise Exception
         except:
@@ -619,20 +617,20 @@ def review_enroll(request):
             review.next_review = datetime.datetime.now(
                 tz=None) + datetime.timedelta(minutes=10)
             review.save()
-            return redirect('review_view',1)
+            return redirect('review_view', 1)
     return render(request, 'study/function/review_enroll.html')
 
 
 @login_required(login_url='/user/login')
-def review_delete(request,pk):
+def review_delete(request, pk):
     review = Review.objects.get(pk=pk)
-    
-    if review.user == request.user or request.user.is_staff :
+
+    if review.user == request.user or request.user.is_staff:
         review.delete()
-        return redirect('review_view',1)
-    else :
-        messages.error(request,'타인의 글은 삭제가 불가능합니다.')
-        return redirect('review_view',1)
+        return redirect('review_view', 1)
+    else:
+        messages.error(request, '타인의 글은 삭제가 불가능합니다.')
+        return redirect('review_view', 1)
 
 
 @login_required(login_url='/user/login')
@@ -645,22 +643,21 @@ def review_detail(request, pk):
             review.save()
         return render(request, 'study/function/review_detail.html', context={"review": review})
     else:
-        review = Review.objects.get(pk = pk)
+        review = Review.objects.get(pk=pk)
         if request.method == "POST":
-            if review.answer :
-                messages.error(request,"답변이 작성된 리뷰는 수정이 불가능합니다.")
-                return render(request,'study/function/review_detail.html',context={"review":review})
+            if review.answer:
+                messages.error(request, "답변이 작성된 리뷰는 수정이 불가능합니다.")
+                return render(request, 'study/function/review_detail.html', context={"review": review})
             elif review.user == request.user:
-                new_review = review(user = request.user)
+                new_review = review(user=request.user)
                 new_review.title = request.POST["title"]
                 new_review.text = request.POST["text"]
                 new_review.date = datetime.date.today()
                 new_review.save()
-            else :
-                messages.error(request,"타인의 리뷰는 수정할 수 없습니다")
-                return render(request,'study/function/review_detail.html',context={"review":review})
-        return render(request,'study/function/review_detail.html',context={"review":review})
-
+            else:
+                messages.error(request, "타인의 리뷰는 수정할 수 없습니다")
+                return render(request, 'study/function/review_detail.html', context={"review": review})
+        return render(request, 'study/function/review_detail.html', context={"review": review})
 
 
 # @login_required(login_url='/login/')
