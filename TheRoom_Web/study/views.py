@@ -449,9 +449,9 @@ def qna_list(request):  # 커뮤니티
     if request.user.is_staff:
         page = int(request.GET['page'])
         qnas = Qna.objects.all().order_by('-pk')
-        page_len = qnas.count()//2 + qnas.count() % 2
+        page_len = qnas.count()//11 + 1
 
-        qnas = qnas[2*(page-1):2*page]
+        qnas = qnas[10*(page-1):10*page]
         qnas = render_to_string(
             'study/function/qna_list_base.html', context={"qnas": qnas, "is_staff": True})
         context = {
@@ -463,9 +463,9 @@ def qna_list(request):  # 커뮤니티
     else:
         page = int(request.GET['page'])
         qnas = Qna.objects.filter(user=request.user).order_by('-pk')
-        page_len = qnas.count()//2 + qnas.count() % 2
+        page_len = qnas.count()//11
 
-        qnas = qnas[2*(page-1):2*page]
+        qnas = qnas[10*(page-1):10*page]
         qnas = render_to_string(
             'study/function/qna_list_base.html', context={"qnas": qnas})
 
@@ -567,9 +567,9 @@ def my_review(request):
 def review_list(request):  # 커뮤니티
     page = int(request.GET['page'])
     reviews = Review.objects.all().order_by('-pk')
-    page_len = reviews.count()//2 + reviews.count() % 2
+    page_len = reviews.count()//11 + 1
 
-    reviews = reviews[2*(page-1):2*page]
+    reviews = reviews[10*(page-1):10*page]
     reviews = render_to_string(
         'study/function/review_list_base.html', context={"reviews": reviews})
 
