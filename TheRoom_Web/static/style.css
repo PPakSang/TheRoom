@@ -556,6 +556,11 @@ body {
   width: 180px;
 }
 
+.buttons .col {
+  display: flex;
+  direction: rtl;
+}
+
 .buttons .enroll_btn {
   background-color: var(--main-basic-color);
   color: aliceblue;
@@ -696,7 +701,7 @@ body {
 }
 
 .delete_btn,
-.buttons .writing_close_btn {
+.buttons .detail_close_btn {
   border: 1px;
   text-decoration: none;
   color: var(--sub-basic-color);
