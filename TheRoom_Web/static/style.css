@@ -700,13 +700,18 @@ body {
   text-align: center;
 }
 
-.delete_btn,
-.buttons .detail_close_btn {
-  border: 1px;
+.delete_btn {
+  border: 1px solid var(--sub-basic-color);
   text-decoration: none;
   color: var(--sub-basic-color);
-  border-style: solid;
-  border-color: var(--sub-basic-color);
+  border-radius: 3px;
+  background-color: white;
+  font-size: 0.95rem;
+}
+
+.detail_close_btn {
+  border: 1px solid var(--sub-basic-color);
+  color: var(--sub-basic-color);
   border-radius: 3px;
   background-color: white;
   font-size: 0.95rem;
