@@ -97,14 +97,14 @@ if DEBUG == True:
     }
 else:
     DATABASES = {
-        'default' : {
+        'default': {
             'ENGINE': 'django.db.backends.mysql',
-            #mysql db이름 (mysql 들어가서 디렉토리부분)
-            'NAME': 'sys',                  
-            'USER': 'theroom',                      
-            'PASSWORD': secret['dbpassword'],                  
+            # mysql db이름 (mysql 들어가서 디렉토리부분)
+            'NAME': 'sys',
+            'USER': 'theroom',
+            'PASSWORD': secret['dbpassword'],
             'HOST': secret['HOST'],
-            'PORT': '3306',                          
+            'PORT': '3306',
         }
     }
 # Password validation

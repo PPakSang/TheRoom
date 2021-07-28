@@ -401,13 +401,14 @@ body {
 }
 
 .container.qna {
-  min-height: calc(100vh - 288px);
+  min-height: calc(100vh - 263px);
   position: relative;
 }
 
 .view_bottom {
+  display: block;
   position: absolute;
-  width: 90%;
+  width: 100%;
   bottom: 0px;
 }
 
@@ -482,6 +483,13 @@ body {
   color: #6b6b6b;
 }
 
+.boxform {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
 .writing_box {
   display: flex;
   justify-content: center;
@@ -549,7 +557,7 @@ body {
 .btn_container {
   display: flex;
   justify-content: flex-end;
-  width: 95%;
+  width: 85%;
 }
 
 .buttons {
@@ -644,7 +652,8 @@ body {
 }
 
 /*글보기*/
-.detailView_con {
+.detailView_con,
+.writingView_con {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -700,13 +709,18 @@ body {
   text-align: center;
 }
 
-.delete_btn,
-.buttons .detail_close_btn {
-  border: 1px;
+.delete_btn {
+  border: 1px solid var(--sub-basic-color);
   text-decoration: none;
   color: var(--sub-basic-color);
-  border-style: solid;
-  border-color: var(--sub-basic-color);
+  border-radius: 3px;
+  background-color: white;
+  font-size: 0.95rem;
+}
+
+.detail_close_btn {
+  border: 1px solid var(--sub-basic-color);
+  color: var(--sub-basic-color);
   border-radius: 3px;
   background-color: white;
   font-size: 0.95rem;
