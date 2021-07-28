@@ -401,13 +401,14 @@ body {
 }
 
 .container.qna {
-  min-height: calc(100vh - 288px);
+  min-height: calc(100vh - 263px);
   position: relative;
 }
 
 .view_bottom {
+  display: block;
   position: absolute;
-  width: 90%;
+  width: 100%;
   bottom: 0px;
 }
 

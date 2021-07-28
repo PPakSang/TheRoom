@@ -65,8 +65,8 @@
         {% if not review %}<a class="writing_link px-4 py-2" href="{% url 'review_enroll'%}"> 리뷰쓰기</a>
         {% else %}<a class="writing_link px-4 py-2" href="{% url 'my_review'%}"> 내 리뷰</a>{% endif %}
     </div>
-    <div class="view_bottom">
-        <ul class="pagination mt-3 justify-content-center">
+    <div class="view_bottom pt-3">
+        <ul class="pagination justify-content-center mt-3 mb-0">
         </ul>
 
         <div style="display: none;" id="num">{{num}}</div>

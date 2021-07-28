@@ -35,7 +35,7 @@ with open(secret_file) as f:
 SECRET_KEY = secret['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -97,14 +97,14 @@ if DEBUG == True:
     }
 else:
     DATABASES = {
-        'default' : {
+        'default': {
             'ENGINE': 'django.db.backends.mysql',
-            #mysql db이름 (mysql 들어가서 디렉토리부분)
-            'NAME': 'sys',                  
-            'USER': 'theroom',                      
-            'PASSWORD': secret['dbpassword'],                  
+            # mysql db이름 (mysql 들어가서 디렉토리부분)
+            'NAME': 'sys',
+            'USER': 'theroom',
+            'PASSWORD': secret['dbpassword'],
             'HOST': secret['HOST'],
-            'PORT': '3306',                          
+            'PORT': '3306',
         }
     }
 # Password validation
