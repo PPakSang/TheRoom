@@ -405,13 +405,6 @@ body {
   position: relative;
 }
 
-.view_bottom {
-  display: block;
-  position: absolute;
-  width: 100%;
-  bottom: 0px;
-}
-
 .qna_index ul,
 .qna_list ul {
   display: flex;
