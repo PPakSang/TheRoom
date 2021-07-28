@@ -543,14 +543,11 @@ def qna_detail(request, pk):
             if qna.answer:
                 messages.error(request, "답변이 작성된 글은 수정이 불가능합니다.")
                 return render(request, 'study/function/qna_detail.html', context={"qna": qna,'need_to_delete' : True})
-            if qna.next_qna < datetime.datetime.today():
+            else:
                 qna.title = request.POST["title"]
                 qna.text = request.POST["text"]
-                qna.date = datetime.date.today()
                 qna.next_qna = datetime.datetime.today() + datetime.timedelta(minutes=10)
                 qna.save()
-            else:
-                messages.error(request, "문의 후 10분간 재문의가 제한됩니다.")
         return render(request, 'study/function/qna_detail.html', context={"qna": qna,'need_to_delete' : True})
 
 
@@ -602,14 +599,12 @@ def review_view(request, num):
 def review_enroll(request):
     if request.method == "POST":
         try:
-            if Review.objects.get(user=request.user):
-                messages.error(request, "리뷰는 한번만 작성 가능합니다")
-                return redirect('review_view', 1)
-            elif not Student.objects.filter(user_id=request.user.id).exists() or Student.objects.filter(user_id=request.user.id)[0].check_in == '1':
+            if not Student.objects.filter(user_id=request.user.id).exists() or Student.objects.filter(user_id=request.user.id)[0].check_in == '1':
                 messages.error(request, "레슨이 진행된 이후에 리뷰작성 가능합니다")
                 return redirect('review_view', 1)
-            else:
-                raise Exception
+            elif Review.objects.get(user=request.user):
+                messages.error(request, "리뷰는 한번만 작성 가능합니다")
+                return redirect('review_view', 1)
         except:
             review = Review(user=request.user)
             review.title = request.POST["title"]
