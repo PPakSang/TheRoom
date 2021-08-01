@@ -463,7 +463,7 @@ def qna_list(request):  # 커뮤니티
     else:
         page = int(request.GET['page'])
         qnas = Qna.objects.filter(user=request.user).order_by('-pk')
-        page_len = qnas.count()//11
+        page_len = qnas.count()//11 + 1
 
         qnas = qnas[10*(page-1):10*page]
         qnas = render_to_string(

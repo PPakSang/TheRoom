@@ -35,9 +35,9 @@ with open(secret_file) as f:
 SECRET_KEY = secret['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['lessontheroom.com']
 
 
 # Application definition
@@ -162,7 +162,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.naver.com' 		 # 메일 호스트 서버
 EMAIL_PORT = '587' 			 # 서버 포트
-EMAIL_HOST_USER = 'dohee121@naver.com' 	 # 우리가 사용할 Gmail
+EMAIL_HOST_USER = 'ppm5377@naver.com' 	 # 우리가 사용할 Gmail
 EMAIL_HOST_PASSWORD = secret['EMAIL_HOST_PASSWORD']		 # 우리가 사용할 Gmail password
 EMAIL_USE_TLS = True			 # TLS 보안 설정
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER	 # 응답 메일 관련 설정
