@@ -16,4 +16,4 @@ Regular Meeting time
 
 
 최종배포
-www.lessontheroom.com
+http://lessontheroom.com
