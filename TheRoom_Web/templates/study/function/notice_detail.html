@@ -43,7 +43,7 @@
     {% endfor %}
 </div>
 
-< class="container qna" id="container">
+<div class="container qna" id="container">
     <h3 class="menu_title mb-4 mt-5"> 공지사항</h3>
     <div class="divline mb-5"></div>
     <div class="detail_view">
@@ -83,7 +83,7 @@
         </div>
         <form action="" method="POST">
             <div class="writingView_con d-none">
-                <div class="writing_box mt-5">
+                <div class="writing_box">
                     {% csrf_token %}
                     <table class="writing_table">
                         <tr class="first_col">
@@ -180,38 +180,38 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
 
-    <script text="javascript/text">
+<script text="javascript/text">
 
-        function modify_func() {
-            $('.detailView_con').addClass('d-none');
-            $('.writingView_con').removeClass('d-none');
-        }
+    function modify_func() {
+        $('.detailView_con').addClass('d-none');
+        $('.writingView_con').removeClass('d-none');
+    }
 
-        function back_func() {
-            $('.detailView_con').removeClass('d-none');
-            $('.writingView_con').addClass('d-none');
-        }
+    function back_func() {
+        $('.detailView_con').removeClass('d-none');
+        $('.writingView_con').addClass('d-none');
+    }
 
-    </script>
-    <script>
-        document.querySelectorAll('.toolbar a')
-            .forEach(aEl => aEl.addEventListener('click', function (e) {
-                e.preventDefault();
-                const command = aEl.dataset.command;
+</script>
+<script>
+    document.querySelectorAll('.toolbar a')
+        .forEach(aEl => aEl.addEventListener('click', function (e) {
+            e.preventDefault();
+            const command = aEl.dataset.command;
 
-                document.execCommand(command);
+            document.execCommand(command);
 
-            }));
+        }));
 
-        document.getElementById('fonstSize_select').addEventListener('change', function (e) {
-            document.execCommand('fontSize', false, e.target.value);
-        });
-        function text_input() {
-            $('#text').val($('#content_input').html())
-        }
-    </script>
+    document.getElementById('fonstSize_select').addEventListener('change', function (e) {
+        document.execCommand('fontSize', false, e.target.value);
+    });
+    function text_input() {
+        $('#text').val($('#content_input').html())
+    }
+</script>
 
-    {% endblock %}
+{% endblock %}
