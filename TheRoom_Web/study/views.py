@@ -942,6 +942,60 @@ import requests
 
 #######소셜 로그인#######
 
+def signup_sns(request):  # sns회원가입
+    encoded_em = str(request.GET['email']).encode('utf-8')
+    #절대경로로 들어오는 행위 막기위함
+    if not bcrypt.checkpw(encoded_em,request.GET['hashed'].encode('utf-8')):
+        return redirect('index')
+
+    if request.user.is_authenticated:
+        return redirect('index')
+
+    email = request.GET['email']
+
+    if request.method == 'POST':
+        form = Signup_sns_form(request.POST)
+        
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            password2 = form.cleaned_data['password2']
+            email = email
+            name = form.cleaned_data['name']
+
+            if User.objects.filter(username=username).count() != 0:  # ID 중복시
+                return render(request, 'study/sign/signup_sns.html', {'form_error': '양식을 정확히 다시 작성해주세요'})
+            if validate_password(password):
+                return render(request, 'study/sign/signup_sns.html', {
+                    'password_error': '4자이상, 영문자포함, 숫자, 특수문자 조합으로만 가능합니다',
+                    'username': username,
+                    'email': email,
+                    'name': name,
+                    're': True}
+                )
+            if password == password2:
+                user = User(first_name=name, email=email, username=username)
+                user.set_password(password)
+                user.save()
+                return redirect('index')
+            else:
+                return render(request, 'study/sign/signup_sns.html', {
+                    'password_error': '비밀번호를 다시 확인해주세요 ',
+                    'username': username,
+                    'email': email,
+                    'name': name,
+                    're': True}
+                )
+        else:
+            return render(request, 'study/sign/signup_sns.html', 
+            {'form_error': '양식을 정확히 다시 작성해주세요',
+            'email' : email})
+    return render(request, 'study/sign/signup_sns.html',{
+            'email' : email
+        })
+        
+
 
 # BASE_DIR 경로 + secret.json
 secret_file = os.path.join(settings.BASE_DIR, "secret.json")

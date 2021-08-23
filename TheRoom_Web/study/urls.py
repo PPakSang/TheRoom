@@ -22,6 +22,7 @@ urlpatterns = [
 
     # user
     path('user/signup/', signup_hw, name='signup'),
+    path('user/signupsns/', signup_sns, name='signup_sns'),
     path('user/login/', login_hw, name='login'),
     path('user/findid/', find_id, name='find_id'),
     path('user/findpw/', find_pw, name='find_pw'),
