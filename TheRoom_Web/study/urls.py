@@ -65,7 +65,7 @@ urlpatterns = [
     path('deleteimg/<pk>', deleteimg),
 
 
-    # test
+    # community
     path('test/', test, name='test'),
 
     path('qnalist/', qna_list, name='qna_list'),
@@ -81,7 +81,11 @@ urlpatterns = [
     path('category/review/<num>', review_view, name='review_view'),
     path('category/review/delete/<pk>', review_delete, name='review_delete'),
     
-    
+    path('noticelist/', notice_list, name='notice_list'),
+    path('category/notice/detail/<num>', notice_detail, name='notice_detail'),
+    path('category/notice/enroll', notice_enroll, name='notice_enroll'),
+    path('category/notice/<num>', notice_view, name='notice_view'),
+    path('category/notice/delete/<pk>', notice_delete, name='notice_delete'),
 
     path('testt/', test3),
 

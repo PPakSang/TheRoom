@@ -1205,3 +1205,62 @@ def test(request):
         post.save()
     else:
         return render(request, "test/test.html")
+
+
+
+def notice_list(request):
+    page = int(request.GET['page'])
+    notice = Notice.objects.all().order_by('-pk')
+    page_len = notice.count()//11 + 1
+
+    notice = notice[10*(page-1):10*page]
+    num = [i+1 for i in range(10*(page-1),10*page)]
+    notice = zip(notice,num)
+    
+    notice = render_to_string(
+        'study/function/notice_list_base.html', context={"notices": notice})
+
+    context = {
+        "notice": notice,
+        "page_len": page_len
+    }
+    context = json.dumps(context)
+    return HttpResponse(context)
+
+
+def notice_view(request,num):
+    #로그인 안하면
+    if not request.user.is_authenticated :
+        return render(request,'study/function/notice_view.html', {"num": num})
+    else :
+        notice = Notice.objects.all()
+        return render(request, 'study/function/notice_view.html', {"num": num,'notice' : notice})
+
+
+@staff_member_required(login_url='/')
+def notice_enroll(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        content = request.POST['content']
+        
+        new_notice = Notice(title=title, content=content)
+        new_notice.save()
+
+        return redirect('notice_view',1)
+    return render(request, 'study/function/notice_enroll.html')
+
+@login_required(login_url='/user/login/')
+def notice_detail(request,num):
+    notice = Notice.objects.get(pk=num)
+
+    if request.method == 'POST':
+        notice.title = request.POST['title']
+        notice.content = request.POST['content']
+        notice.save()
+    return render(request, 'study/function/notice_detail.html',{"notice" : notice})
+
+@staff_member_required(login_url='/')
+def notice_delete(request,pk):
+    notice = Notice.objects.get(pk=pk)
+    notice.delete()
+    return redirect('notice_view', 1)

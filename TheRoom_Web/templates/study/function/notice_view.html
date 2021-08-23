@@ -24,7 +24,7 @@
 </nav>
 
 <div class="container qna">
-    <h3 class="menu_title mb-4 mt-5"> 1:1 문의</h3>
+    <h3 class="menu_title mb-4 mt-5"> 공지사항</h3>
     <div class="divline"></div>
     <div class="qna_index">
         <ul class="p-2">
@@ -35,11 +35,11 @@
     </div>
     <div class="divline"></div>
 
-    <div class="qna_list">
+    <div class="notice_list">
     </div>
     
     <div class="writing_link_div">
-        <a class="writing_link px-4 py-2" href="{% url 'qna_enroll' %}"> 글쓰기</a>
+        {% if request.user.is_staff %}<a class="writing_link px-4 py-2" href="{% url 'qna_enroll' %}"> 글쓰기</a>{% endif %}
     </div>
     <div class="view_bottom">
         <ul class="pagination justify-content-center mt-3 mb-0">
