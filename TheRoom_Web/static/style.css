@@ -950,6 +950,10 @@ body {
   font-weight: bold;
 }
 
+.sns_login a {
+  text-decoration: none;
+}
+
 /* 계정찾기(+회원가입), 정책 링크태그 css*/
 
 .login_find,
