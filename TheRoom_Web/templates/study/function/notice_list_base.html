@@ -1,7 +1,7 @@
 {% for notice,num in notices %}
     <a href="detail/{{notice.pk}}">
         <ul class="py-3 px-2">
-            <li class="col-2"id="notice_list_new">{{ notice.is_new }}</li>
+            <li class="col-2" {% if notice.is_new == "new"%} style="color: #e74c3c;" {% endif %} id="notice_list_new">{{ notice.is_new }}</li>
             <li class="col-7" id="notice_list_title">{% if is_staff %}(작성자:{{notice.user.first_name}}){% endif %}{{ notice.title }}</li>
             <li class="col-3"id="notice_list_date">{{ notice.date|date:"Y-m-d" }}</li>
         </ul>
