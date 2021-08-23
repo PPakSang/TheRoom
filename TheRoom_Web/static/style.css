@@ -873,6 +873,37 @@ body {
   font-size: 0.8rem;
 }
 
+/*공지사항*/
+.notice_list ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  list-style: none;
+  margin: 0;
+}
+
+.notice_list ul li {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+#notice_list_title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.notice_list a {
+  text-decoration: none;
+  color: black;
+}
+
+.notice_list a :hover {
+  font-weight: bold;
+}
+
 /*login 혜원*/
 
 /*네비바*/
