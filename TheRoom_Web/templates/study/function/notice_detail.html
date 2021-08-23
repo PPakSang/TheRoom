@@ -140,7 +140,7 @@
                     </table>
                     <input type="text" name="content" id="text" style="display: none;">
                 </div>
-                {% if request.user == qna.user %}
+                {% if request.user.is_staff %}
                 <div class="btn_container">
                     <div class="buttons mt-2 row g-0">
                         <div class="col">
@@ -155,7 +155,7 @@
 
             </div>
             <div class="mt-5 mb-2">
-                <button class="detail_list_btn"><a class="list_btn" href="{% url 'qna_view' 1 %}">목록</a></button>
+                <button class="detail_list_btn"><a class="list_btn" href="{% url 'notice_view' 1 %}">목록</a></button>
             </div>
         </form>
     </div>
