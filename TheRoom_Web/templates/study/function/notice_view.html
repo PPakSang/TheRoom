@@ -1,0 +1,54 @@
+{% extends 'study/main/base.html' %} {% block title %}더 룸{% endblock %} {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+
+
+<!-- 중간 카테고리 -->
+<nav class="navbar navbar-expand-md navbar-light shadow-sm sticky-top mid-nav">
+    <div class="container-fluid">
+        <ul class="navbar-nav mx-auto mb-md-0">
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'lesson' %}">레슨 신청</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'qna_view' 1 %}">1:1 문의</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" aria-current="page" href="{% url 'enroll' %}">연습실 대여</a>
+            </li>
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'review_view' 1%}">더 룸 리뷰</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container qna">
+    <h3 class="menu_title mb-4 mt-5"> 1:1 문의</h3>
+    <div class="divline"></div>
+    <div class="qna_index">
+        <ul class="p-2">
+            <li class="col-2" id="qna_progress"></li>
+            <li class="col-7" id="qna_title">제목</li>
+            <li class="col-3" id="qna_date">작성일</li>
+        </ul>
+    </div>
+    <div class="divline"></div>
+
+    <div class="qna_list">
+    </div>
+    
+    <div class="writing_link_div">
+        <a class="writing_link px-4 py-2" href="{% url 'qna_enroll' %}"> 글쓰기</a>
+    </div>
+    <div class="view_bottom">
+        <ul class="pagination justify-content-center mt-3 mb-0">
+        </ul>
+
+        <div style="display: none;" id="num">{{num}}</div>
+    </div>
+</div>
+</div>
+
+<script src="{% static 'main.js' %}"></script>
+{% endblock %}
