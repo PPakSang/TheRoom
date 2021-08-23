@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
 
 from django.views import generic
 from django.contrib import auth
@@ -551,8 +552,9 @@ def qna_detail(request, pk):
         return render(request, 'study/function/qna_detail.html', context={"qna": qna,'need_to_delete' : True})
 
 
-@login_required(login_url='/user/login')
 def my_review(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     review = Review.objects.filter(user=request.user)
     if review.exists():
         return redirect('review_detail', review.last().pk)
@@ -560,7 +562,7 @@ def my_review(request):
         return redirect('review_enroll')
 
 
-@login_required(login_url='/user/login')
+
 def review_list(request):  # 커뮤니티
     page = int(request.GET['page'])
     reviews = Review.objects.all().order_by('-pk')
@@ -577,22 +579,13 @@ def review_list(request):  # 커뮤니티
     context = json.dumps(context)
     return HttpResponse(context)
 
-@login_required(login_url='/user/login')
-def review_view(request, num):
-    review = Review.objects.filter(user = request.user)
-    try:
-        student = Student.objects.get(user_id=request.user.id)
-        if student.check_in == '1':
-            # 아직 레슨일정 안잡혔을때
-            is_enrolled = False
-            day1 = student.day1
-        else:
-            is_enrolled = True
-            day1 = student.lesson_day
-    except:
-        return render(request, 'study/function/review_view.html', {"num": num, "no_enroll": True,'review':review})
 
-    return render(request, 'study/function/review_view.html', {"num": num, "is_enrolled": is_enrolled, "day1": day1,'review':review})
+def review_view(request, num):
+    if not request.user.is_authenticated :
+        return render(request,'study/function/review_view.html', {"num": num,"need_to_delete" : True })
+    else :
+        review = Review.objects.filter(user = request.user)
+        return render(request, 'study/function/review_view.html', {"num": num, "need_to_delete": True,'review':review})
 
 
 @login_required(login_url='/user/login')
@@ -629,31 +622,21 @@ def review_delete(request, pk):
         return redirect('review_view', 1)
 
 
-@login_required(login_url='/user/login')
 def review_detail(request, pk):
-    if request.user.is_staff:
-        # 답변하기
-        review = Review.objects.get(pk=pk)
-        if request.method == "POST":
-            review.answer = request.POST["answer"]
+    
+    review = Review.objects.get(pk=pk)
+    if request.method == "POST":
+        if review.answer:
+            messages.error(request, "답변이 작성된 리뷰는 수정이 불가능합니다.")
+            return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
+        elif review.user == request.user:
+            review.title = request.POST["title"]
+            review.text = request.POST["text"]
             review.save()
-        return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
-    else:
-        review = Review.objects.get(pk=pk)
-        if request.method == "POST":
-            if review.answer:
-                messages.error(request, "답변이 작성된 리뷰는 수정이 불가능합니다.")
-                return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
-            elif review.user == request.user:
-                new_review = review(user=request.user)
-                new_review.title = request.POST["title"]
-                new_review.text = request.POST["text"]
-                new_review.date = datetime.date.today()
-                new_review.save()
-            else:
-                messages.error(request, "타인의 리뷰는 수정할 수 없습니다")
-                return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
-        return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
+        else:
+            messages.error(request, "타인의 리뷰는 수정할 수 없습니다")
+            return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
+    return render(request, 'study/function/review_detail.html', context={"review": review,'need_to_delete' : True})
 
 
 # @login_required(login_url='/login/')
@@ -950,6 +933,185 @@ def activate(request, uid64, token):
     except Exception as e:
         print(e)
         return render(request, 'study/error.html')
+
+
+
+
+import requests
+
+
+#######소셜 로그인#######
+
+
+# BASE_DIR 경로 + secret.json
+secret_file = os.path.join(settings.BASE_DIR, "secret.json")
+
+with open(secret_file) as f:
+    secret = json.load(f)
+
+
+# 유저정보 확인 인가코드 -> callback_url return
+def kakao_login(request):
+    REST_API_KEY = secret['KAKAO_API_KEY']
+    domain = str(get_current_site(request))
+    REDIRECT_URI = "http://" + domain + "/kakao/callback"
+    return redirect(
+        f"https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&response_type=code"
+    )
+
+def naver_login(request):
+    REST_API_KEY = secret['NAVER_API_KEY']
+    domain = str(get_current_site(request))
+    REDIRECT_URI = "http://" + domain + "/naver/callback"
+    return redirect(
+        f"https://nid.naver.com/oauth2.0/authorize?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&response_type=code&state=ready"
+    )
+
+
+# callback 시 error 없으면 회원가입 바로 시키기
+
+
+def kakao_callback(request):
+    try:
+        request.GET['error']
+        return redirect('index')
+    except:
+        # 토큰 불러오기
+        code = request.GET['code']
+        REST_API_KEY = secret['KAKAO_API_KEY']
+        domain = str(get_current_site(request))
+        REDIRECT_URI = "http://" + domain + "/kakao/callback"
+
+        data = {
+            "grant_type": "authorization_code",
+            "client_id": REST_API_KEY,
+            "redirect_uri": REDIRECT_URI,
+            "code": code,
+        }
+
+        token_request = requests.post(
+            f"https://kauth.kakao.com/oauth/token",
+            data=data
+        )
+        token_json = token_request.json()
+        access_token = token_json.get("access_token")
+
+        # 이메일 불러오기
+
+        headers = {
+            "Authorization": f"Bearer {access_token}"
+        }
+
+        data = {
+            "property_keys": '["kakao_account.email"]'
+        }
+
+        email_response = requests.post(
+            "https://kapi.kakao.com/v2/user/me",
+            headers=headers,
+            data=data
+        )
+
+        email_response_json = email_response.json()
+
+    #     requests.post(
+    #     f"https://kapi.kakao.com/v1/user/unlink",
+    #     headers=headers
+    # )
+
+        email = email_response_json.get('kakao_account').get('email')
+        
+        user = User.objects.filter(email = email)
+
+        #카카오에서 불러온 이메일과 동일한 이메일의 유저가 존재할 시 로그인 시키기
+        if user.exists() :
+           
+            login(request,user[0])
+            return redirect('index')
+        #없으면 가입
+        else:
+            hashed = bcrypt.hashpw(str(email).encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
+            
+            return redirect(reverse('signup_sns') + f"?email={email}&hashed={hashed}")
+
+
+
+def naver_callback(request):
+    try:
+        request.GET['error']
+        return redirect('index')
+    except:
+        # 토큰 불러오기
+        code = request.GET['code']
+        REST_API_KEY = secret['NAVER_API_KEY']
+        SECRET_KEY = secret['NAVER_SECRET_KEY']
+        domain = str(get_current_site(request))
+        REDIRECT_URI = "http://" + domain + "/naver/callback"
+
+        data = {
+            "grant_type": "authorization_code",
+            "client_id": REST_API_KEY,
+            "code": code,
+            "state":"ready",
+            "client_secret": SECRET_KEY
+        }
+
+        token_request = requests.post(
+            f"https://nid.naver.com/oauth2.0/token",
+            data=data
+        )
+        token_json = token_request.json()
+        access_token = token_json.get("access_token")
+
+
+        # 이메일 불러오기
+
+        headers = {
+            "Authorization": f"Bearer {access_token}"
+        }
+
+        email_response = requests.post(
+            "https://openapi.naver.com/v1/nid/me",
+            headers=headers,
+        )
+
+        email_response_json = email_response.json()
+
+
+    #     requests.post(
+    #     f"https://kapi.kakao.com/v1/user/unlink",
+    #     headers=headers
+    # )
+
+        email = email_response_json.get('response').get('email')
+        
+        user = User.objects.filter(email = email)
+
+        #카카오에서 불러온 이메일과 동일한 이메일의 유저가 존재할 시 로그인 시키기
+        if user.exists() :
+           
+            login(request,user[0])
+            return redirect('index')
+        #없으면 가입
+        else:
+            hashed = bcrypt.hashpw(str(email).encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
+            
+            return redirect(reverse('signup_sns') + f"?email={email}&hashed={hashed}")
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # def signup(request): #회원가입

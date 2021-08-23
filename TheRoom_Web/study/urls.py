@@ -33,12 +33,21 @@ urlpatterns = [
     path('user/isduplicated/', is_duplicated, name='is_duplicated'),
     path('user/resend/<email>', re_send, name='re_send'),
 
+    #kakao
+    path('kakao/login',kakao_login,name='kakao_login'),
+    path('kakao/callback',kakao_callback),
+    # path('kakao/logout',kakao_logout),
+
+    #naver
+    path('naver/login',naver_login,name='naver_login'),
+    path('naver/callback',naver_callback),
+    # path('naver/logout',naver_logout),
+
     # category
     path('category/inquire/', inquire, name='inquire'),
     path('category/enroll/', enroll, name='enroll'),
     path('category/change/', change, name='change'),
     path('category/faq/', faq_view, name='faq'),
-
 
     # policy
 
