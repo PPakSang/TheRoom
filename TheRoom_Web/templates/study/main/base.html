@@ -61,7 +61,7 @@
                            href="{% url 'index' %}">홈</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3 px-md-2 {% if request.path == '/category/notice/' %}active{% endif %}"
+                        <a class="nav-link px-3 px-md-2 {% if '/category/notice/' in request.path %}active{% endif %}"
                            aria-current="page"
                            href="{% url 'notice_view' 1 %}">공지사항</a>
                     </li>

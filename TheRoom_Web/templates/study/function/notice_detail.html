@@ -43,7 +43,7 @@
     {% endfor %}
 </div>
 
-< class="container qna" id="container">
+<div class="container qna" id="container">
     <h3 class="menu_title mb-4 mt-5"> 공지사항</h3>
     <div class="divline mb-5"></div>
     <div class="detail_view">
@@ -184,6 +184,10 @@
 
 
     <script text="javascript/text">
+
+        function cancel() {
+                $('#notice_delete')[0].click()
+            }
 
         function modify_func() {
             $('.detailView_con').addClass('d-none');
