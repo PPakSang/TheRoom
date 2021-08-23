@@ -46,6 +46,15 @@
                     <a class="login_find" href="{% url 'find_pw' %}">비밀번호 찾기</a>
                     </span>
             </div>
+            <div class="sns_login">
+                <h6 class="sns_login_title">간편회원가입</h6>
+                <a href="{% url 'kakao_login' %}">
+                    <img class="mt-2" src="{% static 'img/kakao_signup_narrow.png'%}">
+                </a>
+                <a href="{% url 'naver_login' %}">
+                    <img class="mt-2" src="{% static 'img/naver_signup_narrow.png'%}">
+                </a>
+            </div>
             <div class="mt-4 pb-2">
                     <span id="q_account">
                         계정이 아직 없으신가요?

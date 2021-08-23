@@ -120,3 +120,15 @@ class Study_img(models.Model):
     #     if self.pic :
     #         os.remove(os.path.join(settings.MEDIA_ROOT,self.pic.path))
     #         super(Study_img, self).delete(*args,**kwargs)
+
+class Notice(models.Model):
+    title = models.CharField(max_length=30)
+    content = models.CharField(max_length=1000)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.title+ f"({self.date})"
+
+    def is_new(self):
+        date =datetime.date.fromisoformat(str(self.date))
+        return "new" if (datetime.date.today().day - date.day) < 6 else "공지"
